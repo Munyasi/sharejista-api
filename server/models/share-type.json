@@ -1,0 +1,35 @@
+{
+  "name": "ShareType",
+  "plural": "sharetypes",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "number",
+      "required": false
+    },
+    "description": {
+      "type": "string"
+    },
+    "tranferrable": {
+      "type": "boolean"
+    },
+    "can_be_director": {
+      "type": "boolean"
+    },
+    "can_vote": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

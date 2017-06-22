@@ -1,0 +1,51 @@
+{
+  "name": "ShareTransfer",
+  "plural": "sharetransfers",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "transferer_id": {
+      "type": "number",
+      "required": false
+    },
+    "transferee_id": {
+      "type": "number",
+      "required": true
+    },
+    "transfer_type": {
+      "type": "number",
+      "required": true
+    },
+    "company_id": {
+      "type": "number",
+      "required": true
+    },
+    "number_of_shares": {
+      "type": "number",
+      "required": true
+    },
+    "share_type_id": {
+      "type": "number",
+      "required": true
+    },
+    "approved": {
+      "type": "boolean",
+      "required": true
+    },
+    "initiated_by": {
+      "type": "number",
+      "required": true
+    },
+    "approved_by": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,73 @@
+{
+  "name": "Person",
+  "plural": "persons",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "surname": {
+      "type": "string",
+      "required": true
+    },
+    "other_names": {
+      "type": "string",
+      "required": true
+    },
+    "salutation": {
+      "type": "string",
+      "required": true
+    },
+    "email_address": {
+      "type": "string",
+      "required": true
+    },
+    "phone_number": {
+      "type": "string",
+      "required": true
+    },
+    "id_number": {
+      "type": "string",
+      "required": true
+    },
+    "occupation": {
+      "type": "string",
+      "required": true
+    },
+    "kra_pin": {
+      "type": "string",
+      "required": true
+    },
+    "date_of_birth": {
+      "type": "date",
+      "required": true
+    },
+    "former_name": {
+      "type": "string"
+    },
+    "residential_address": {
+      "type": "string",
+      "required": true
+    },
+    "box": {
+      "type": "string",
+      "required": true
+    },
+    "postal_code": {
+      "type": "string",
+      "required": true
+    },
+    "appointment_allotment_date": {
+      "type": "date",
+      "desc": "Appointment date for secretary/director and allotment for shareholders"
+    },
+    "resignation_date": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,94 @@
+{
+  "name": "Company",
+  "plural": "companies",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "company_name": {
+      "type": "string",
+      "required": true
+    },
+    "registration_no": {
+      "type": "string",
+      "required": true
+    },
+    "employee_count": {
+      "type": "number",
+      "required": true
+    },
+    "primary_activity": {
+      "type": "string",
+      "required": true
+    },
+    "incorporation_date": {
+      "type": "date",
+      "required": true
+    },
+    "accounting_start_period": {
+      "type": "date",
+      "required": true
+    },
+    "accounting_end_period": {
+      "type": "date",
+      "required": true
+    },
+    "town": {
+      "type": "string",
+      "required": true
+    },
+    "street": {
+      "type": "string",
+      "required": true
+    },
+    "name_of_building": {
+      "type": "string",
+      "required": true
+    },
+    "floor_room_no": {
+      "type": "string",
+      "required": true
+    },
+    "region": {
+      "type": "string",
+      "required": true
+    },
+    "box": {
+      "type": "string",
+      "required": true
+    },
+    "postal_code": {
+      "type": "string"
+    },
+    "office_telephone_no": {
+      "type": "string",
+      "required": true
+    },
+    "mobile_no": {
+      "type": "string",
+      "required": true
+    },
+    "email_address": {
+      "type": "string",
+      "required": true
+    },
+    "company_share_capital": {
+      "type": "number",
+      "required": true
+    },
+    "number_of_shares": {
+      "type": "number",
+      "required": true
+    },
+    "remaining_shares": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

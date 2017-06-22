@@ -1,0 +1,66 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Company": {
+    "dataSource": "db",
+    "public": true
+  },
+  "CompanyType": {
+    "dataSource": "db",
+    "public": true
+  },
+  "ShareType": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Person": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Shares": {
+    "dataSource": "db",
+    "public": true
+  },
+  "ShareTransfer": {
+    "dataSource": "db",
+    "public": true
+  },
+  "SystemUser": {
+    "dataSource": "db",
+    "public": true
+  }
+}
