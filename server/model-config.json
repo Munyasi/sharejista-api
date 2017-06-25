@@ -14,53 +14,53 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "mysql"
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": false
   },
   "Company": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "CompanyType": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "ShareType": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "Person": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "Shares": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "ShareTransfer": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "SystemUser": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   }
 }

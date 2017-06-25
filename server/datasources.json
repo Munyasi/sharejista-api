@@ -2,5 +2,15 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "mysql": {
+    "host": "localhost",
+    "port": 8889,
+    "url": "mysql://root:root@localhost:8889/secretarialsystem",
+    "database": "secretarialsystem",
+    "password": "root",
+    "name": "mysql",
+    "user": "root",
+    "connector": "mysql"
   }
 }
