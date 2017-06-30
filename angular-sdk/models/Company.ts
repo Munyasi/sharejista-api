@@ -3,6 +3,7 @@
 declare var Object: any;
 export interface CompanyInterface {
   "company_name": string;
+  "company_type": string;
   "registration_no": string;
   "employee_count": number;
   "primary_activity": string;
@@ -22,11 +23,13 @@ export interface CompanyInterface {
   "company_share_capital": number;
   "number_of_shares": number;
   "remaining_shares": number;
+  "current"?: number;
   "id"?: number;
 }
 
 export class Company implements CompanyInterface {
   "company_name": string;
+  "company_type": string;
   "registration_no": string;
   "employee_count": number;
   "primary_activity": string;
@@ -46,6 +49,7 @@ export class Company implements CompanyInterface {
   "company_share_capital": number;
   "number_of_shares": number;
   "remaining_shares": number;
+  "current": number;
   "id": number;
   constructor(data?: CompanyInterface) {
     Object.assign(this, data);
@@ -80,6 +84,10 @@ export class Company implements CompanyInterface {
       properties: {
         "company_name": {
           name: 'company_name',
+          type: 'string'
+        },
+        "company_type": {
+          name: 'company_type',
           type: 'string'
         },
         "registration_no": {
@@ -156,6 +164,10 @@ export class Company implements CompanyInterface {
         },
         "remaining_shares": {
           name: 'remaining_shares',
+          type: 'number'
+        },
+        "current": {
+          name: 'current',
           type: 'number'
         },
         "id": {

@@ -11,6 +11,10 @@
       "type": "string",
       "required": true
     },
+    "company_type": {
+      "type": "string",
+      "required": true
+    },
     "registration_no": {
       "type": "string",
       "required": true
