@@ -17,6 +17,7 @@ export interface PersonInterface {
   "postal_code": string;
   "appointment_allotment_date"?: Date;
   "resignation_date"?: Date;
+  "person_type"?: string;
   "id"?: number;
 }
 
@@ -36,6 +37,7 @@ export class Person implements PersonInterface {
   "postal_code": string;
   "appointment_allotment_date": Date;
   "resignation_date": Date;
+  "person_type": string;
   "id": number;
   constructor(data?: PersonInterface) {
     Object.assign(this, data);
@@ -127,6 +129,10 @@ export class Person implements PersonInterface {
         "resignation_date": {
           name: 'resignation_date',
           type: 'Date'
+        },
+        "person_type": {
+          name: 'person_type',
+          type: 'string'
         },
         "id": {
           name: 'id',

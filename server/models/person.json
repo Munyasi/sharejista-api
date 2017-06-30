@@ -64,6 +64,10 @@
     },
     "resignation_date": {
       "type": "date"
+    },
+    "person_type": {
+      "type": "string",
+      "desc": "can be shareholder, secretary or director"
     }
   },
   "validations": [],
