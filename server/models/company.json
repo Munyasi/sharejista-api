@@ -85,6 +85,9 @@
     "remaining_shares": {
       "type": "number",
       "required": true
+    },
+    "current": {
+      "type": "number"
     }
   },
   "validations": [],
