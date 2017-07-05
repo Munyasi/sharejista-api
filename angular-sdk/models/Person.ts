@@ -11,13 +11,17 @@ export interface PersonInterface {
   "occupation": string;
   "kra_pin": string;
   "date_of_birth": Date;
-  "former_name"?: string;
   "residential_address": string;
   "box": string;
   "postal_code": string;
-  "appointment_allotment_date"?: Date;
+  "appointment_date"?: Date;
   "resignation_date"?: Date;
   "person_type"?: string;
+  "town": string;
+  "street": string;
+  "house_number": string;
+  "building_name": string;
+  "estate": string;
   "id"?: number;
 }
 
@@ -31,13 +35,17 @@ export class Person implements PersonInterface {
   "occupation": string;
   "kra_pin": string;
   "date_of_birth": Date;
-  "former_name": string;
   "residential_address": string;
   "box": string;
   "postal_code": string;
-  "appointment_allotment_date": Date;
+  "appointment_date": Date;
   "resignation_date": Date;
   "person_type": string;
+  "town": string;
+  "street": string;
+  "house_number": string;
+  "building_name": string;
+  "estate": string;
   "id": number;
   constructor(data?: PersonInterface) {
     Object.assign(this, data);
@@ -106,10 +114,6 @@ export class Person implements PersonInterface {
           name: 'date_of_birth',
           type: 'Date'
         },
-        "former_name": {
-          name: 'former_name',
-          type: 'string'
-        },
         "residential_address": {
           name: 'residential_address',
           type: 'string'
@@ -122,8 +126,8 @@ export class Person implements PersonInterface {
           name: 'postal_code',
           type: 'string'
         },
-        "appointment_allotment_date": {
-          name: 'appointment_allotment_date',
+        "appointment_date": {
+          name: 'appointment_date',
           type: 'Date'
         },
         "resignation_date": {
@@ -132,6 +136,26 @@ export class Person implements PersonInterface {
         },
         "person_type": {
           name: 'person_type',
+          type: 'string'
+        },
+        "town": {
+          name: 'town',
+          type: 'string'
+        },
+        "street": {
+          name: 'street',
+          type: 'string'
+        },
+        "house_number": {
+          name: 'house_number',
+          type: 'string'
+        },
+        "building_name": {
+          name: 'building_name',
+          type: 'string'
+        },
+        "estate": {
+          name: 'estate',
           type: 'string'
         },
         "id": {

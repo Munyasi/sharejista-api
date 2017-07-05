@@ -8,6 +8,7 @@ import { Person } from '../../models/Person';
 import { Shares } from '../../models/Shares';
 import { ShareTransfer } from '../../models/ShareTransfer';
 import { SystemUser } from '../../models/SystemUser';
+import { Shareholder } from '../../models/Shareholder';
 
 export interface Models { [name: string]: any }
 
@@ -23,6 +24,7 @@ export class SDKModels {
     Shares: Shares,
     ShareTransfer: ShareTransfer,
     SystemUser: SystemUser,
+    Shareholder: Shareholder,
     
   };
 

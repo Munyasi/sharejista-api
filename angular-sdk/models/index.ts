@@ -7,5 +7,6 @@ export * from './Person';
 export * from './Shares';
 export * from './ShareTransfer';
 export * from './SystemUser';
+export * from './Shareholder';
 export * from './BaseModels';
 export * from './FireLoopRef';

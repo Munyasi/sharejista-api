@@ -43,9 +43,6 @@
       "type": "date",
       "required": true
     },
-    "former_name": {
-      "type": "string"
-    },
     "residential_address": {
       "type": "string",
       "required": true
@@ -58,7 +55,7 @@
       "type": "string",
       "required": true
     },
-    "appointment_allotment_date": {
+    "appointment_date": {
       "type": "date",
       "desc": "Appointment date for secretary/director and allotment for shareholders"
     },
@@ -67,7 +64,27 @@
     },
     "person_type": {
       "type": "string",
-      "desc": "can be shareholder, secretary or director"
+      "desc": "can be secretary or director"
+    },
+    "town": {
+      "type": "string",
+      "required": true
+    },
+    "street": {
+      "type": "string",
+      "required": true
+    },
+    "house_number": {
+      "type": "string",
+      "required": true
+    },
+    "building_name": {
+      "type": "string",
+      "required": true
+    },
+    "estate":{
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],

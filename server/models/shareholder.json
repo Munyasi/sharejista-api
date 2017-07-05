@@ -1,0 +1,46 @@
+{
+  "name": "Shareholder",
+  "plural": "shareholders",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "type": {
+      "type": "string",
+      "required": "string"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email_address": {
+      "type": "string",
+      "required": true
+    },
+    "phone_number": {
+      "type": "string",
+      "required": true
+    },
+    "id_reg_number": {
+      "type": "string",
+      "required": true
+    },
+    "appointment_date": {
+      "type": "date"
+    },
+    "postal_code": {
+      "type": "string",
+      "required": true
+    },
+    "box": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -56,6 +56,7 @@ import { PersonApi } from './services/custom/Person';
 import { SharesApi } from './services/custom/Shares';
 import { ShareTransferApi } from './services/custom/ShareTransfer';
 import { SystemUserApi } from './services/custom/SystemUser';
+import { ShareholderApi } from './services/custom/Shareholder';
 /**
 * @module SDKBrowserModule
 * @description
@@ -95,6 +96,7 @@ export class SDKBrowserModule {
         SharesApi,
         ShareTransferApi,
         SystemUserApi,
+        ShareholderApi,
         internalStorageProvider,
         { provide: SDKStorage, useClass: StorageBrowser },
         { provide: SocketDriver, useClass: SocketBrowser }

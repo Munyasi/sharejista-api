@@ -62,5 +62,9 @@
   "SystemUser": {
     "dataSource": "mysql",
     "public": true
+  },
+  "Shareholder": {
+    "dataSource": "mysql",
+    "public": true
   }
 }
