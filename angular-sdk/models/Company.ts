@@ -1,9 +1,11 @@
 /* tslint:disable */
+import {
+  CompanyType
+} from '../index';
 
 declare var Object: any;
 export interface CompanyInterface {
   "company_name": string;
-  "company_type": string;
   "registration_no": string;
   "employee_count": number;
   "primary_activity": string;
@@ -25,11 +27,12 @@ export interface CompanyInterface {
   "remaining_shares": number;
   "current"?: number;
   "id"?: number;
+  "company_type_id"?: number;
+  CompanyType?: CompanyType;
 }
 
 export class Company implements CompanyInterface {
   "company_name": string;
-  "company_type": string;
   "registration_no": string;
   "employee_count": number;
   "primary_activity": string;
@@ -51,6 +54,8 @@ export class Company implements CompanyInterface {
   "remaining_shares": number;
   "current": number;
   "id": number;
+  "company_type_id": number;
+  CompanyType: CompanyType;
   constructor(data?: CompanyInterface) {
     Object.assign(this, data);
   }
@@ -84,10 +89,6 @@ export class Company implements CompanyInterface {
       properties: {
         "company_name": {
           name: 'company_name',
-          type: 'string'
-        },
-        "company_type": {
-          name: 'company_type',
           type: 'string'
         },
         "registration_no": {
@@ -174,8 +175,17 @@ export class Company implements CompanyInterface {
           name: 'id',
           type: 'number'
         },
+        "company_type_id": {
+          name: 'company_type_id',
+          type: 'number'
+        },
       },
       relations: {
+        CompanyType: {
+          name: 'CompanyType',
+          type: 'CompanyType',
+          model: 'CompanyType'
+        },
       }
     }
   }

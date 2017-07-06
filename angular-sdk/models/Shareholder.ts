@@ -1,4 +1,7 @@
 /* tslint:disable */
+import {
+  Company
+} from '../index';
 
 declare var Object: any;
 export interface ShareholderInterface {
@@ -11,6 +14,8 @@ export interface ShareholderInterface {
   "postal_code": string;
   "box": string;
   "id"?: number;
+  "company_id"?: number;
+  Company?: Company;
 }
 
 export class Shareholder implements ShareholderInterface {
@@ -23,6 +28,8 @@ export class Shareholder implements ShareholderInterface {
   "postal_code": string;
   "box": string;
   "id": number;
+  "company_id": number;
+  Company: Company;
   constructor(data?: ShareholderInterface) {
     Object.assign(this, data);
   }
@@ -90,8 +97,17 @@ export class Shareholder implements ShareholderInterface {
           name: 'id',
           type: 'number'
         },
+        "company_id": {
+          name: 'company_id',
+          type: 'number'
+        },
       },
       relations: {
+        Company: {
+          name: 'Company',
+          type: 'Company',
+          model: 'Company'
+        },
       }
     }
   }

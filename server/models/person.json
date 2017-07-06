@@ -88,7 +88,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "Company":{
+      "type": "belongsTo",
+      "model": "Company",
+      "foreignKey": "company_id"
+    }
+  },
   "acls": [],
   "methods": {}
 }

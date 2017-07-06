@@ -1,4 +1,7 @@
 /* tslint:disable */
+import {
+  Company
+} from '../index';
 
 declare var Object: any;
 export interface PersonInterface {
@@ -23,6 +26,8 @@ export interface PersonInterface {
   "building_name": string;
   "estate": string;
   "id"?: number;
+  "company_id"?: number;
+  Company?: Company;
 }
 
 export class Person implements PersonInterface {
@@ -47,6 +52,8 @@ export class Person implements PersonInterface {
   "building_name": string;
   "estate": string;
   "id": number;
+  "company_id": number;
+  Company: Company;
   constructor(data?: PersonInterface) {
     Object.assign(this, data);
   }
@@ -162,8 +169,17 @@ export class Person implements PersonInterface {
           name: 'id',
           type: 'number'
         },
+        "company_id": {
+          name: 'company_id',
+          type: 'number'
+        },
       },
       relations: {
+        Company: {
+          name: 'Company',
+          type: 'Company',
+          model: 'Company'
+        },
       }
     }
   }
