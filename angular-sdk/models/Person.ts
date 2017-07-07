@@ -14,7 +14,6 @@ export interface PersonInterface {
   "occupation": string;
   "kra_pin": string;
   "date_of_birth": Date;
-  "residential_address": string;
   "box": string;
   "postal_code": string;
   "appointment_date"?: Date;
@@ -40,7 +39,6 @@ export class Person implements PersonInterface {
   "occupation": string;
   "kra_pin": string;
   "date_of_birth": Date;
-  "residential_address": string;
   "box": string;
   "postal_code": string;
   "appointment_date": Date;
@@ -120,10 +118,6 @@ export class Person implements PersonInterface {
         "date_of_birth": {
           name: 'date_of_birth',
           type: 'Date'
-        },
-        "residential_address": {
-          name: 'residential_address',
-          type: 'string'
         },
         "box": {
           name: 'box',

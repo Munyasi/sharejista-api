@@ -43,10 +43,6 @@
       "type": "date",
       "required": true
     },
-    "residential_address": {
-      "type": "string",
-      "required": true
-    },
     "box": {
       "type": "string",
       "required": true
