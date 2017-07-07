@@ -11,25 +11,21 @@
       "type": "string",
       "required": true
     },
-    "type": {
-      "type": "number",
-      "required": false
-    },
     "description": {
       "type": "string"
     },
-    "tranferrable": {
-      "type": "boolean"
-    },
-    "can_be_director": {
-      "type": "boolean"
-    },
-    "can_vote": {
-      "type": "boolean"
+    "transferrable": {
+      "type": "number"
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "Company": {
+      "type": "belongsTo",
+      "model": "Company",
+      "foreignKey": "company_id"
+    }
+  },
   "acls": [],
   "methods": {}
 }

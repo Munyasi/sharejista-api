@@ -1,14 +1,26 @@
 /* tslint:disable */
+import {
+  ShareType,
+  Shareholder
+} from '../index';
 
 declare var Object: any;
 export interface SharesInterface {
-  "name"?: string;
+  "number_of_shares"?: number;
   "id"?: number;
+  "sharetype_id"?: number;
+  "shareholder_id"?: number;
+  ShareType?: ShareType;
+  Shareholder?: Shareholder;
 }
 
 export class Shares implements SharesInterface {
-  "name": string;
+  "number_of_shares": number;
   "id": number;
+  "sharetype_id": number;
+  "shareholder_id": number;
+  ShareType: ShareType;
+  Shareholder: Shareholder;
   constructor(data?: SharesInterface) {
     Object.assign(this, data);
   }
@@ -40,16 +52,34 @@ export class Shares implements SharesInterface {
       name: 'Shares',
       plural: 'shares',
       properties: {
-        "name": {
-          name: 'name',
-          type: 'string'
+        "number_of_shares": {
+          name: 'number_of_shares',
+          type: 'number'
         },
         "id": {
           name: 'id',
           type: 'number'
         },
+        "sharetype_id": {
+          name: 'sharetype_id',
+          type: 'number'
+        },
+        "shareholder_id": {
+          name: 'shareholder_id',
+          type: 'number'
+        },
       },
       relations: {
+        ShareType: {
+          name: 'ShareType',
+          type: 'ShareType',
+          model: 'ShareType'
+        },
+        Shareholder: {
+          name: 'Shareholder',
+          type: 'Shareholder',
+          model: 'Shareholder'
+        },
       }
     }
   }

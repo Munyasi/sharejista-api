@@ -1,24 +1,25 @@
 /* tslint:disable */
+import {
+  Company
+} from '../index';
 
 declare var Object: any;
 export interface ShareTypeInterface {
   "name": string;
-  "type"?: number;
   "description"?: string;
-  "tranferrable"?: boolean;
-  "can_be_director"?: boolean;
-  "can_vote"?: boolean;
+  "transferrable"?: number;
   "id"?: number;
+  "company_id"?: number;
+  Company?: Company;
 }
 
 export class ShareType implements ShareTypeInterface {
   "name": string;
-  "type": number;
   "description": string;
-  "tranferrable": boolean;
-  "can_be_director": boolean;
-  "can_vote": boolean;
+  "transferrable": number;
   "id": number;
+  "company_id": number;
+  Company: Company;
   constructor(data?: ShareTypeInterface) {
     Object.assign(this, data);
   }
@@ -54,32 +55,29 @@ export class ShareType implements ShareTypeInterface {
           name: 'name',
           type: 'string'
         },
-        "type": {
-          name: 'type',
-          type: 'number'
-        },
         "description": {
           name: 'description',
           type: 'string'
         },
-        "tranferrable": {
-          name: 'tranferrable',
-          type: 'boolean'
-        },
-        "can_be_director": {
-          name: 'can_be_director',
-          type: 'boolean'
-        },
-        "can_vote": {
-          name: 'can_vote',
-          type: 'boolean'
+        "transferrable": {
+          name: 'transferrable',
+          type: 'number'
         },
         "id": {
           name: 'id',
           type: 'number'
         },
+        "company_id": {
+          name: 'company_id',
+          type: 'number'
+        },
       },
       relations: {
+        Company: {
+          name: 'Company',
+          type: 'Company',
+          model: 'Company'
+        },
       }
     }
   }
