@@ -13,13 +13,13 @@
   },
   "validations": [],
   "relations": {
-    "Shareholder":{
-      "type":"belongsTo",
+    "Shareholder": {
+      "type": "belongsTo",
       "model": "Shareholder",
       "foreignKey": "shareholder_id"
     },
-    "ShareType":{
-      "type":"belongsTo",
+    "ShareType": {
+      "type": "belongsTo",
       "model": "ShareType",
       "foreignKey": "sharetype_id"
     }

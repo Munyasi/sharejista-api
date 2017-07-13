@@ -82,14 +82,17 @@
       "type": "string",
       "required": true
     },
-    "estate":{
+    "estate": {
       "type": "string",
       "required": true
+    },
+    "profile_photo": {
+      "type": "string"
     }
   },
   "validations": [],
   "relations": {
-    "Company":{
+    "Company": {
       "type": "belongsTo",
       "model": "Company",
       "foreignKey": "company_id"

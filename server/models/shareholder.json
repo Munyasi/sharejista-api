@@ -37,6 +37,9 @@
     "box": {
       "type": "string",
       "required": true
+    },
+    "profile_photo": {
+      "type": "string"
     }
   },
   "validations": [],

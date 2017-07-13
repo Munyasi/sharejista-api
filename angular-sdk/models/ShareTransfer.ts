@@ -4,13 +4,13 @@ declare var Object: any;
 export interface ShareTransferInterface {
   "transferer_id"?: number;
   "transferee_id": number;
-  "transfer_type": number;
+  "transfer_type"?: number;
   "company_id": number;
   "number_of_shares": number;
   "share_type_id": number;
-  "approved": boolean;
-  "initiated_by": number;
-  "approved_by": number;
+  "approved"?: boolean;
+  "initiated_by"?: number;
+  "approved_by"?: number;
   "id"?: number;
 }
 
