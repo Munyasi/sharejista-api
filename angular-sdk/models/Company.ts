@@ -7,24 +7,28 @@ declare var Object: any;
 export interface CompanyInterface {
   "company_name": string;
   "registration_no": string;
-  "employee_count": number;
+  "avg_turn_over": number;
   "primary_activity": string;
-  "incorporation_date": Date;
-  "accounting_start_period": Date;
-  "accounting_end_period": Date;
-  "town": string;
-  "street": string;
-  "name_of_building": string;
-  "floor_room_no": string;
-  "region": string;
-  "box": string;
-  "postal_code"?: string;
-  "office_telephone_no": string;
-  "mobile_no": string;
+  "phone_numbers": string;
   "email_address": string;
-  "company_share_capital": number;
+  "incorporation_date": Date;
+  "accounting_reference_date": Date;
+  "annual_return_date": Date;
+  "ro_land_reference_no": string;
+  "ro_building_estate": string;
+  "ro_road_street": string;
+  "ro_postal_address": string;
+  "ro_postal_code": string;
+  "ro_town_city": string;
+  "o_land_reference_no"?: string;
+  "o_building_estate"?: string;
+  "o_road_street"?: string;
+  "o_postal_address"?: string;
+  "o_postal_code"?: string;
+  "o_town_city"?: string;
+  "nominal_share_capital": number;
   "number_of_shares": number;
-  "remaining_shares": number;
+  "unissued_shares": number;
   "current"?: number;
   "id"?: number;
   "company_type_id"?: number;
@@ -34,24 +38,28 @@ export interface CompanyInterface {
 export class Company implements CompanyInterface {
   "company_name": string;
   "registration_no": string;
-  "employee_count": number;
+  "avg_turn_over": number;
   "primary_activity": string;
-  "incorporation_date": Date;
-  "accounting_start_period": Date;
-  "accounting_end_period": Date;
-  "town": string;
-  "street": string;
-  "name_of_building": string;
-  "floor_room_no": string;
-  "region": string;
-  "box": string;
-  "postal_code": string;
-  "office_telephone_no": string;
-  "mobile_no": string;
+  "phone_numbers": string;
   "email_address": string;
-  "company_share_capital": number;
+  "incorporation_date": Date;
+  "accounting_reference_date": Date;
+  "annual_return_date": Date;
+  "ro_land_reference_no": string;
+  "ro_building_estate": string;
+  "ro_road_street": string;
+  "ro_postal_address": string;
+  "ro_postal_code": string;
+  "ro_town_city": string;
+  "o_land_reference_no": string;
+  "o_building_estate": string;
+  "o_road_street": string;
+  "o_postal_address": string;
+  "o_postal_code": string;
+  "o_town_city": string;
+  "nominal_share_capital": number;
   "number_of_shares": number;
-  "remaining_shares": number;
+  "unissued_shares": number;
   "current": number;
   "id": number;
   "company_type_id": number;
@@ -95,76 +103,92 @@ export class Company implements CompanyInterface {
           name: 'registration_no',
           type: 'string'
         },
-        "employee_count": {
-          name: 'employee_count',
+        "avg_turn_over": {
+          name: 'avg_turn_over',
           type: 'number'
         },
         "primary_activity": {
           name: 'primary_activity',
           type: 'string'
         },
-        "incorporation_date": {
-          name: 'incorporation_date',
-          type: 'Date'
-        },
-        "accounting_start_period": {
-          name: 'accounting_start_period',
-          type: 'Date'
-        },
-        "accounting_end_period": {
-          name: 'accounting_end_period',
-          type: 'Date'
-        },
-        "town": {
-          name: 'town',
-          type: 'string'
-        },
-        "street": {
-          name: 'street',
-          type: 'string'
-        },
-        "name_of_building": {
-          name: 'name_of_building',
-          type: 'string'
-        },
-        "floor_room_no": {
-          name: 'floor_room_no',
-          type: 'string'
-        },
-        "region": {
-          name: 'region',
-          type: 'string'
-        },
-        "box": {
-          name: 'box',
-          type: 'string'
-        },
-        "postal_code": {
-          name: 'postal_code',
-          type: 'string'
-        },
-        "office_telephone_no": {
-          name: 'office_telephone_no',
-          type: 'string'
-        },
-        "mobile_no": {
-          name: 'mobile_no',
+        "phone_numbers": {
+          name: 'phone_numbers',
           type: 'string'
         },
         "email_address": {
           name: 'email_address',
           type: 'string'
         },
-        "company_share_capital": {
-          name: 'company_share_capital',
+        "incorporation_date": {
+          name: 'incorporation_date',
+          type: 'Date'
+        },
+        "accounting_reference_date": {
+          name: 'accounting_reference_date',
+          type: 'Date'
+        },
+        "annual_return_date": {
+          name: 'annual_return_date',
+          type: 'Date'
+        },
+        "ro_land_reference_no": {
+          name: 'ro_land_reference_no',
+          type: 'string'
+        },
+        "ro_building_estate": {
+          name: 'ro_building_estate',
+          type: 'string'
+        },
+        "ro_road_street": {
+          name: 'ro_road_street',
+          type: 'string'
+        },
+        "ro_postal_address": {
+          name: 'ro_postal_address',
+          type: 'string'
+        },
+        "ro_postal_code": {
+          name: 'ro_postal_code',
+          type: 'string'
+        },
+        "ro_town_city": {
+          name: 'ro_town_city',
+          type: 'string'
+        },
+        "o_land_reference_no": {
+          name: 'o_land_reference_no',
+          type: 'string'
+        },
+        "o_building_estate": {
+          name: 'o_building_estate',
+          type: 'string'
+        },
+        "o_road_street": {
+          name: 'o_road_street',
+          type: 'string'
+        },
+        "o_postal_address": {
+          name: 'o_postal_address',
+          type: 'string'
+        },
+        "o_postal_code": {
+          name: 'o_postal_code',
+          type: 'string'
+        },
+        "o_town_city": {
+          name: 'o_town_city',
+          type: 'string'
+        },
+        "nominal_share_capital": {
+          name: 'nominal_share_capital',
           type: 'number'
         },
         "number_of_shares": {
           name: 'number_of_shares',
           type: 'number'
         },
-        "remaining_shares": {
-          name: 'remaining_shares',
+        "unissued_shares": {
+          name: 'unissued_shares',
           type: 'number'
         },
         "current": {

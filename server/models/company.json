@@ -15,7 +15,7 @@
       "type": "string",
       "required": true
     },
-    "employee_count": {
+    "avg_turn_over": {
       "type": "number",
       "required": true
     },
@@ -23,50 +23,7 @@
       "type": "string",
       "required": true
     },
-    "incorporation_date": {
-      "type": "date",
-      "required": true
-    },
-    "accounting_start_period": {
-      "type": "date",
-      "required": true
-    },
-    "accounting_end_period": {
-      "type": "date",
-      "required": true
-    },
-    "town": {
-      "type": "string",
-      "required": true
-    },
-    "street": {
-      "type": "string",
-      "required": true
-    },
-    "name_of_building": {
-      "type": "string",
-      "required": true
-    },
-    "floor_room_no": {
-      "type": "string",
-      "required": true
-    },
-    "region": {
-      "type": "string",
-      "required": true
-    },
-    "box": {
-      "type": "string",
-      "required": true
-    },
-    "postal_code": {
-      "type": "string"
-    },
-    "office_telephone_no": {
-      "type": "string",
-      "required": true
-    },
-    "mobile_no": {
+    "phone_numbers": {
       "type": "string",
       "required": true
     },
@@ -74,7 +31,67 @@
       "type": "string",
       "required": true
     },
-    "company_share_capital": {
+    "incorporation_date": {
+      "type": "date",
+      "required": true
+    },
+    "accounting_reference_date": {
+      "type": "date",
+      "required": true
+    },
+    "annual_return_date": {
+      "type": "date",
+      "required": true
+    },
+    "ro_land_reference_no": {
+      "type": "string",
+      "required": true
+    },
+    "ro_building_estate": {
+      "type": "string",
+      "required": true
+    },
+    "ro_road_street": {
+      "type": "string",
+      "required": true
+    },
+    "ro_postal_address": {
+      "type": "string",
+      "required": true
+    },
+    "ro_postal_code": {
+      "type": "string",
+      "required": true
+    },
+    "ro_town_city": {
+      "type": "string",
+      "required": true
+    },
+    "o_land_reference_no": {
+      "type": "string",
+      "required": false
+    },
+    "o_building_estate": {
+      "type": "string",
+      "required": false
+    },
+    "o_road_street": {
+      "type": "string",
+      "required": false
+    },
+    "o_postal_address": {
+      "type": "string",
+      "required": false
+    },
+    "o_postal_code": {
+      "type": "string",
+      "required": false
+    },
+    "o_town_city": {
+      "type": "string",
+      "required": false
+    },
+    "nominal_share_capital": {
       "type": "number",
       "required": true
     },
@@ -82,7 +99,7 @@
       "type": "number",
       "required": true
     },
-    "remaining_shares": {
+    "unissued_shares": {
       "type": "number",
       "required": true
     },
