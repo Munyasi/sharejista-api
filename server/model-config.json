@@ -66,5 +66,9 @@
   "Shareholder": {
     "dataSource": "mysql",
     "public": true
+  },
+  "output": {
+    "dataSource": "storage",
+    "public": true
   }
 }

@@ -24,6 +24,7 @@ export interface PersonInterface {
   "house_number": string;
   "building_name": string;
   "estate": string;
+  "profile_photo"?: string;
   "id"?: number;
   "company_id"?: number;
   Company?: Company;
@@ -49,6 +50,7 @@ export class Person implements PersonInterface {
   "house_number": string;
   "building_name": string;
   "estate": string;
+  "profile_photo": string;
   "id": number;
   "company_id": number;
   Company: Company;
@@ -157,6 +159,10 @@ export class Person implements PersonInterface {
         },
         "estate": {
           name: 'estate',
+          type: 'string'
+        },
+        "profile_photo": {
+          name: 'profile_photo',
           type: 'string'
         },
         "id": {

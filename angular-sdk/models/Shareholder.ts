@@ -13,6 +13,7 @@ export interface ShareholderInterface {
   "appointment_date"?: Date;
   "postal_code": string;
   "box": string;
+  "profile_photo"?: string;
   "id"?: number;
   "company_id"?: number;
   Company?: Company;
@@ -27,6 +28,7 @@ export class Shareholder implements ShareholderInterface {
   "appointment_date": Date;
   "postal_code": string;
   "box": string;
+  "profile_photo": string;
   "id": number;
   "company_id": number;
   Company: Company;
@@ -91,6 +93,10 @@ export class Shareholder implements ShareholderInterface {
         },
         "box": {
           name: 'box',
+          type: 'string'
+        },
+        "profile_photo": {
+          name: 'profile_photo',
           type: 'string'
         },
         "id": {

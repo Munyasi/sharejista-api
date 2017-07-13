@@ -8,5 +8,6 @@ export * from './Shares';
 export * from './ShareTransfer';
 export * from './SystemUser';
 export * from './Shareholder';
+export * from './Output';
 export * from './SDKModels';
 export * from './logger.service';
