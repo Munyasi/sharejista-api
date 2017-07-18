@@ -1,4 +1,7 @@
 /* tslint:disable */
+import {
+  Shareholder
+} from '../index';
 
 declare var Object: any;
 export interface ShareTransferInterface {
@@ -12,6 +15,8 @@ export interface ShareTransferInterface {
   "initiated_by"?: number;
   "approved_by"?: number;
   "id"?: number;
+  transferer?: Shareholder;
+  transferee?: Shareholder;
 }
 
 export class ShareTransfer implements ShareTransferInterface {
@@ -25,6 +30,8 @@ export class ShareTransfer implements ShareTransferInterface {
   "initiated_by": number;
   "approved_by": number;
   "id": number;
+  transferer: Shareholder;
+  transferee: Shareholder;
   constructor(data?: ShareTransferInterface) {
     Object.assign(this, data);
   }
@@ -98,6 +105,16 @@ export class ShareTransfer implements ShareTransferInterface {
         },
       },
       relations: {
+        transferer: {
+          name: 'transferer',
+          type: 'Shareholder',
+          model: 'Shareholder'
+        },
+        transferee: {
+          name: 'transferee',
+          type: 'Shareholder',
+          model: 'Shareholder'
+        },
       }
     }
   }

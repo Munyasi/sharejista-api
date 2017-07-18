@@ -1,4 +1,3 @@
-/* tslint:disable */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ShareTransfer = (function () {
@@ -74,7 +73,18 @@ var ShareTransfer = (function () {
                     type: 'number'
                 },
             },
-            relations: {}
+            relations: {
+                transferer: {
+                    name: 'transferer',
+                    type: 'Shareholder',
+                    model: 'Shareholder'
+                },
+                transferee: {
+                    name: 'transferee',
+                    type: 'Shareholder',
+                    model: 'Shareholder'
+                },
+            }
         };
     };
     return ShareTransfer;

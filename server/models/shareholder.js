@@ -1,5 +1,5 @@
 'use strict'
-var generateList = require('../shareholders/generate_list');
+let generateList = require('../shareholders/generate_list');
 module.exports = function (Shareholder) {
 	Shareholder.generatelist = generateList;
 
