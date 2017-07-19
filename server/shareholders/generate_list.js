@@ -4,39 +4,66 @@ let path = require('path')
 let JSZip = require('jszip')
 let Docxtemplater = require('docxtemplater')
 
-module.exports = function (company_id, res, cb) {
+module.exports = function (company_id,export_config, res, cb) {
 	console.log(company_id);
+	console.log(export_config);
 	let app = require('../server')
 	let Shareholder = app.models.Shareholder
+	let Company = app.models.Company;
 	let template_path = '../templates/list_of_shareholders.docx'
 	let output_path = '../output/shareholders_list/list_of_shareholders.docx'
 
-	Shareholder.find({company_id: company_id})
-		.then(function (shareholders) {
-			let content = fs.readFileSync(path.resolve(__dirname, template_path), 'binary')
-			let zip = new JSZip(content)
-			let doc = new Docxtemplater()
-			doc.loadZip(zip)
-			doc.setData({'shareholders': shareholders})
+	let angularParser= function(tag){
+		let expr=expressions.compile(tag);
+		return {get:expr};
+	}
 
-			try {
-				doc.render();
-				let buf = doc.getZip().generate({type: 'nodebuffer'})
-				fs.writeFileSync(path.resolve(__dirname, output_path), buf);
-				cb(null, {success: 1})
-			}
-			catch (error) {
-				let e = {
-					message: error.message,
-					name: error.name,
-					stack: error.stack,
-					properties: error.properties,
-				}
 
-				cb(error);
-			}
+	Company.findById(company_id, {fields: ['company_name', 'box', 'postal_code','town']})
+		.then(function (company) {
+			console.log(company);
+			Shareholder.find({company_id: company_id})
+				.then(function (shareholders) {
+					shareholders = JSON.parse(JSON.stringify(shareholders));
+					for(let i = 0; i < shareholders.length; i++){
+						shareholders[i].num = i + 1;
+						console.log(shareholders[i]);
+					}
+
+					let content = fs.readFileSync(path.resolve(__dirname, template_path), 'binary');
+					let zip = new JSZip(content);
+					let doc = new Docxtemplater();
+					doc.loadZip(zip);
+					let data = {
+						name: company.company_name,
+						box: company.box,
+						postal_code: company.postal_code,
+						town: company.town,
+						shareholders: shareholders
+					}
+					doc.setData(data);
+
+					try {
+						doc.render();
+						let buf = doc.getZip().generate({type: 'nodebuffer'})
+						fs.writeFileSync(path.resolve(__dirname, output_path), buf);
+						cb(null, {success: 1})
+					}
+					catch (error) {
+						let e = {
+							message: error.message,
+							name: error.name,
+							stack: error.stack,
+							properties: error.properties,
+						}
+						cb(error);
+					}
+				})
+				.catch(function (err) {
+					cb(err);
+				})
 		})
 		.catch(function (err) {
-			cb(err);
+			console.log(err);
 		})
 }

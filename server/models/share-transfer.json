@@ -45,7 +45,23 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "transferer": {
+      "type": "belongsTo",
+      "model": "Shareholder",
+      "foreignKey": "transferer_id"
+    },
+    "transferee": {
+      "type": "belongsTo",
+      "model": "Shareholder",
+      "foreignKey": "transferee_id"
+    },
+    "sharetype": {
+      "type": "belongsTo",
+      "model": "ShareType",
+      "foreignKey": "share_type_id"
+    }
+  },
   "acls": [],
   "methods": {}
 }

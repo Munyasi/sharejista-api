@@ -45,6 +45,68 @@ var ShareTransferApi = (function (_super) {
         return _this;
     }
     /**
+     * Fetches belongsTo relation transferer.
+     *
+     * @param {any} id ShareTransfer id
+     *
+     * @param {boolean} refresh
+     *
+     * @returns {object} An empty reference that will be
+     *   populated with the actual data once the response is returned
+     *   from the server.
+     *
+     * <em>
+     * (The remote method definition does not provide any description.
+     * This usually means the response is a `ShareTransfer` object.)
+     * </em>
+     */
+    ShareTransferApi.prototype.getTransferer = function (id, refresh, customHeaders) {
+        if (refresh === void 0) { refresh = {}; }
+        var _method = "GET";
+        var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
+            "/sharetransfers/:id/transferer";
+        var _routeParams = {
+            id: id
+        };
+        var _postBody = {};
+        var _urlParams = {};
+        if (typeof refresh !== 'undefined' && refresh !== null)
+            _urlParams.refresh = refresh;
+        var result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+        return result;
+    };
+    /**
+     * Fetches belongsTo relation transferee.
+     *
+     * @param {any} id ShareTransfer id
+     *
+     * @param {boolean} refresh
+     *
+     * @returns {object} An empty reference that will be
+     *   populated with the actual data once the response is returned
+     *   from the server.
+     *
+     * <em>
+     * (The remote method definition does not provide any description.
+     * This usually means the response is a `ShareTransfer` object.)
+     * </em>
+     */
+    ShareTransferApi.prototype.getTransferee = function (id, refresh, customHeaders) {
+        if (refresh === void 0) { refresh = {}; }
+        var _method = "GET";
+        var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
+            "/sharetransfers/:id/transferee";
+        var _routeParams = {
+            id: id
+        };
+        var _postBody = {};
+        var _urlParams = {};
+        if (typeof refresh !== 'undefined' && refresh !== null)
+            _urlParams.refresh = refresh;
+        var result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+        return result;
+    };
+    /**
      * Patch an existing model instance or insert a new one into the data source.
      *
      * @param {object} data Request data.
@@ -103,6 +165,33 @@ var ShareTransferApi = (function (_super) {
             data: data
         };
         var _urlParams = {};
+        var result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+        return result;
+    };
+    /**
+     * <em>
+           * (The remote method definition does not provide any description.)
+           * </em>
+     *
+     * @param {number} sharetransfer_id
+     *
+     * @returns {object} An empty reference that will be
+     *   populated with the actual data once the response is returned
+     *   from the server.
+     *
+     * Data properties:
+     *
+     *  - `data` – `{Object}` -
+     */
+    ShareTransferApi.prototype.approveTransfer = function (sharetransfer_id, customHeaders) {
+        var _method = "GET";
+        var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
+            "/sharetransfers/approvetransfer";
+        var _routeParams = {};
+        var _postBody = {};
+        var _urlParams = {};
+        if (typeof sharetransfer_id !== 'undefined' && sharetransfer_id !== null)
+            _urlParams.sharetransfer_id = sharetransfer_id;
         var result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
         return result;
     };
