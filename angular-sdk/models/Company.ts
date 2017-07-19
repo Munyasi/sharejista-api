@@ -12,8 +12,10 @@ export interface CompanyInterface {
   "phone_numbers": string;
   "email_address": string;
   "incorporation_date": Date;
-  "accounting_reference_date": Date;
-  "annual_return_date": Date;
+  "accounting_reference_month": number;
+  "accounting_reference_day": number;
+  "annual_return_month": number;
+  "annual_return_day": number;
   "ro_land_reference_no": string;
   "ro_building_estate": string;
   "ro_road_street": string;
@@ -28,6 +30,7 @@ export interface CompanyInterface {
   "o_town_city"?: string;
   "nominal_share_capital": number;
   "number_of_shares": number;
+  "par_value": number;
   "unissued_shares": number;
   "current"?: number;
   "id"?: number;
@@ -43,8 +46,10 @@ export class Company implements CompanyInterface {
   "phone_numbers": string;
   "email_address": string;
   "incorporation_date": Date;
-  "accounting_reference_date": Date;
-  "annual_return_date": Date;
+  "accounting_reference_month": number;
+  "accounting_reference_day": number;
+  "annual_return_month": number;
+  "annual_return_day": number;
   "ro_land_reference_no": string;
   "ro_building_estate": string;
   "ro_road_street": string;
@@ -59,6 +64,7 @@ export class Company implements CompanyInterface {
   "o_town_city": string;
   "nominal_share_capital": number;
   "number_of_shares": number;
+  "par_value": number;
   "unissued_shares": number;
   "current": number;
   "id": number;
@@ -123,13 +129,21 @@ export class Company implements CompanyInterface {
           name: 'incorporation_date',
           type: 'Date'
         },
-        "accounting_reference_date": {
-          name: 'accounting_reference_date',
-          type: 'Date'
+        "accounting_reference_month": {
+          name: 'accounting_reference_month',
+          type: 'number'
         },
-        "annual_return_date": {
-          name: 'annual_return_date',
-          type: 'Date'
+        "accounting_reference_day": {
+          name: 'accounting_reference_day',
+          type: 'number'
+        },
+        "annual_return_month": {
+          name: 'annual_return_month',
+          type: 'number'
+        },
+        "annual_return_day": {
+          name: 'annual_return_day',
+          type: 'number'
         },
         "ro_land_reference_no": {
           name: 'ro_land_reference_no',
@@ -185,6 +199,10 @@ export class Company implements CompanyInterface {
         },
         "number_of_shares": {
           name: 'number_of_shares',
+          type: 'number'
+        },
+        "par_value": {
+          name: 'par_value',
           type: 'number'
         },
         "unissued_shares": {

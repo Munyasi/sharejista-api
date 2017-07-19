@@ -35,12 +35,20 @@
       "type": "date",
       "required": true
     },
-    "accounting_reference_date": {
-      "type": "date",
+    "accounting_reference_month": {
+      "type": "number",
       "required": true
     },
-    "annual_return_date": {
-      "type": "date",
+    "accounting_reference_day": {
+      "type": "number",
+      "required": true
+    },
+    "annual_return_month": {
+      "type": "number",
+      "required": true
+    },
+    "annual_return_day": {
+      "type": "number",
       "required": true
     },
     "ro_land_reference_no": {
@@ -96,6 +104,10 @@
       "required": true
     },
     "number_of_shares": {
+      "type": "number",
+      "required": true
+    },
+    "par_value": {
       "type": "number",
       "required": true
     },
