@@ -4,9 +4,9 @@ let path = require('path')
 let JSZip = require('jszip')
 let Docxtemplater = require('docxtemplater')
 
-module.exports = function (company_id,export_config, res, cb) {
+module.exports = function (company_id, res, cb) {
 	console.log(company_id);
-	console.log(export_config);
+	//console.log(export_config);
 	let app = require('../server')
 	let Shareholder = app.models.Shareholder
 	let Company = app.models.Company;
@@ -22,7 +22,7 @@ module.exports = function (company_id,export_config, res, cb) {
 	Company.findById(company_id, {fields: ['company_name', 'box', 'postal_code','town']})
 		.then(function (company) {
 			console.log(company);
-			Shareholder.find({company_id: company_id})
+			Shareholder.find({where:{company_id: company_id}})
 				.then(function (shareholders) {
 					shareholders = JSON.parse(JSON.stringify(shareholders));
 					for(let i = 0; i < shareholders.length; i++){
@@ -36,9 +36,9 @@ module.exports = function (company_id,export_config, res, cb) {
 					doc.loadZip(zip);
 					let data = {
 						name: company.company_name,
-						box: company.box,
-						postal_code: company.postal_code,
-						town: company.town,
+						box: company.ro_postal_address,
+						postal_code: company.ro_postal_code,
+						town: company.ro_town_city,
 						shareholders: shareholders
 					}
 					doc.setData(data);

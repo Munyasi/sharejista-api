@@ -1,5 +1,6 @@
 /* tslint:disable */
 import {
+  ShareType,
   Shareholder
 } from '../index';
 
@@ -15,6 +16,7 @@ export interface ShareTransferInterface {
   "initiated_by"?: number;
   "approved_by"?: number;
   "id"?: number;
+  sharetype?: ShareType;
   transferer?: Shareholder;
   transferee?: Shareholder;
 }
@@ -30,6 +32,7 @@ export class ShareTransfer implements ShareTransferInterface {
   "initiated_by": number;
   "approved_by": number;
   "id": number;
+  sharetype: ShareType;
   transferer: Shareholder;
   transferee: Shareholder;
   constructor(data?: ShareTransferInterface) {
@@ -105,6 +108,11 @@ export class ShareTransfer implements ShareTransferInterface {
         },
       },
       relations: {
+        sharetype: {
+          name: 'sharetype',
+          type: 'ShareType',
+          model: 'ShareType'
+        },
         transferer: {
           name: 'transferer',
           type: 'Shareholder',
