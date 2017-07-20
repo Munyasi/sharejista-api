@@ -19,7 +19,7 @@ module.exports = function (company_id, res, cb) {
 	}
 
 
-	Company.findById(company_id, {fields: ['company_name', 'box', 'postal_code','town']})
+	Company.findById(company_id, {fields: ['company_name', 'ro_postal_address', 'ro_postal_code','ro_town_city']})
 		.then(function (company) {
 			console.log(company);
 			Shareholder.find({where:{company_id: company_id}})
