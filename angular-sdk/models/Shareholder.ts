@@ -1,6 +1,7 @@
 /* tslint:disable */
 import {
-  Company
+  Company,
+  Shares
 } from '../index';
 
 declare var Object: any;
@@ -17,6 +18,7 @@ export interface ShareholderInterface {
   "id"?: number;
   "company_id"?: number;
   Company?: Company;
+  Shares?: Shares[];
 }
 
 export class Shareholder implements ShareholderInterface {
@@ -32,6 +34,7 @@ export class Shareholder implements ShareholderInterface {
   "id": number;
   "company_id": number;
   Company: Company;
+  Shares: Shares[];
   constructor(data?: ShareholderInterface) {
     Object.assign(this, data);
   }
@@ -113,6 +116,11 @@ export class Shareholder implements ShareholderInterface {
           name: 'Company',
           type: 'Company',
           model: 'Company'
+        },
+        Shares: {
+          name: 'Shares',
+          type: 'Shares[]',
+          model: 'Shares'
         },
       }
     }

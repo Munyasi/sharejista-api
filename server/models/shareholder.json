@@ -48,6 +48,11 @@
       "type": "belongsTo",
       "model": "Company",
       "foreignKey": "company_id"
+    },
+    "Shares": {
+      "type": "hasMany",
+      "model": "Shares",
+      "foreignKey": "shareholder_id"
     }
   },
   "acls": [],

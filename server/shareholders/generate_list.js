@@ -2,32 +2,48 @@ let Promise = require('bluebird')
 let fs = require('fs')
 let path = require('path')
 let JSZip = require('jszip')
-let Docxtemplater = require('docxtemplater')
+let Docxtemplater = require('docxtemplater');
+let _ = require('underscore');
 
-module.exports = function (company_id, res, cb) {
-	console.log(company_id);
-	//console.log(export_config);
+module.exports = function (company_id,export_config, res, cb) {
 	let app = require('../server')
 	let Shareholder = app.models.Shareholder
 	let Company = app.models.Company;
 	let template_path = '../templates/list_of_shareholders.docx'
 	let output_path = '../output/shareholders_list/list_of_shareholders.docx'
 
-	let angularParser= function(tag){
-		let expr=expressions.compile(tag);
-		return {get:expr};
-	}
-
-
 	Company.findById(company_id, {fields: ['company_name', 'ro_postal_address', 'ro_postal_code','ro_town_city']})
 		.then(function (company) {
-			console.log(company);
-			Shareholder.find({where:{company_id: company_id}})
+			let sort_string = '';
+			let sortByShares = false;
+
+			if(export_config){
+				if(export_config.field === 'name'){
+					sort_string = `${export_config.field} ${export_config.order}`
+					console.log(sort_string);
+				}
+				else{
+					sortByShares = true;
+				}
+			}
+			else{
+				sort_string = `name ASC`;
+			}
+
+			Shareholder.find({where:{ company_id: company_id }, include:['Shares'], order: sort_string})
 				.then(function (shareholders) {
 					shareholders = JSON.parse(JSON.stringify(shareholders));
-					for(let i = 0; i < shareholders.length; i++){
+					for(let i = 0; i < shareholders.length; i++) {
 						shareholders[i].num = i + 1;
-						console.log(shareholders[i]);
+						let total = 0;
+						for(let share of shareholders[i].Shares) {
+							total += share.number_of_shares;
+						}
+						shareholders[i].total_shares = total;
+					}
+
+					if(sortByShares){
+						shareholders = _.sortBy(shareholders, 'total_shares').reverse();
 					}
 
 					let content = fs.readFileSync(path.resolve(__dirname, template_path), 'binary');
@@ -56,7 +72,7 @@ module.exports = function (company_id, res, cb) {
 							stack: error.stack,
 							properties: error.properties,
 						}
-						cb(error);
+						cb(e);
 					}
 				})
 				.catch(function (err) {
