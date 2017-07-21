@@ -20,7 +20,6 @@ module.exports = function (company_id,export_config, res, cb) {
 			if(export_config){
 				if(export_config.field === 'name'){
 					sort_string = `${export_config.field} ${export_config.order}`
-					console.log(sort_string);
 				}
 				else{
 					sortByShares = true;
