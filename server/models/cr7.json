@@ -1,0 +1,38 @@
+{
+  "name": "CR7",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "from": {
+      "type": [
+        "date"
+      ],
+      "required": true
+    },
+    "to": {
+      "type": "date",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "Company": {
+      "type": "belongsTo",
+      "model": "Company",
+      "foreignKey": "companyId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

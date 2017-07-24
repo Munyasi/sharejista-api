@@ -70,5 +70,13 @@
   "output": {
     "dataSource": "storage",
     "public": true
+  },
+  "PersonChanges": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "CR7": {
+    "dataSource": "mysql",
+    "public": true
   }
 }
