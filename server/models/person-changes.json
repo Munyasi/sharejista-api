@@ -12,11 +12,10 @@
     },
     "value": {
       "type": "string",
-      "required": true,
-      "default": "date_modified"
+      "required": true
     },
     "date_modified": {
-      "type": "string",
+      "type": "date",
       "required": true
     }
   },
@@ -26,6 +25,11 @@
       "type": "belongsTo",
       "model": "Person",
       "foreignKey": "personId"
+    },
+    "Company": {
+      "type": "belongsTo",
+      "model": "Company",
+      "foreignKey": "companyId"
     }
   },
   "acls": [],

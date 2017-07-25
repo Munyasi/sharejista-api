@@ -14,5 +14,7 @@ __export(require("./ShareTransfer"));
 __export(require("./SystemUser"));
 __export(require("./Shareholder"));
 __export(require("./Output"));
+__export(require("./PersonChanges"));
+__export(require("./CR7"));
 __export(require("./BaseModels"));
 __export(require("./FireLoopRef"));

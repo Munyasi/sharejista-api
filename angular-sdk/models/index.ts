@@ -9,5 +9,7 @@ export * from './ShareTransfer';
 export * from './SystemUser';
 export * from './Shareholder';
 export * from './Output';
+export * from './PersonChanges';
+export * from './CR7';
 export * from './BaseModels';
 export * from './FireLoopRef';

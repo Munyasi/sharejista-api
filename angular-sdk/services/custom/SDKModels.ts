@@ -10,6 +10,8 @@ import { ShareTransfer } from '../../models/ShareTransfer';
 import { SystemUser } from '../../models/SystemUser';
 import { Shareholder } from '../../models/Shareholder';
 import { Output } from '../../models/Output';
+import { PersonChanges } from '../../models/PersonChanges';
+import { CR7 } from '../../models/CR7';
 
 export interface Models { [name: string]: any }
 
@@ -27,6 +29,8 @@ export class SDKModels {
     SystemUser: SystemUser,
     Shareholder: Shareholder,
     Output: Output,
+    PersonChanges: PersonChanges,
+    CR7: CR7,
     
   };
 

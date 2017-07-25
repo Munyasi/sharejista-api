@@ -18,6 +18,8 @@ var ShareTransfer_1 = require("../../models/ShareTransfer");
 var SystemUser_1 = require("../../models/SystemUser");
 var Shareholder_1 = require("../../models/Shareholder");
 var Output_1 = require("../../models/Output");
+var PersonChanges_1 = require("../../models/PersonChanges");
+var CR7_1 = require("../../models/CR7");
 var SDKModels = (function () {
     function SDKModels() {
         this.models = {
@@ -31,6 +33,8 @@ var SDKModels = (function () {
             SystemUser: SystemUser_1.SystemUser,
             Shareholder: Shareholder_1.Shareholder,
             Output: Output_1.Output,
+            PersonChanges: PersonChanges_1.PersonChanges,
+            CR7: CR7_1.CR7,
         };
     }
     SDKModels.prototype.get = function (modelName) {
