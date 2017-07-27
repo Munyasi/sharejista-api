@@ -11,13 +11,14 @@
       "type": "number",
       "required": false
     },
+    "transferer_type": {
+      "type": "string",
+      "required": false,
+      "description": "Can be company/shareholder"
+    },
     "transferee_id": {
       "type": "number",
       "required": true
-    },
-    "transfer_type": {
-      "type": "number",
-      "required": false
     },
     "company_id": {
       "type": "number",
@@ -33,7 +34,8 @@
     },
     "approved": {
       "type": "boolean",
-      "required": false
+      "required": false,
+      "default": 0
     },
     "initiated_by": {
       "type": "number",

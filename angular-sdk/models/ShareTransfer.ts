@@ -7,8 +7,8 @@ import {
 declare var Object: any;
 export interface ShareTransferInterface {
   "transferer_id"?: number;
+  "transferer_type"?: string;
   "transferee_id": number;
-  "transfer_type"?: number;
   "company_id": number;
   "number_of_shares": number;
   "share_type_id": number;
@@ -23,8 +23,8 @@ export interface ShareTransferInterface {
 
 export class ShareTransfer implements ShareTransferInterface {
   "transferer_id": number;
+  "transferer_type": string;
   "transferee_id": number;
-  "transfer_type": number;
   "company_id": number;
   "number_of_shares": number;
   "share_type_id": number;
@@ -70,12 +70,12 @@ export class ShareTransfer implements ShareTransferInterface {
           name: 'transferer_id',
           type: 'number'
         },
+        "transferer_type": {
+          name: 'transferer_type',
+          type: 'string'
+        },
         "transferee_id": {
           name: 'transferee_id',
-          type: 'number'
-        },
-        "transfer_type": {
-          name: 'transfer_type',
           type: 'number'
         },
         "company_id": {
@@ -92,7 +92,8 @@ export class ShareTransfer implements ShareTransferInterface {
         },
         "approved": {
           name: 'approved',
-          type: 'boolean'
+          type: 'boolean',
+          default: false
         },
         "initiated_by": {
           name: 'initiated_by',
