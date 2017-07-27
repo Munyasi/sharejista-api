@@ -64,6 +64,10 @@ var Shareholder = (function () {
                     name: 'box',
                     type: 'string'
                 },
+                "town": {
+                    name: 'town',
+                    type: 'string'
+                },
                 "profile_photo": {
                     name: 'profile_photo',
                     type: 'string'

@@ -11,9 +11,7 @@
       "required": true
     },
     "from": {
-      "type": [
-        "date"
-      ],
+      "type": "date",
       "required": true
     },
     "to": {

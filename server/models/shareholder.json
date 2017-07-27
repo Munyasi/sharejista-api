@@ -38,6 +38,10 @@
       "type": "string",
       "required": true
     },
+    "town":{
+      "type": "string",
+      "required": true
+    },
     "profile_photo": {
       "type": "string"
     }

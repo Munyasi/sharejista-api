@@ -6,7 +6,7 @@ import {
 declare var Object: any;
 export interface CR7Interface {
   "name": string;
-  "from": Array<any>;
+  "from": Date;
   "to": Date;
   "date": Date;
   "id"?: number;
@@ -16,7 +16,7 @@ export interface CR7Interface {
 
 export class CR7 implements CR7Interface {
   "name": string;
-  "from": Array<any>;
+  "from": Date;
   "to": Date;
   "date": Date;
   "id": number;
@@ -59,7 +59,7 @@ export class CR7 implements CR7Interface {
         },
         "from": {
           name: 'from',
-          type: 'Array&lt;any&gt;'
+          type: 'Date'
         },
         "to": {
           name: 'to',

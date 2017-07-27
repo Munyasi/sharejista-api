@@ -38,7 +38,7 @@ var CR7 = (function () {
                 },
                 "from": {
                     name: 'from',
-                    type: 'Array&lt;any&gt;'
+                    type: 'Date'
                 },
                 "to": {
                     name: 'to',

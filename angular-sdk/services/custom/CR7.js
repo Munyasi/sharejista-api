@@ -138,6 +138,43 @@ var CR7Api = (function (_super) {
         return result;
     };
     /**
+     * <em>
+           * (The remote method definition does not provide any description.)
+           * </em>
+     *
+     * @param {object} data Request data.
+     *
+     *  - `companyId` – `{string}` -
+     *
+     *  - `from` – `{string}` -
+     *
+     *  - `to` – `{string}` -
+     *
+     * @returns {object} An empty reference that will be
+     *   populated with the actual data once the response is returned
+     *   from the server.
+     *
+     * Data properties:
+     *
+     *  - `data` – `{Object}` -
+     */
+    CR7Api.prototype.generateCR7 = function (companyId, from, to, customHeaders) {
+        var _method = "POST";
+        var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
+            "/CR7s/generateCR7";
+        var _routeParams = {};
+        var _postBody = {};
+        var _urlParams = {};
+        if (typeof companyId !== 'undefined' && companyId !== null)
+            _urlParams.companyId = companyId;
+        if (typeof from !== 'undefined' && from !== null)
+            _urlParams.from = from;
+        if (typeof to !== 'undefined' && to !== null)
+            _urlParams.to = to;
+        var result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+        return result;
+    };
+    /**
      * The name of the model represented by this $resource,
      * i.e. `CR7`.
      */
