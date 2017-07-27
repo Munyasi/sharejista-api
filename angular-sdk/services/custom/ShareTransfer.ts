@@ -192,6 +192,10 @@ export class ShareTransferApi extends BaseLoopBackApi {
    *
    * @param {number} sharetransfer_id 
    *
+   * @param {string} transferer_type 
+   *
+   * @param {number} action 
+   *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
    *   from the server.
@@ -200,7 +204,7 @@ export class ShareTransferApi extends BaseLoopBackApi {
    *
    *  - `data` – `{Object}` - 
    */
-  public approveTransfer(sharetransfer_id: any, customHeaders?: Function): Observable<any> {
+  public approveTransfer(sharetransfer_id: any, transferer_type: any, action: any, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
     "/sharetransfers/approvetransfer";
@@ -208,6 +212,35 @@ export class ShareTransferApi extends BaseLoopBackApi {
     let _postBody: any = {};
     let _urlParams: any = {};
     if (typeof sharetransfer_id !== 'undefined' && sharetransfer_id !== null) _urlParams.sharetransfer_id = sharetransfer_id;
+    if (typeof transferer_type !== 'undefined' && transferer_type !== null) _urlParams.transferer_type = transferer_type;
+    if (typeof action !== 'undefined' && action !== null) _urlParams.action = action;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+   *
+   * @param {number} company_id 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * Data properties:
+   *
+   *  - `data` – `{Object}` - 
+   */
+  public listTransfers(company_id: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "GET";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/sharetransfers/list-transfers";
+    let _routeParams: any = {};
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof company_id !== 'undefined' && company_id !== null) _urlParams.company_id = company_id;
     let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
     return result;
   }
