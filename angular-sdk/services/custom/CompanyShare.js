@@ -30,11 +30,11 @@ var search_params_1 = require("../core/search.params");
 var error_service_1 = require("../core/error.service");
 var socket_connections_1 = require("../../sockets/socket.connections");
 /**
- * Api services for the `ShareType` model.
+ * Api services for the `CompanyShare` model.
  */
-var ShareTypeApi = (function (_super) {
-    __extends(ShareTypeApi, _super);
-    function ShareTypeApi(http, connection, models, auth, searchParams, errorHandler) {
+var CompanyShareApi = (function (_super) {
+    __extends(CompanyShareApi, _super);
+    function CompanyShareApi(http, connection, models, auth, searchParams, errorHandler) {
         var _this = _super.call(this, http, connection, models, auth, searchParams, errorHandler) || this;
         _this.http = http;
         _this.connection = connection;
@@ -47,7 +47,7 @@ var ShareTypeApi = (function (_super) {
     /**
      * Fetches belongsTo relation Company.
      *
-     * @param {any} id ShareType id
+     * @param {any} id CompanyShare id
      *
      * @param {boolean} refresh
      *
@@ -57,14 +57,45 @@ var ShareTypeApi = (function (_super) {
      *
      * <em>
      * (The remote method definition does not provide any description.
-     * This usually means the response is a `ShareType` object.)
+     * This usually means the response is a `CompanyShare` object.)
      * </em>
      */
-    ShareTypeApi.prototype.getCompany = function (id, refresh, customHeaders) {
+    CompanyShareApi.prototype.getCompany = function (id, refresh, customHeaders) {
         if (refresh === void 0) { refresh = {}; }
         var _method = "GET";
         var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
-            "/sharetypes/:id/Company";
+            "/CompanyShares/:id/Company";
+        var _routeParams = {
+            id: id
+        };
+        var _postBody = {};
+        var _urlParams = {};
+        if (typeof refresh !== 'undefined' && refresh !== null)
+            _urlParams.refresh = refresh;
+        var result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+        return result;
+    };
+    /**
+     * Fetches belongsTo relation ShareType.
+     *
+     * @param {any} id CompanyShare id
+     *
+     * @param {boolean} refresh
+     *
+     * @returns {object} An empty reference that will be
+     *   populated with the actual data once the response is returned
+     *   from the server.
+     *
+     * <em>
+     * (The remote method definition does not provide any description.
+     * This usually means the response is a `CompanyShare` object.)
+     * </em>
+     */
+    CompanyShareApi.prototype.getShareType = function (id, refresh, customHeaders) {
+        if (refresh === void 0) { refresh = {}; }
+        var _method = "GET";
+        var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
+            "/CompanyShares/:id/ShareType";
         var _routeParams = {
             id: id
         };
@@ -88,14 +119,14 @@ var ShareTypeApi = (function (_super) {
      *
      * <em>
      * (The remote method definition does not provide any description.
-     * This usually means the response is a `ShareType` object.)
+     * This usually means the response is a `CompanyShare` object.)
      * </em>
      */
-    ShareTypeApi.prototype.patchOrCreate = function (data, customHeaders) {
+    CompanyShareApi.prototype.patchOrCreate = function (data, customHeaders) {
         if (data === void 0) { data = {}; }
         var _method = "PATCH";
         var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
-            "/sharetypes";
+            "/CompanyShares";
         var _routeParams = {};
         var _postBody = {
             data: data
@@ -107,7 +138,7 @@ var ShareTypeApi = (function (_super) {
     /**
      * Patch attributes for a model instance and persist it into the data source.
      *
-     * @param {any} id ShareType id
+     * @param {any} id CompanyShare id
      *
      * @param {object} data Request data.
      *
@@ -119,14 +150,14 @@ var ShareTypeApi = (function (_super) {
      *
      * <em>
      * (The remote method definition does not provide any description.
-     * This usually means the response is a `ShareType` object.)
+     * This usually means the response is a `CompanyShare` object.)
      * </em>
      */
-    ShareTypeApi.prototype.patchAttributes = function (id, data, customHeaders) {
+    CompanyShareApi.prototype.patchAttributes = function (id, data, customHeaders) {
         if (data === void 0) { data = {}; }
         var _method = "PATCH";
         var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
-            "/sharetypes/:id";
+            "/CompanyShares/:id";
         var _routeParams = {
             id: id
         };
@@ -138,38 +169,15 @@ var ShareTypeApi = (function (_super) {
         return result;
     };
     /**
-     * <em>
-           * (The remote method definition does not provide any description.)
-           * </em>
-     *
-     * @returns {object} An empty reference that will be
-     *   populated with the actual data once the response is returned
-     *   from the server.
-     *
-     * Data properties:
-     *
-     *  - `data` – `{Object}` -
-     */
-    ShareTypeApi.prototype.getShareTypes = function (customHeaders) {
-        var _method = "GET";
-        var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
-            "/sharetypes/getShareTypes";
-        var _routeParams = {};
-        var _postBody = {};
-        var _urlParams = {};
-        var result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
-        return result;
-    };
-    /**
      * The name of the model represented by this $resource,
-     * i.e. `ShareType`.
+     * i.e. `CompanyShare`.
      */
-    ShareTypeApi.prototype.getModelName = function () {
-        return "ShareType";
+    CompanyShareApi.prototype.getModelName = function () {
+        return "CompanyShare";
     };
-    return ShareTypeApi;
+    return CompanyShareApi;
 }(base_service_1.BaseLoopBackApi));
-ShareTypeApi = __decorate([
+CompanyShareApi = __decorate([
     core_1.Injectable(),
     __param(0, core_1.Inject(http_1.Http)),
     __param(1, core_1.Inject(socket_connections_1.SocketConnection)),
@@ -177,5 +185,5 @@ ShareTypeApi = __decorate([
     __param(3, core_1.Inject(auth_service_1.LoopBackAuth)),
     __param(4, core_1.Inject(search_params_1.JSONSearchParams)),
     __param(5, core_1.Optional()), __param(5, core_1.Inject(error_service_1.ErrorHandler))
-], ShareTypeApi);
-exports.ShareTypeApi = ShareTypeApi;
+], CompanyShareApi);
+exports.CompanyShareApi = CompanyShareApi;

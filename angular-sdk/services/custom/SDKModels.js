@@ -20,6 +20,7 @@ var Shareholder_1 = require("../../models/Shareholder");
 var Output_1 = require("../../models/Output");
 var PersonChanges_1 = require("../../models/PersonChanges");
 var CR7_1 = require("../../models/CR7");
+var CompanyShare_1 = require("../../models/CompanyShare");
 var SDKModels = (function () {
     function SDKModels() {
         this.models = {
@@ -35,6 +36,7 @@ var SDKModels = (function () {
             Output: Output_1.Output,
             PersonChanges: PersonChanges_1.PersonChanges,
             CR7: CR7_1.CR7,
+            CompanyShare: CompanyShare_1.CompanyShare,
         };
     }
     SDKModels.prototype.get = function (modelName) {

@@ -10,16 +10,17 @@ import { JSONSearchParams } from '../core/search.params';
 import { ErrorHandler } from '../core/error.service';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
-import { ShareType } from '../../models/ShareType';
+import { CompanyShare } from '../../models/CompanyShare';
 import { SocketConnection } from '../../sockets/socket.connections';
 import { Company } from '../../models/Company';
+import { ShareType } from '../../models/ShareType';
 
 
 /**
- * Api services for the `ShareType` model.
+ * Api services for the `CompanyShare` model.
  */
 @Injectable()
-export class ShareTypeApi extends BaseLoopBackApi {
+export class CompanyShareApi extends BaseLoopBackApi {
 
   constructor(
     @Inject(Http) protected http: Http,
@@ -35,7 +36,7 @@ export class ShareTypeApi extends BaseLoopBackApi {
   /**
    * Fetches belongsTo relation Company.
    *
-   * @param {any} id ShareType id
+   * @param {any} id CompanyShare id
    *
    * @param {boolean} refresh 
    *
@@ -45,13 +46,43 @@ export class ShareTypeApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `ShareType` object.)
+   * This usually means the response is a `CompanyShare` object.)
    * </em>
    */
   public getCompany(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/sharetypes/:id/Company";
+    "/CompanyShares/:id/Company";
+    let _routeParams: any = {
+      id: id
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof refresh !== 'undefined' && refresh !== null) _urlParams.refresh = refresh;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Fetches belongsTo relation ShareType.
+   *
+   * @param {any} id CompanyShare id
+   *
+   * @param {boolean} refresh 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `CompanyShare` object.)
+   * </em>
+   */
+  public getShareType(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
+    let _method: string = "GET";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/CompanyShares/:id/ShareType";
     let _routeParams: any = {
       id: id
     };
@@ -75,13 +106,13 @@ export class ShareTypeApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `ShareType` object.)
+   * This usually means the response is a `CompanyShare` object.)
    * </em>
    */
   public patchOrCreate(data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PATCH";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/sharetypes";
+    "/CompanyShares";
     let _routeParams: any = {};
     let _postBody: any = {
       data: data
@@ -94,7 +125,7 @@ export class ShareTypeApi extends BaseLoopBackApi {
   /**
    * Patch attributes for a model instance and persist it into the data source.
    *
-   * @param {any} id ShareType id
+   * @param {any} id CompanyShare id
    *
    * @param {object} data Request data.
    *
@@ -106,13 +137,13 @@ export class ShareTypeApi extends BaseLoopBackApi {
    *
    * <em>
    * (The remote method definition does not provide any description.
-   * This usually means the response is a `ShareType` object.)
+   * This usually means the response is a `CompanyShare` object.)
    * </em>
    */
   public patchAttributes(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "PATCH";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/sharetypes/:id";
+    "/CompanyShares/:id";
     let _routeParams: any = {
       id: id
     };
@@ -125,34 +156,10 @@ export class ShareTypeApi extends BaseLoopBackApi {
   }
 
   /**
-   * <em>
-         * (The remote method definition does not provide any description.)
-         * </em>
-   *
-   * @returns {object} An empty reference that will be
-   *   populated with the actual data once the response is returned
-   *   from the server.
-   *
-   * Data properties:
-   *
-   *  - `data` – `{Object}` - 
-   */
-  public getShareTypes(customHeaders?: Function): Observable<any> {
-    let _method: string = "GET";
-    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/sharetypes/getShareTypes";
-    let _routeParams: any = {};
-    let _postBody: any = {};
-    let _urlParams: any = {};
-    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
-    return result;
-  }
-
-  /**
    * The name of the model represented by this $resource,
-   * i.e. `ShareType`.
+   * i.e. `CompanyShare`.
    */
   public getModelName() {
-    return "ShareType";
+    return "CompanyShare";
   }
 }

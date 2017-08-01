@@ -5,8 +5,8 @@
   },
   "mysql": {
     "host": "localhost",
-    "port": 8889,
-    "url": "mysql://root:root@localhost:8889/secretarialsystem",
+    "port": 3306,
+    "url": "mysql://root:e&Ey4)v:+26C_”^n@localhost:3306/secretarialsystem",
     "database": "secretarialsystem",
     "password": "root",
     "name": "mysql",

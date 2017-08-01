@@ -16,5 +16,6 @@ __export(require("./Shareholder"));
 __export(require("./Output"));
 __export(require("./PersonChanges"));
 __export(require("./CR7"));
+__export(require("./CompanyShare"));
 __export(require("./SDKModels"));
 __export(require("./logger.service"));

@@ -11,5 +11,6 @@ export * from './Shareholder';
 export * from './Output';
 export * from './PersonChanges';
 export * from './CR7';
+export * from './CompanyShare';
 export * from './BaseModels';
 export * from './FireLoopRef';

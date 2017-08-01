@@ -12,6 +12,7 @@ import { Shareholder } from '../../models/Shareholder';
 import { Output } from '../../models/Output';
 import { PersonChanges } from '../../models/PersonChanges';
 import { CR7 } from '../../models/CR7';
+import { CompanyShare } from '../../models/CompanyShare';
 
 export interface Models { [name: string]: any }
 
@@ -31,6 +32,7 @@ export class SDKModels {
     Output: Output,
     PersonChanges: PersonChanges,
     CR7: CR7,
+    CompanyShare: CompanyShare,
     
   };
 

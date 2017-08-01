@@ -38,7 +38,7 @@
       "type": "string",
       "required": true
     },
-    "town":{
+    "town": {
       "type": "string",
       "required": true
     },

@@ -78,5 +78,9 @@
   "CR7": {
     "dataSource": "mysql",
     "public": true
+  },
+  "CompanyShare": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

@@ -1,0 +1,29 @@
+{
+  "name": "CompanyShare",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "share_number": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "Company": {
+      "type": "belongsTo",
+      "model": "Company",
+      "foreignKey": "company_id"
+    },
+    "ShareType": {
+      "type": "belongsTo",
+      "model": "ShareType",
+      "foreignKey": "share_type_id"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -71,6 +71,7 @@ var Shareholder_1 = require("./services/custom/Shareholder");
 var Output_1 = require("./services/custom/Output");
 var PersonChanges_1 = require("./services/custom/PersonChanges");
 var CR7_1 = require("./services/custom/CR7");
+var CompanyShare_1 = require("./services/custom/CompanyShare");
 /**
 * @module SDKBrowserModule
 * @description
@@ -108,6 +109,7 @@ var SDKBrowserModule = SDKBrowserModule_1 = (function () {
                 Output_1.OutputApi,
                 PersonChanges_1.PersonChangesApi,
                 CR7_1.CR7Api,
+                CompanyShare_1.CompanyShareApi,
                 internalStorageProvider,
                 { provide: storage_swaps_1.SDKStorage, useClass: storage_browser_1.StorageBrowser },
                 { provide: socket_driver_1.SocketDriver, useClass: socket_browser_1.SocketBrowser }

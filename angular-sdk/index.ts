@@ -60,6 +60,7 @@ import { ShareholderApi } from './services/custom/Shareholder';
 import { OutputApi } from './services/custom/Output';
 import { PersonChangesApi } from './services/custom/PersonChanges';
 import { CR7Api } from './services/custom/CR7';
+import { CompanyShareApi } from './services/custom/CompanyShare';
 /**
 * @module SDKBrowserModule
 * @description
@@ -103,6 +104,7 @@ export class SDKBrowserModule {
         OutputApi,
         PersonChangesApi,
         CR7Api,
+        CompanyShareApi,
         internalStorageProvider,
         { provide: SDKStorage, useClass: StorageBrowser },
         { provide: SocketDriver, useClass: SocketBrowser }
