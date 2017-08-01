@@ -36,12 +36,12 @@ var ShareTransfer = (function () {
                     name: 'transferer_id',
                     type: 'number'
                 },
+                "transferer_type": {
+                    name: 'transferer_type',
+                    type: 'string'
+                },
                 "transferee_id": {
                     name: 'transferee_id',
-                    type: 'number'
-                },
-                "transfer_type": {
-                    name: 'transfer_type',
                     type: 'number'
                 },
                 "company_id": {
@@ -58,7 +58,8 @@ var ShareTransfer = (function () {
                 },
                 "approved": {
                     name: 'approved',
-                    type: 'boolean'
+                    type: 'boolean',
+                    default: false
                 },
                 "initiated_by": {
                     name: 'initiated_by',

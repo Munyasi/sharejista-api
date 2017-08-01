@@ -1,5 +1,6 @@
 'use strict'
 let generateList = require('../shareholders/generate_list');
+let afterRemoteFindById = require('../shareholders/after-remote-find-by-id');
 module.exports = function (Shareholder) {
 	Shareholder.generatelist = generateList;
 
@@ -11,5 +12,7 @@ module.exports = function (Shareholder) {
 		],
 		returns: {arg: 'data', type: 'Object'},
 		http: {path: '/generatelist', verb: 'post'}
-	})
+	});
+
+	Shareholder.afterRemote('findById', afterRemoteFindById);
 }
