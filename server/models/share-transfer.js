@@ -1,7 +1,7 @@
 'use strict';
 
 let approveTransfer = require('../sharetransfer/approve-transfer');
-let listTransfers = require('../sharetransfer/list-shares');
+let listTransfers = require('../sharetransfer/list-allotments');
 
 module.exports = function(Sharetransfer) {
 	Sharetransfer.approveTransfer = approveTransfer ;

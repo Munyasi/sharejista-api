@@ -1,5 +1,5 @@
-let app = require('../server')
-let Promise = require('bluebird')
+let app = require('../server');
+let Promise = require('bluebird');
 let _ = require('lodash');
 let async = require('async');
 
@@ -14,10 +14,10 @@ function listTransfers(company_id,cb) {
         shareTranfers = JSON.parse(JSON.stringify(shareTranfers));
         async.forEachOf(shareTranfers,function (value,index,callback) {
             value = JSON.parse(JSON.stringify(value));
-            if(value.transferer_type=='company'){
+            if(value.transferer_type==='company'){
                 Company.findById(value.transferer_id,{fields:['id','company_name','unissued_shares']})
                     .then(function (info) {
-                        info = JSON.parse(JSON.stringify(info))
+                        info = JSON.parse(JSON.stringify(info));
                         info.name = info.company_name;
                         info.company_id = info.id;
                         delete info.company_name;
@@ -31,7 +31,7 @@ function listTransfers(company_id,cb) {
                 Shareholder.findById(value.transferer_id)
                     .then(function (info) {
 
-                        info = JSON.parse(JSON.stringify(info))
+                        info = JSON.parse(JSON.stringify(info));
                         shareTranfers[index]['transferer'] = info;
                         callback();
                     })
