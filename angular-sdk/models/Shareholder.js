@@ -80,6 +80,14 @@ var Shareholder = (function () {
                     name: 'company_id',
                     type: 'number'
                 },
+                "createdAt": {
+                    name: 'createdAt',
+                    type: 'Date'
+                },
+                "updatedAt": {
+                    name: 'updatedAt',
+                    type: 'Date'
+                },
             },
             relations: {
                 Company: {

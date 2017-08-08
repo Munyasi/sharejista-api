@@ -206,7 +206,36 @@ var ShareTransferApi = (function (_super) {
      *
      * @param {number} sharetransfer_id
      *
-     * @param {string} transferer_type
+     * @param {number} action
+     *
+     * @returns {object} An empty reference that will be
+     *   populated with the actual data once the response is returned
+     *   from the server.
+     *
+     * Data properties:
+     *
+     *  - `data` – `{Object}` -
+     */
+    ShareTransferApi.prototype.approveTransfer = function (sharetransfer_id, action, customHeaders) {
+        var _method = "GET";
+        var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
+            "/sharetransfers/approvetransfer";
+        var _routeParams = {};
+        var _postBody = {};
+        var _urlParams = {};
+        if (typeof sharetransfer_id !== 'undefined' && sharetransfer_id !== null)
+            _urlParams.sharetransfer_id = sharetransfer_id;
+        if (typeof action !== 'undefined' && action !== null)
+            _urlParams.action = action;
+        var result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+        return result;
+    };
+    /**
+     * <em>
+           * (The remote method definition does not provide any description.)
+           * </em>
+     *
+     * @param {number} sharetransfer_id
      *
      * @param {number} action
      *
@@ -218,19 +247,44 @@ var ShareTransferApi = (function (_super) {
      *
      *  - `data` – `{Object}` -
      */
-    ShareTransferApi.prototype.approveTransfer = function (sharetransfer_id, transferer_type, action, customHeaders) {
+    ShareTransferApi.prototype.approveAllotment = function (sharetransfer_id, action, customHeaders) {
         var _method = "GET";
         var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
-            "/sharetransfers/approvetransfer";
+            "/sharetransfers/approveallotment";
         var _routeParams = {};
         var _postBody = {};
         var _urlParams = {};
         if (typeof sharetransfer_id !== 'undefined' && sharetransfer_id !== null)
             _urlParams.sharetransfer_id = sharetransfer_id;
-        if (typeof transferer_type !== 'undefined' && transferer_type !== null)
-            _urlParams.transferer_type = transferer_type;
         if (typeof action !== 'undefined' && action !== null)
             _urlParams.action = action;
+        var result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+        return result;
+    };
+    /**
+     * <em>
+           * (The remote method definition does not provide any description.)
+           * </em>
+     *
+     * @param {number} company_id
+     *
+     * @returns {object} An empty reference that will be
+     *   populated with the actual data once the response is returned
+     *   from the server.
+     *
+     * Data properties:
+     *
+     *  - `data` – `{Object}` -
+     */
+    ShareTransferApi.prototype.listAllotments = function (company_id, customHeaders) {
+        var _method = "GET";
+        var _url = lb_config_1.LoopBackConfig.getPath() + "/" + lb_config_1.LoopBackConfig.getApiVersion() +
+            "/sharetransfers/list-allotments";
+        var _routeParams = {};
+        var _postBody = {};
+        var _urlParams = {};
+        if (typeof company_id !== 'undefined' && company_id !== null)
+            _urlParams.company_id = company_id;
         var result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
         return result;
     };

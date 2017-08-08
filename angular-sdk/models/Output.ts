@@ -3,10 +3,14 @@
 declare var Object: any;
 export interface OutputInterface {
   "id"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
 }
 
 export class Output implements OutputInterface {
   "id": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   constructor(data?: OutputInterface) {
     Object.assign(this, data);
   }
@@ -41,6 +45,14 @@ export class Output implements OutputInterface {
         "id": {
           name: 'id',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
       },
       relations: {

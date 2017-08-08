@@ -1,6 +1,8 @@
 /* tslint:disable */
 import {
-  CompanyType
+  CompanyType,
+  ShareType,
+  CompanyShare
 } from '../index';
 
 declare var Object: any;
@@ -29,13 +31,14 @@ export interface CompanyInterface {
   "o_postal_code"?: string;
   "o_town_city"?: string;
   "nominal_share_capital": number;
-  "number_of_shares": number;
-  "par_value": number;
-  "unissued_shares": number;
   "current"?: number;
   "id"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
   "company_type_id"?: number;
   CompanyType?: CompanyType;
+  ShareType?: ShareType[];
+  CompanyShare?: CompanyShare[];
 }
 
 export class Company implements CompanyInterface {
@@ -63,13 +66,14 @@ export class Company implements CompanyInterface {
   "o_postal_code": string;
   "o_town_city": string;
   "nominal_share_capital": number;
-  "number_of_shares": number;
-  "par_value": number;
-  "unissued_shares": number;
   "current": number;
   "id": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   "company_type_id": number;
   CompanyType: CompanyType;
+  ShareType: ShareType[];
+  CompanyShare: CompanyShare[];
   constructor(data?: CompanyInterface) {
     Object.assign(this, data);
   }
@@ -197,18 +201,6 @@ export class Company implements CompanyInterface {
           name: 'nominal_share_capital',
           type: 'number'
         },
-        "number_of_shares": {
-          name: 'number_of_shares',
-          type: 'number'
-        },
-        "par_value": {
-          name: 'par_value',
-          type: 'number'
-        },
-        "unissued_shares": {
-          name: 'unissued_shares',
-          type: 'number'
-        },
         "current": {
           name: 'current',
           type: 'number'
@@ -216,6 +208,14 @@ export class Company implements CompanyInterface {
         "id": {
           name: 'id',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
         "company_type_id": {
           name: 'company_type_id',
@@ -227,6 +227,16 @@ export class Company implements CompanyInterface {
           name: 'CompanyType',
           type: 'CompanyType',
           model: 'CompanyType'
+        },
+        ShareType: {
+          name: 'ShareType',
+          type: 'ShareType[]',
+          model: 'ShareType'
+        },
+        CompanyShare: {
+          name: 'CompanyShare',
+          type: 'CompanyShare[]',
+          model: 'CompanyShare'
         },
       }
     }

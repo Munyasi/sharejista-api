@@ -6,6 +6,10 @@
   "options": {
     "validateUpsert": true
   },
+  "forceId": false,
+  "mixins": {
+    "TimeStamp": true
+  },
   "properties": {
     "surname": {
       "type": "string",

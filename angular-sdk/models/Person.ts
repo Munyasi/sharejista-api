@@ -27,6 +27,8 @@ export interface PersonInterface {
   "profile_photo"?: string;
   "id"?: number;
   "company_id"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Company?: Company;
 }
 
@@ -53,6 +55,8 @@ export class Person implements PersonInterface {
   "profile_photo": string;
   "id": number;
   "company_id": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Company: Company;
   constructor(data?: PersonInterface) {
     Object.assign(this, data);
@@ -172,6 +176,14 @@ export class Person implements PersonInterface {
         "company_id": {
           name: 'company_id',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
       },
       relations: {

@@ -4,11 +4,15 @@ declare var Object: any;
 export interface CompanyTypeInterface {
   "name": string;
   "id"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
 }
 
 export class CompanyType implements CompanyTypeInterface {
   "name": string;
   "id": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   constructor(data?: CompanyTypeInterface) {
     Object.assign(this, data);
   }
@@ -47,6 +51,14 @@ export class CompanyType implements CompanyTypeInterface {
         "id": {
           name: 'id',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
       },
       relations: {

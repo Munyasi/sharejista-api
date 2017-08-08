@@ -56,6 +56,14 @@ var PersonChanges = (function () {
                     name: 'companyId',
                     type: 'number'
                 },
+                "createdAt": {
+                    name: 'createdAt',
+                    type: 'Date'
+                },
+                "updatedAt": {
+                    name: 'updatedAt',
+                    type: 'Date'
+                },
             },
             relations: {
                 Person: {

@@ -6,6 +6,10 @@
   "options": {
     "validateUpsert": true
   },
+  "forceId": false,
+  "mixins": {
+    "TimeStamp": true
+  },
   "properties": {
     "name": {
       "type": "string",
@@ -15,6 +19,9 @@
       "type": "string"
     },
     "transferrable": {
+      "type": "number"
+    },
+    "par_value": {
       "type": "number"
     }
   },

@@ -7,6 +7,8 @@ export interface SystemUserInterface {
   "email": string;
   "emailVerified"?: boolean;
   "id"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
   accessTokens?: any[];
 }
 
@@ -16,6 +18,8 @@ export class SystemUser implements SystemUserInterface {
   "email": string;
   "emailVerified": boolean;
   "id": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   accessTokens: any[];
   constructor(data?: SystemUserInterface) {
     Object.assign(this, data);
@@ -67,6 +71,14 @@ export class SystemUser implements SystemUserInterface {
         "id": {
           name: 'id',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
       },
       relations: {

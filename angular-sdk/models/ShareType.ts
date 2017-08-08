@@ -8,8 +8,11 @@ export interface ShareTypeInterface {
   "name": string;
   "description"?: string;
   "transferrable"?: number;
+  "par_value"?: number;
   "id"?: number;
   "company_id"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Company?: Company;
 }
 
@@ -17,8 +20,11 @@ export class ShareType implements ShareTypeInterface {
   "name": string;
   "description": string;
   "transferrable": number;
+  "par_value": number;
   "id": number;
   "company_id": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Company: Company;
   constructor(data?: ShareTypeInterface) {
     Object.assign(this, data);
@@ -63,6 +69,10 @@ export class ShareType implements ShareTypeInterface {
           name: 'transferrable',
           type: 'number'
         },
+        "par_value": {
+          name: 'par_value',
+          type: 'number'
+        },
         "id": {
           name: 'id',
           type: 'number'
@@ -70,6 +80,14 @@ export class ShareType implements ShareTypeInterface {
         "company_id": {
           name: 'company_id',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
       },
       relations: {
