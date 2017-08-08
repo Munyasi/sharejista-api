@@ -44,6 +44,10 @@ var ShareType = (function () {
                     name: 'transferrable',
                     type: 'number'
                 },
+                "par_value": {
+                    name: 'par_value',
+                    type: 'number'
+                },
                 "id": {
                     name: 'id',
                     type: 'number'
@@ -51,6 +55,14 @@ var ShareType = (function () {
                 "company_id": {
                     name: 'company_id',
                     type: 'number'
+                },
+                "createdAt": {
+                    name: 'createdAt',
+                    type: 'Date'
+                },
+                "updatedAt": {
+                    name: 'updatedAt',
+                    type: 'Date'
                 },
             },
             relations: {

@@ -41,6 +41,14 @@ var CompanyType = (function () {
                     name: 'id',
                     type: 'number'
                 },
+                "createdAt": {
+                    name: 'createdAt',
+                    type: 'Date'
+                },
+                "updatedAt": {
+                    name: 'updatedAt',
+                    type: 'Date'
+                },
             },
             relations: {}
         };

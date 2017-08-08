@@ -11,6 +11,8 @@ export interface CR7Interface {
   "date": Date;
   "id"?: number;
   "companyId"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Company?: Company;
 }
 
@@ -21,6 +23,8 @@ export class CR7 implements CR7Interface {
   "date": Date;
   "id": number;
   "companyId": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Company: Company;
   constructor(data?: CR7Interface) {
     Object.assign(this, data);
@@ -76,6 +80,14 @@ export class CR7 implements CR7Interface {
         "companyId": {
           name: 'companyId',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
       },
       relations: {

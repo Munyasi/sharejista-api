@@ -6,6 +6,10 @@
   "options": {
     "validateUpsert": true
   },
+  "forceId": false,
+  "mixins": {
+    "TimeStamp": true
+  },
   "properties": {
     "company_name": {
       "type": "string",
@@ -103,18 +107,6 @@
       "type": "number",
       "required": true
     },
-    "number_of_shares": {
-      "type": "number",
-      "required": true
-    },
-    "par_value": {
-      "type": "number",
-      "required": true
-    },
-    "unissued_shares": {
-      "type": "number",
-      "required": true
-    },
     "current": {
       "type": "number"
     }
@@ -125,6 +117,16 @@
       "type": "belongsTo",
       "model": "CompanyType",
       "foreignKey": "company_type_id"
+    },
+    "CompanyShare": {
+      "type": "hasMany",
+      "model": "CompanyShare",
+      "foreignKey": "company_id"
+    },
+    "ShareType": {
+      "type": "hasMany",
+      "model": "ShareType",
+      "foreignKey": "company_id"
     }
   },
   "acls": [],

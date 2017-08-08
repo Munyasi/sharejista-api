@@ -12,6 +12,8 @@ export interface PersonChangesInterface {
   "id"?: number;
   "personId"?: number;
   "companyId"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Person?: Person;
   Company?: Company;
 }
@@ -23,6 +25,8 @@ export class PersonChanges implements PersonChangesInterface {
   "id": number;
   "personId": number;
   "companyId": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Person: Person;
   Company: Company;
   constructor(data?: PersonChangesInterface) {
@@ -79,6 +83,14 @@ export class PersonChanges implements PersonChangesInterface {
         "companyId": {
           name: 'companyId',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
       },
       relations: {

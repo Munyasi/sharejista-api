@@ -18,6 +18,8 @@ export interface ShareholderInterface {
   "profile_photo"?: string;
   "id"?: number;
   "company_id"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Company?: Company;
   Shares?: Shares[];
 }
@@ -35,6 +37,8 @@ export class Shareholder implements ShareholderInterface {
   "profile_photo": string;
   "id": number;
   "company_id": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Company: Company;
   Shares: Shares[];
   constructor(data?: ShareholderInterface) {
@@ -115,6 +119,14 @@ export class Shareholder implements ShareholderInterface {
         "company_id": {
           name: 'company_id',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
       },
       relations: {

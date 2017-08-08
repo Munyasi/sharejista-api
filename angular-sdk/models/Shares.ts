@@ -9,6 +9,8 @@ export interface SharesInterface {
   "number_of_shares"?: number;
   "id"?: number;
   "sharetype_id"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
   "shareholder_id"?: number;
   ShareType?: ShareType;
   Shareholder?: Shareholder;
@@ -18,6 +20,8 @@ export class Shares implements SharesInterface {
   "number_of_shares": number;
   "id": number;
   "sharetype_id": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   "shareholder_id": number;
   ShareType: ShareType;
   Shareholder: Shareholder;
@@ -63,6 +67,14 @@ export class Shares implements SharesInterface {
         "sharetype_id": {
           name: 'sharetype_id',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
         "shareholder_id": {
           name: 'shareholder_id',

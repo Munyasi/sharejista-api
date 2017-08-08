@@ -128,18 +128,6 @@ var Company = (function () {
                     name: 'nominal_share_capital',
                     type: 'number'
                 },
-                "number_of_shares": {
-                    name: 'number_of_shares',
-                    type: 'number'
-                },
-                "par_value": {
-                    name: 'par_value',
-                    type: 'number'
-                },
-                "unissued_shares": {
-                    name: 'unissued_shares',
-                    type: 'number'
-                },
                 "current": {
                     name: 'current',
                     type: 'number'
@@ -147,6 +135,14 @@ var Company = (function () {
                 "id": {
                     name: 'id',
                     type: 'number'
+                },
+                "createdAt": {
+                    name: 'createdAt',
+                    type: 'Date'
+                },
+                "updatedAt": {
+                    name: 'updatedAt',
+                    type: 'Date'
                 },
                 "company_type_id": {
                     name: 'company_type_id',
@@ -158,6 +154,16 @@ var Company = (function () {
                     name: 'CompanyType',
                     type: 'CompanyType',
                     model: 'CompanyType'
+                },
+                ShareType: {
+                    name: 'ShareType',
+                    type: 'ShareType[]',
+                    model: 'ShareType'
+                },
+                CompanyShare: {
+                    name: 'CompanyShare',
+                    type: 'CompanyShare[]',
+                    model: 'CompanyShare'
                 },
             }
         };

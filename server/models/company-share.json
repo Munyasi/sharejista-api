@@ -5,8 +5,16 @@
   "options": {
     "validateUpsert": true
   },
+  "forceId": false,
+  "mixins": {
+    "TimeStamp": true
+  },
   "properties": {
     "share_number": {
+      "type": "number",
+      "required": true
+    },
+    "unissued_shares":{
       "type": "number",
       "required": true
     }

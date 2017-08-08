@@ -7,18 +7,24 @@ import {
 declare var Object: any;
 export interface CompanyShareInterface {
   "share_number": number;
+  "unissued_shares": number;
   "id"?: number;
   "company_id"?: number;
   "share_type_id"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Company?: Company;
   ShareType?: ShareType;
 }
 
 export class CompanyShare implements CompanyShareInterface {
   "share_number": number;
+  "unissued_shares": number;
   "id": number;
   "company_id": number;
   "share_type_id": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   Company: Company;
   ShareType: ShareType;
   constructor(data?: CompanyShareInterface) {
@@ -56,6 +62,10 @@ export class CompanyShare implements CompanyShareInterface {
           name: 'share_number',
           type: 'number'
         },
+        "unissued_shares": {
+          name: 'unissued_shares',
+          type: 'number'
+        },
         "id": {
           name: 'id',
           type: 'number'
@@ -67,6 +77,14 @@ export class CompanyShare implements CompanyShareInterface {
         "share_type_id": {
           name: 'share_type_id',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
       },
       relations: {

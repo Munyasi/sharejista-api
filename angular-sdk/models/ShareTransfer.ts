@@ -16,6 +16,8 @@ export interface ShareTransferInterface {
   "initiated_by"?: number;
   "approved_by"?: number;
   "id"?: number;
+  "createdAt": Date;
+  "updatedAt": Date;
   sharetype?: ShareType;
   transferer?: Shareholder;
   transferee?: Shareholder;
@@ -32,6 +34,8 @@ export class ShareTransfer implements ShareTransferInterface {
   "initiated_by": number;
   "approved_by": number;
   "id": number;
+  "createdAt": Date;
+  "updatedAt": Date;
   sharetype: ShareType;
   transferer: Shareholder;
   transferee: Shareholder;
@@ -106,6 +110,14 @@ export class ShareTransfer implements ShareTransferInterface {
         "id": {
           name: 'id',
           type: 'number'
+        },
+        "createdAt": {
+          name: 'createdAt',
+          type: 'Date'
+        },
+        "updatedAt": {
+          name: 'updatedAt',
+          type: 'Date'
         },
       },
       relations: {

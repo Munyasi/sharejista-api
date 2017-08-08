@@ -36,6 +36,10 @@ var CompanyShare = (function () {
                     name: 'share_number',
                     type: 'number'
                 },
+                "unissued_shares": {
+                    name: 'unissued_shares',
+                    type: 'number'
+                },
                 "id": {
                     name: 'id',
                     type: 'number'
@@ -47,6 +51,14 @@ var CompanyShare = (function () {
                 "share_type_id": {
                     name: 'share_type_id',
                     type: 'number'
+                },
+                "createdAt": {
+                    name: 'createdAt',
+                    type: 'Date'
+                },
+                "updatedAt": {
+                    name: 'updatedAt',
+                    type: 'Date'
                 },
             },
             relations: {
