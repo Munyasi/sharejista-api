@@ -44,6 +44,10 @@ var CR7 = (function () {
                     name: 'to',
                     type: 'Date'
                 },
+                "type": {
+                    name: 'type',
+                    type: 'string'
+                },
                 "date": {
                     name: 'date',
                     type: 'Date'

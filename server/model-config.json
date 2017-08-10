@@ -83,5 +83,9 @@
   "CompanyShare": {
     "dataSource": "mysql",
     "public": true
+  },
+  "CR6": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

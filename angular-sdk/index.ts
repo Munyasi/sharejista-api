@@ -61,6 +61,7 @@ import { OutputApi } from './services/custom/Output';
 import { PersonChangesApi } from './services/custom/PersonChanges';
 import { CR7Api } from './services/custom/CR7';
 import { CompanyShareApi } from './services/custom/CompanyShare';
+import { CR6Api } from './services/custom/CR6';
 /**
 * @module SDKBrowserModule
 * @description
@@ -105,6 +106,7 @@ export class SDKBrowserModule {
         PersonChangesApi,
         CR7Api,
         CompanyShareApi,
+        CR6Api,
         internalStorageProvider,
         { provide: SDKStorage, useClass: StorageBrowser },
         { provide: SocketDriver, useClass: SocketBrowser }

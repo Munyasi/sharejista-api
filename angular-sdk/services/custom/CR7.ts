@@ -160,6 +160,41 @@ export class CR7Api extends BaseLoopBackApi {
   }
 
   /**
+   * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+   *
+   * @param {object} data Request data.
+   *
+   *  - `companyId` – `{string}` - 
+   *
+   *  - `from` – `{string}` - 
+   *
+   *  - `to` – `{string}` - 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * Data properties:
+   *
+   *  - `data` – `{Object}` - 
+   */
+  public generateCR8(companyId: any, from: any, to: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/CR7s/generateCR8";
+    let _routeParams: any = {};
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof companyId !== 'undefined' && companyId !== null) _urlParams.companyId = companyId;
+    if (typeof from !== 'undefined' && from !== null) _urlParams.from = from;
+    if (typeof to !== 'undefined' && to !== null) _urlParams.to = to;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
    * The name of the model represented by this $resource,
    * i.e. `CR7`.
    */

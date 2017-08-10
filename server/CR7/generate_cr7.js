@@ -2,9 +2,9 @@
 let Promise = require('bluebird');
 let app = require('../server');
 let _ = require('underscore');
-let fs = require('fs')
-let path = require('path')
-let JSZip = require('jszip')
+let fs = require('fs');
+let path = require('path');
+let JSZip = require('jszip');
 let Docxtemplater = require('docxtemplater');
 function generateCR7(companyId, from, to, cb){
 	// pull PersonChanges for the company
@@ -13,8 +13,8 @@ function generateCR7(companyId, from, to, cb){
 	let Person = app.models.Person;
 	let Company = app.models.Company;
 	let CR7 = app.models.CR7;
-	let template_path = '../templates/CR7.docx'
-	let output_path = '../output/CR7s'
+	let template_path = '../templates/CR7.docx';
+	let output_path = '../output/CR7s';
 	let map = {
 		'surname': 'Surname',
 		'other_names': 'Names',
@@ -35,12 +35,14 @@ function generateCR7(companyId, from, to, cb){
 		'house_number': 'House number',
 		'building_name': 'Building name',
 		'estate': 'Estate'
-	}
+	};
+
 	Company.findById(companyId, { fields: ['company_name', 'registration_no']})
 		.then(function (company) {
 			PersonChanges.find({where: { companyId: companyId, and:[{ date_modified:{ gte: from}},{ date_modified: { lte: to }} ]}, include: ['Person']})
 				.then(function (personChanges) {
 					if(personChanges.length > 0){
+						console.log(personChanges);
 						personChanges =  JSON.parse(JSON.stringify(personChanges));
 						personChanges = _.groupBy(personChanges, 'personId');
 						let persons = [];
@@ -89,20 +91,21 @@ function generateCR7(companyId, from, to, cb){
 									secretary_town: secretary.town,
 									secretary_email: secretary.email_address,
 									secretary_phone: secretary.phone_number
-								}
+								};
 
 								doc.setData(data);
 
 								try {
 									doc.render();
-									let buf = doc.getZip().generate({type: 'nodebuffer'})
+									let buf = doc.getZip().generate({type: 'nodebuffer'});
 									let date = Date.now().toString();
-									let fileName = `CR7-${company.company_name}-${date}.docx`
+									let fileName = `CR7-${company.company_name}-${date}.docx`;
 									fs.writeFileSync(path.resolve(__dirname, `${output_path}/${fileName}`), buf);
 									let cr7 = {
 										name: fileName,
 										from: new Date(from),
 										to: new Date(to),
+										type: 'CR7',
 										date:new Date(),
 										companyId: companyId
 									};
@@ -114,14 +117,15 @@ function generateCR7(companyId, from, to, cb){
 										.catch(function (err) {
 											return cb(err);
 										})
-									}
+								}
 								catch (error) {
 									let e = {
 										message: error.message,
 										name: error.name,
 										stack: error.stack,
 										properties: error.properties,
-									}
+									};
+
 									cb(e);
 								}
 							})

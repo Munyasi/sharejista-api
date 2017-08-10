@@ -62,7 +62,7 @@ var LoopBackConfig = (function () {
     };
     return LoopBackConfig;
 }());
-LoopBackConfig.path = '//0.0.0.0:8000';
+LoopBackConfig.path = '//0.0.0.0:3000';
 LoopBackConfig.version = 'api';
 LoopBackConfig.authPrefix = '';
 LoopBackConfig.debug = true;

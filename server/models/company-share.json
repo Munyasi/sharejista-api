@@ -14,7 +14,7 @@
       "type": "number",
       "required": true
     },
-    "unissued_shares":{
+    "unissued_shares": {
       "type": "number",
       "required": true
     }

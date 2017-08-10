@@ -27,7 +27,8 @@
     "loopback-ds-timestamp-mixin": "^3.4.1",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^1.0.1",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "eslint": "^2.13.1",

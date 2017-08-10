@@ -1,13 +1,9 @@
 {
-  "name": "CR7",
+  "name": "CR6",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
-  },
-  "forceId": false,
-  "mixins": {
-    "TimeStamp": true
   },
   "properties": {
     "name": {
@@ -22,24 +18,13 @@
       "type": "date",
       "required": true
     },
-    "type": {
-      "type": "string",
-      "required": true,
-      "desc": "Value can be CR7 or CR8"
-    },
     "date": {
       "type": "date",
       "required": true
     }
   },
   "validations": [],
-  "relations": {
-    "Company": {
-      "type": "belongsTo",
-      "model": "Company",
-      "foreignKey": "companyId"
-    }
-  },
+  "relations": {},
   "acls": [],
   "methods": {}
 }

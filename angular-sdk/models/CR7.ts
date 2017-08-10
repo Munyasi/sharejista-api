@@ -8,6 +8,7 @@ export interface CR7Interface {
   "name": string;
   "from": Date;
   "to": Date;
+  "type": string;
   "date": Date;
   "id"?: number;
   "companyId"?: number;
@@ -20,6 +21,7 @@ export class CR7 implements CR7Interface {
   "name": string;
   "from": Date;
   "to": Date;
+  "type": string;
   "date": Date;
   "id": number;
   "companyId": number;
@@ -68,6 +70,10 @@ export class CR7 implements CR7Interface {
         "to": {
           name: 'to',
           type: 'Date'
+        },
+        "type": {
+          name: 'type',
+          type: 'string'
         },
         "date": {
           name: 'date',

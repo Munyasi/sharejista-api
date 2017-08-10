@@ -13,6 +13,7 @@ import { Output } from '../../models/Output';
 import { PersonChanges } from '../../models/PersonChanges';
 import { CR7 } from '../../models/CR7';
 import { CompanyShare } from '../../models/CompanyShare';
+import { CR6 } from '../../models/CR6';
 
 export interface Models { [name: string]: any }
 
@@ -33,6 +34,7 @@ export class SDKModels {
     PersonChanges: PersonChanges,
     CR7: CR7,
     CompanyShare: CompanyShare,
+    CR6: CR6,
     
   };
 
