@@ -5,7 +5,7 @@
   },
   "mysql": {
     "name": "mysql",
-    "url": "mysql://root:e&Ey4)v:+26C_”^n@178.79.129.211:3306/secretarialsystem",
+    "url": "mysql://root:e&Ey4)v:+26C_”^n@1localhost:3306/secretarialsystem",
     "connector": "mysql"
   },
   "storage": {
