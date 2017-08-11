@@ -40,6 +40,14 @@ var Person = (function () {
                     name: 'other_names',
                     type: 'string'
                 },
+                "former_names": {
+                    name: 'former_names',
+                    type: 'string'
+                },
+                "nationality": {
+                    name: 'nationality',
+                    type: 'string'
+                },
                 "salutation": {
                     name: 'salutation',
                     type: 'string'
@@ -48,9 +56,13 @@ var Person = (function () {
                     name: 'email_address',
                     type: 'string'
                 },
+                "area_code": {
+                    name: 'area_code',
+                    type: 'string'
+                },
                 "phone_number": {
                     name: 'phone_number',
-                    type: 'string'
+                    type: 'number'
                 },
                 "id_number": {
                     name: 'id_number',
@@ -111,6 +123,11 @@ var Person = (function () {
                 "profile_photo": {
                     name: 'profile_photo',
                     type: 'string'
+                },
+                "parent_id": {
+                    name: 'parent_id',
+                    type: 'number',
+                    default: 0
                 },
                 "id": {
                     name: 'id',

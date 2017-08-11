@@ -19,6 +19,13 @@
       "type": "string",
       "required": true
     },
+    "former_names": {
+      "type": "string"
+    },
+    "nationality": {
+      "type": "string",
+      "required": true
+    },
     "salutation": {
       "type": "string",
       "required": true
@@ -27,8 +34,12 @@
       "type": "string",
       "required": true
     },
-    "phone_number": {
+    "area_code": {
       "type": "string",
+      "required": true
+    },
+    "phone_number": {
+      "type": "number",
       "required": true
     },
     "id_number": {
@@ -88,6 +99,9 @@
     },
     "profile_photo": {
       "type": "string"
+    },
+    "parent_id": {
+      "type": "number"
     }
   },
   "validations": [],

@@ -7,9 +7,12 @@ declare var Object: any;
 export interface PersonInterface {
   "surname": string;
   "other_names": string;
+  "former_names"?: string;
+  "nationality": string;
   "salutation": string;
   "email_address": string;
-  "phone_number": string;
+  "area_code": string;
+  "phone_number": number;
   "id_number": string;
   "occupation": string;
   "kra_pin": string;
@@ -25,6 +28,7 @@ export interface PersonInterface {
   "building_name": string;
   "estate": string;
   "profile_photo"?: string;
+  "parent_id"?: number;
   "id"?: number;
   "company_id"?: number;
   "createdAt": Date;
@@ -35,9 +39,12 @@ export interface PersonInterface {
 export class Person implements PersonInterface {
   "surname": string;
   "other_names": string;
+  "former_names": string;
+  "nationality": string;
   "salutation": string;
   "email_address": string;
-  "phone_number": string;
+  "area_code": string;
+  "phone_number": number;
   "id_number": string;
   "occupation": string;
   "kra_pin": string;
@@ -53,6 +60,7 @@ export class Person implements PersonInterface {
   "building_name": string;
   "estate": string;
   "profile_photo": string;
+  "parent_id": number;
   "id": number;
   "company_id": number;
   "createdAt": Date;
@@ -97,6 +105,14 @@ export class Person implements PersonInterface {
           name: 'other_names',
           type: 'string'
         },
+        "former_names": {
+          name: 'former_names',
+          type: 'string'
+        },
+        "nationality": {
+          name: 'nationality',
+          type: 'string'
+        },
         "salutation": {
           name: 'salutation',
           type: 'string'
@@ -105,9 +121,13 @@ export class Person implements PersonInterface {
           name: 'email_address',
           type: 'string'
         },
+        "area_code": {
+          name: 'area_code',
+          type: 'string'
+        },
         "phone_number": {
           name: 'phone_number',
-          type: 'string'
+          type: 'number'
         },
         "id_number": {
           name: 'id_number',
@@ -168,6 +188,11 @@ export class Person implements PersonInterface {
         "profile_photo": {
           name: 'profile_photo',
           type: 'string'
+        },
+        "parent_id": {
+          name: 'parent_id',
+          type: 'number',
+          default: 0
         },
         "id": {
           name: 'id',
