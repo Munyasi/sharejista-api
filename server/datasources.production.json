@@ -4,6 +4,7 @@
     "connector": "memory"
   },
   "mysql": {
+    "name": "mysql",
     "database": "mysql://root:e&Ey4)v:+26C_”^n@178.79.129.211:3306/secretarialsystem",
     "connector": "mysql"
   },
