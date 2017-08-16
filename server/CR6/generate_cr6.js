@@ -14,6 +14,7 @@ function generateCR6 (companyId, from, to, cb) {
 	let CR6 = app.models.CR6;
 	let template_path = '../templates/CR6.docx';
 	let output_path = '../output/CR6s';
+	let NA = 'NA';
 	Company.findById(companyId, {
 		fields: ['id', 'company_type_id', 'company_name', 'registration_no'],
 		include: ['CompanyType']
@@ -32,12 +33,16 @@ function generateCR6 (companyId, from, to, cb) {
 			.then((directors) => {
 				if (directors.length > 0) {
 					company = JSON.parse(JSON.stringify(company));
-
+					directors = JSON.parse(JSON.stringify(directors));
 					for (let i = 0; i < directors.length; i++) {
 						let d = directors[i];
 						d.num = i + 1;
 						let dob = new Date(d.date_of_birth);
 						d.dob = `${dob.getDate()}/${dob.getMonth() + 1}/${dob.getFullYear()}`;
+
+						Object.keys(d).forEach(function (key) {
+							if (d[key] === null && d.hasOwnProperty(key)) d[key] = NA;
+						});
 					}
 
 					// get the company secretary
@@ -49,6 +54,22 @@ function generateCR6 (companyId, from, to, cb) {
 							// they have to be output into n forms
 							// n = Math.ceil(directors.length/itemsPerForm)
 
+							let secName =NA;
+							let secPostalCode = NA;
+							let secPostalBox = NA;
+							let secTown = NA;
+							let secEmail = NA;
+							let secPhoneNo = NA;
+
+							if(secretary !== null){
+								secName = `${secretary.surname} ${secretary.other_names}`;
+								secPostalCode = secretary.postal_code;
+								secPostalBox = secretary.box;
+								secTown = secretary.town;
+								secEmail = secretary.email_address;
+								secPhoneNo = secretary.phone_number;
+							}
+
 							let groupCount = Math.ceil(directors.length / itemsPerForm);
 							let formsPath = [];
 							let data = {
@@ -56,12 +77,12 @@ function generateCR6 (companyId, from, to, cb) {
 								registration_no: company.registration_no,
 								company_type: company.CompanyType.name,
 								dated: `${today.getDate()}/${(today.getMonth() + 1)}/${today.getFullYear()}`,
-								secretary_name: `${secretary.surname} ${secretary.other_names}`,
-								secretary_postal_code: secretary.postal_code,
-								secretary_box: secretary.box,
-								secretary_town: secretary.town,
-								secretary_email: secretary.email_address,
-								secretary_phone: secretary.phone_number
+								secretary_name: secName,
+								secretary_postal_code: secPostalCode,
+								secretary_box: secPostalBox,
+								secretary_town: secTown,
+								secretary_email: secEmail,
+								secretary_phone: secPhoneNo
 							};
 
 							for (let i = 0; i < groupCount; i++) {

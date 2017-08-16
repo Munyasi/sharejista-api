@@ -17,6 +17,7 @@ function generateCR8 (companyId, from, to, cb) {
 	let CR7 = app.models.CR7;
 	let template_path = '../templates/CR8.docx';
 	let output_path = '../output/CR8s';
+	let NA = 'NA';
 	let map = {
 		'street': 'Street',
 		'house_number': 'House number',
@@ -24,7 +25,7 @@ function generateCR8 (companyId, from, to, cb) {
 		'estate': 'Estate'
 	};
 
-	Company.findById(companyId, {fields: ['company_name', 'registration_no']})
+	Company.findById(companyId, {fields: ['company_name', 'registration_no'], include: ['CompanyType']})
 		.then(function (company) {
 			PersonChanges.find({
 				where: {
@@ -54,7 +55,6 @@ function generateCR8 (companyId, from, to, cb) {
 								change = _.sortBy(change, 'date_modified').reverse();
 								// pick latest change, first
 								let latestChange = change[0];
-								console.log(latestChange.date_modified);
 								let fieldObj = {};
 								fieldObj.id = latestChange.Person.id;
 								fieldObj.key = latestChange.key;
@@ -74,7 +74,7 @@ function generateCR8 (companyId, from, to, cb) {
 							.then(function (secretary) {
 								let today = new Date();
 
-								let itemsPerForm = 2;
+								let itemsPerForm = 5;
 								// if items found are more than itemsPerForm
 								// they have to be output into n forms
 								// n = Math.ceil(directors.length/itemsPerForm)
@@ -82,16 +82,33 @@ function generateCR8 (companyId, from, to, cb) {
 								let groupCount = Math.ceil(persons.length / itemsPerForm);
 								let formsPath = [];
 
+								let secName =NA;
+								let secPostalCode = NA;
+								let secPostalBox = NA;
+								let secTown = NA;
+								let secEmail = NA;
+								let secPhoneNo = NA;
+
+								if(secretary !== null){
+									secName = `${secretary.surname} ${secretary.other_names}`;
+									secPostalCode = secretary.postal_code;
+									secPostalBox = secretary.box;
+									secTown = secretary.town;
+									secEmail = secretary.email_address;
+									secPhoneNo = secretary.phone_number;
+								}
+
 								let data = {
 									company_name: company.company_name,
 									registration_no: company.registration_no,
 									dated: `${today.getDate()}/${(today.getMonth() + 1)}/${today.getFullYear()}`,
-									secretary_name: `${secretary.surname} ${secretary.other_names}`,
-									secretary_postal_code: secretary.postal_code,
-									secretary_box: secretary.box,
-									secretary_town: secretary.town,
-									secretary_email: secretary.email_address,
-									secretary_phone: secretary.phone_number
+									company_type: company.CompanyType.name,
+									secretary_name: secName,
+									secretary_postal_code: secPostalCode,
+									secretary_box: secPostalBox,
+									secretary_town: secTown,
+									secretary_email: secEmail,
+									secretary_phone: secPhoneNo
 								};
 
 								for (let i = 0; i < groupCount; i++) {

@@ -4,13 +4,14 @@ let path = require('path');
 let JSZip = require('jszip');
 let Docxtemplater = require('docxtemplater');
 let _ = require('underscore');
+let uuid = require('uuid/v4');
 
 module.exports = function (company_id, export_config, res, cb) {
 	let app = require('../server');
 	let Shareholder = app.models.Shareholder;
 	let Company = app.models.Company;
 	let template_path = '../templates/list_of_shareholders.docx';
-	let output_path = '../output/shareholders_list/list_of_shareholders.docx';
+	let output_path = '../output/shareholders_list';
 
 	Company.findById(company_id, {fields: ['company_name', 'ro_postal_address', 'ro_postal_code', 'ro_town_city']})
 		.then(function (company) {
@@ -33,12 +34,12 @@ module.exports = function (company_id, export_config, res, cb) {
 				.then(function (shareholders) {
 					shareholders = JSON.parse(JSON.stringify(shareholders));
 					for (let i = 0; i < shareholders.length; i++) {
-						shareholders[i].num = i + 1;
+						shareholders[i].n = i + 1;
 						let total = 0;
 						for (let share of shareholders[i].Shares) {
 							total += share.number_of_shares;
 						}
-						shareholders[i].total_shares = total;
+						shareholders[i].total = total;
 					}
 
 					if (sortByShares) {
@@ -54,15 +55,18 @@ module.exports = function (company_id, export_config, res, cb) {
 						box: company.ro_postal_address,
 						postal_code: company.ro_postal_code,
 						town: company.ro_town_city,
-						shareholders: shareholders
+						s: shareholders
 					};
 					doc.setData(data);
 
 					try {
 						doc.render();
 						let buf = doc.getZip().generate({type: 'nodebuffer'});
-						fs.writeFileSync(path.resolve(__dirname, output_path), buf);
-						cb(null, {success: 1});
+						let token = uuid().toString().substring(0, 7);
+						let fileName = `List-of-shareholders-${company.company_name}-${token}.docx`;
+						console.log(fileName);
+						fs.writeFileSync(path.resolve(__dirname, `${output_path}/${fileName}`), buf);
+						cb(null, {success: 1, path: fileName });
 					}
 					catch (error) {
 						let e = {

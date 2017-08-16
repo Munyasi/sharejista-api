@@ -80,17 +80,33 @@ function generateCR7(companyId, from, to, cb){
 								doc.loadZip(zip);
 								let today = new Date();
 
+								let secName =NA;
+								let secPostalCode = NA;
+								let secPostalBox = NA;
+								let secTown = NA;
+								let secEmail = NA;
+								let secPhoneNo = NA;
+
+								if(secretary !== null){
+									secName = `${secretary.surname} ${secretary.other_names}`;
+									secPostalCode = secretary.postal_code;
+									secPostalBox = secretary.box;
+									secTown = secretary.town;
+									secEmail = secretary.email_address;
+									secPhoneNo = secretary.phone_number;
+								}
+
 								let data = {
 									company_name: company.company_name,
 									registration_no: company.registration_no,
 									directors: persons,
 									dated: `${today.getDate()}/${(today.getMonth() + 1)}/${today.getFullYear()}`,
-									secretary_name: `${secretary.surname} ${secretary.other_names}`,
-									secretary_postal_code: secretary.postal_code,
-									secretary_box: secretary.box,
-									secretary_town: secretary.town,
-									secretary_email: secretary.email_address,
-									secretary_phone: secretary.phone_number
+									secretary_name: secName,
+									secretary_postal_code: secPostalCode,
+									secretary_box: secPostalBox,
+									secretary_town: secTown,
+									secretary_email: secEmail,
+									secretary_phone: secPhoneNo
 								};
 
 								doc.setData(data);
