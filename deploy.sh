@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 git pull
+npm install
 #create a copy of datasources.json called datasources1.json
 cp server/datasources.json server/datasources1.json
 #copy datasources.production.json to datasources.json
