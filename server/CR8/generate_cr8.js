@@ -8,6 +8,7 @@ let path = require('path');
 let JSZip = require('jszip');
 let Docxtemplater = require('docxtemplater');
 let uuid = require('uuid/v4');
+
 function generateCR8 (companyId, from, to, cb) {
 	// pull PersonChanges for the company
 	// group by directorId
@@ -29,6 +30,7 @@ function generateCR8 (companyId, from, to, cb) {
 		fields: ['company_name', 'registration_no'],
 		include: ['CompanyType']
 	});
+
 	findCompanyPromise.then(function (company) {
 		let findChangesPromise = PersonChanges.find({
 			where: {
@@ -48,117 +50,30 @@ function generateCR8 (companyId, from, to, cb) {
 				personChanges = JSON.parse(JSON.stringify(personChanges));
 				let persons = compilePersonsChanges(personChanges);
 
-				// get the company secretary
-				let findSecPromise = Person.findOne({where: {company_id: companyId, person_type: 'Secretary'}});
-				findSecPromise.then(function (secretary) {
-					let itemsPerForm = 5;
-					// if items found are more than itemsPerForm
-					// they have to be output into n forms
-					// n = Math.ceil(directors.length/itemsPerForm)
-
-					let groupCount = Math.ceil(persons.length / itemsPerForm);
-					let formsPath = [];
-
-					let secName = NA;
-					let secPostalCode = NA;
-					let secPostalBox = NA;
-					let secTown = NA;
-					let secEmail = NA;
-					let secPhoneNo = NA;
-
-					if (secretary !== null) {
-						secName = `${secretary.surname} ${secretary.other_names}`;
-						secPostalCode = secretary.postal_code;
-						secPostalBox = secretary.box;
-						secTown = secretary.town;
-						secEmail = secretary.email_address;
-						secPhoneNo = secretary.phone_number;
+				let findSecPromise = Person.findOne({
+					where: {
+						company_id: companyId, person_type: 'Secretary'
 					}
-					let today = new Date();
-					let data = {
-						company_name: company.company_name,
-						registration_no: company.registration_no,
-						dated: `${today.getDate()}/${(today.getMonth() + 1)}/${today.getFullYear()}`,
-						company_type: company.CompanyType.name,
-						secretary_name: secName,
-						secretary_postal_code: secPostalCode,
-						secretary_box: secPostalBox,
-						secretary_town: secTown,
-						secretary_email: secEmail,
-						secretary_phone: secPhoneNo
-					};
-
-					for (let i = 0; i < groupCount; i++) {
-						let content = fs.readFileSync(path.resolve(__dirname, template_path), 'binary');
-						let zip = new JSZip(content);
-						let doc = new Docxtemplater();
-						doc.loadZip(zip);
-						data.directors = persons.slice(i * itemsPerForm, (i + 1) * itemsPerForm);
-						doc.setData(data);
-
-						try {
-							doc.render();
-							let buf = doc.getZip().generate({type: 'nodebuffer'});
-							let token = uuid().toString().substring(0, 7);
-							let fileName = `CR8-${company.company_name}-${token}.docx`;
-							fs.writeFileSync(path.resolve(__dirname, `${output_path}/${fileName}`), buf);
-							formsPath.push(fileName);
-						}
-						catch (error) {
-							let e = {
-								message: error.message,
-								name: error.name,
-								stack: error.stack,
-								properties: error.properties,
-							};
-
-							cb(e);
-						}
-					}
-
-					// doc.setData(data);
-					let cr8 = {
-						from: new Date(from),
-						to: new Date(to),
-						type: 'CR8',
-						date: new Date(),
-						companyId: companyId
-					};
-
-					async.each(formsPath, (formPath, callback) => {
-							cr8.name = formPath;
-							CR7.create(cr8)
-								.then((cr6Item) => {
-									callback(null, cr6Item);
-								})
-								.catch((err) => {
-									callback(err);
-								});
-						},
-						(err) => {
-							if (err)
-								cb(err);
-							else
-								return cb(null, {
-									success: 1,
-									message: `CR8 form for  ${company.company_name} created successfully.`,
-									paths: formsPath
-								});
-						});
-
 				});
+
+				findSecPromise.then(function (secretary) {
+					processCR8(company, secretary, persons);
+				});
+
 				findSecPromise.catch((err) => { cb(err);});
 			}
 			else {
 				return cb(null, {
 					success: 0,
-					message: 'There no residential changes for directors to be filed with the specified dates.'
+					message: 'There no residential changes for directors to be filed within the specified dates.'
 				});
 			}
 
 		});
+
 		findChangesPromise.catch((err) => {cb(err);});
 	});
+
 	findCompanyPromise.catch((err) => { cb(err);});
 
 	function compilePersonsChanges (personChanges) {
@@ -189,6 +104,99 @@ function generateCR8 (companyId, from, to, cb) {
 		});
 
 		return persons;
+	}
+
+	function formatCR8Data (company, secretary) {
+		let secName = NA;
+		let secPostalCode = NA;
+		let secPostalBox = NA;
+		let secTown = NA;
+		let secEmail = NA;
+		let secPhoneNo = NA;
+
+		if (secretary !== null) {
+			secName = `${secretary.surname} ${secretary.other_names}`;
+			secPostalCode = secretary.postal_code;
+			secPostalBox = secretary.box;
+			secTown = secretary.town;
+			secEmail = secretary.email_address;
+			secPhoneNo = secretary.phone_number;
+		}
+		let today = new Date();
+		console.log(company.CompanyType.name);
+		return {
+			company_name: company.company_name,
+			registration_no: company.registration_no,
+			dated: `${today.getDate()}/${(today.getMonth() + 1)}/${today.getFullYear()}`,
+			company_type: company.CompanyType.name,
+			secretary_name: secName,
+			secretary_postal_code: secPostalCode,
+			secretary_box: secPostalBox,
+			secretary_town: secTown,
+			secretary_email: secEmail,
+			secretary_phone: secPhoneNo
+		};
+	}
+
+	function createCR8Form (data) {
+		let content = fs.readFileSync(path.resolve(__dirname, template_path), 'binary');
+		let zip = new JSZip(content);
+		let doc = new Docxtemplater();
+		doc.loadZip(zip);
+		doc.setData(data);
+
+		try {
+			doc.render();
+			let buf = doc.getZip().generate({type: 'nodebuffer'});
+			let token = uuid().toString().substring(0, 7);
+			let fileName = `CR8-${data.company_name}-${token}.docx`;
+			fs.writeFileSync(path.resolve(__dirname, `${output_path}/${fileName}`), buf);
+			return fileName;
+		}
+		catch (error) { cb(error);}
+	}
+
+	function processCR8 (company, secretary, persons) {
+		let itemsPerForm = 5;
+		// if items found are more than itemsPerForm
+		// they have to be output into n forms
+		// n = Math.ceil(directors.length/itemsPerForm)
+		let groupCount = Math.ceil(persons.length / itemsPerForm);
+		let data = formatCR8Data(company, secretary);
+		let formsPath = [];
+
+		for (let i = 0; i < groupCount; i++) {
+			data.directors = persons.slice(i * itemsPerForm, (i + 1) * itemsPerForm);
+			let fileName = createCR8Form(data);
+			formsPath.push(fileName);
+		}
+
+		let cr8 = {
+			from: new Date(from),
+			to: new Date(to),
+			type: 'CR8',
+			date: new Date(),
+			companyId: companyId
+		};
+
+		function createCR8ItemTask (formPath, callback) {
+			cr8.name = formPath;
+			let createCR8Promise = CR7.create(cr8);
+			createCR8Promise.then((cr6Item) => { callback(null, cr6Item); });
+			createCR8Promise.catch((err) => { callback(err); });
+		}
+
+		function finalize (err) {
+			if (err) cb(err);
+			else
+				return cb(null, {
+					success: 1,
+					message: `CR8 form for  ${company.company_name} created successfully.`,
+					paths: formsPath
+				});
+		}
+
+		async.each(formsPath, createCR8ItemTask, finalize);
 	}
 }
 
