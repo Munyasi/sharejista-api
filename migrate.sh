@@ -6,6 +6,6 @@ cp cp server/datasources.production.json server/datasources.json
 #migrate the database
 lb-migration migrate --ds=mysql --method=update
 #recreate original datasources.json
-cp server/datasources1.json server/datasources.json
+mv server/datasources1.json server/datasources.json
 #exit
 exit 1
