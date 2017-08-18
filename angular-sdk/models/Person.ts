@@ -28,6 +28,7 @@ export interface PersonInterface {
   "building_name": string;
   "estate": string;
   "profile_photo"?: string;
+  "consent"?: string;
   "parent_id"?: number;
   "id"?: number;
   "company_id"?: number;
@@ -60,6 +61,7 @@ export class Person implements PersonInterface {
   "building_name": string;
   "estate": string;
   "profile_photo": string;
+  "consent": string;
   "parent_id": number;
   "id": number;
   "company_id": number;
@@ -189,10 +191,13 @@ export class Person implements PersonInterface {
           name: 'profile_photo',
           type: 'string'
         },
+        "consent": {
+          name: 'consent',
+          type: 'string'
+        },
         "parent_id": {
           name: 'parent_id',
-          type: 'number',
-          default: 0
+          type: 'number'
         },
         "id": {
           name: 'id',
