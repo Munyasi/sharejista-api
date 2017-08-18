@@ -8,5 +8,6 @@ cp server/datasources.production.json server/datasources.json
 lb-migration migrate --ds=mysql --method=update
 #recreate original datasources.json
 mv server/datasources1.json server/datasources.json
+export NODE_ENV=production
 forever restart server/server.js
 exit 1
