@@ -8,6 +8,7 @@ let JSZip = require('jszip');
 let uuid = require('uuid/v4');
 let async = require('async');
 let Docxtemplater = require('docxtemplater');
+
 function generateCR6 (companyId, from, to, cb) {
 	let Company = app.models.Company;
 	let Person = app.models.Person;
@@ -15,150 +16,185 @@ function generateCR6 (companyId, from, to, cb) {
 	let template_path = '../templates/CR6.docx';
 	let output_path = '../output/CR6s';
 	let NA = 'NA';
-	Company.findById(companyId, {
+
+	let findCompanyPromise = Company.findById(companyId, {
 		fields: ['id', 'company_type_id', 'company_name', 'registration_no'],
 		include: ['CompanyType']
-	})
-	.then((company) => {
+	});
+
+	findCompanyPromise.then((company) => {
 		// select directors whose appointment date lies within
 		// from and to dates
 		// TODO: Add 'Alternate Directors'
-		Person.find({
+		let findDirectorsPromise = Person.find({
 			where: {
 				company_id: companyId,
 				person_type: 'Director',
 				and: [{appointment_date: {gte: from}}, {appointment_date: {lte: to}}]
 			}
-		})
-			.then((directors) => {
-				if (directors.length > 0) {
-					company = JSON.parse(JSON.stringify(company));
-					directors = JSON.parse(JSON.stringify(directors));
-					for (let i = 0; i < directors.length; i++) {
-						let d = directors[i];
-						d.num = i + 1;
-						let dob = new Date(d.date_of_birth);
-						d.dob = `${dob.getDate()}/${dob.getMonth() + 1}/${dob.getFullYear()}`;
+		});
 
-						Object.keys(d).forEach(function (key) {
-							if (d[key] === null && d.hasOwnProperty(key)) d[key] = NA;
-						});
+		findDirectorsPromise.then((directors) => {
+			if (directors.length > 0) {
+				company = JSON.parse(JSON.stringify(company));
+				directors = JSON.parse(JSON.stringify(directors));
+				directors = formatDirectors(directors);
+
+				// get the company secretary
+				let secretaryPromise = Person.findOne({
+					where: {
+						company_id: companyId,
+						person_type: 'Secretary'
 					}
+				});
 
-					// get the company secretary
-					Person.findOne({where: {company_id: companyId, person_type: 'Secretary'}})
-						.then((secretary) => {
-							let today = new Date();
-							let itemsPerForm = 5;
-							// if items found are more than itemsPerForm
-							// they have to be output into n forms
-							// n = Math.ceil(directors.length/itemsPerForm)
+				secretaryPromise.then((secretary) => {
+					processCR6(company, secretary, directors);
+				});
 
-							let secName =NA;
-							let secPostalCode = NA;
-							let secPostalBox = NA;
-							let secTown = NA;
-							let secEmail = NA;
-							let secPhoneNo = NA;
+				secretaryPromise.catch((err) => { cb(err);});
+			}
+			else {
+				return cb(null, {
+					success: 0,
+					message: 'There no directors appointed within the specified dates.'
+				});
+			}
+		});
 
-							if(secretary !== null){
-								secName = `${secretary.surname} ${secretary.other_names}`;
-								secPostalCode = secretary.postal_code;
-								secPostalBox = secretary.box;
-								secTown = secretary.town;
-								secEmail = secretary.email_address;
-								secPhoneNo = secretary.phone_number;
-							}
-
-							let groupCount = Math.ceil(directors.length / itemsPerForm);
-							let formsPath = [];
-							let data = {
-								company_name: company.company_name,
-								registration_no: company.registration_no,
-								company_type: company.CompanyType.name,
-								dated: `${today.getDate()}/${(today.getMonth() + 1)}/${today.getFullYear()}`,
-								secretary_name: secName,
-								secretary_postal_code: secPostalCode,
-								secretary_box: secPostalBox,
-								secretary_town: secTown,
-								secretary_email: secEmail,
-								secretary_phone: secPhoneNo
-							};
-
-							for (let i = 0; i < groupCount; i++) {
-								let content = fs.readFileSync(path.resolve(__dirname, template_path), 'binary');
-								let zip = new JSZip(content);
-								let doc = new Docxtemplater();
-								doc.loadZip(zip);
-								data.directors = directors.slice(i * itemsPerForm, (i + 1) * itemsPerForm);
-								doc.setData(data);
-
-								try {
-									doc.render();
-									let buf = doc.getZip().generate({type: 'nodebuffer'});
-									let token = uuid().toString().substring(0, 7);
-									let fileName = `CR6-${company.company_name}-${token}.docx`;
-									fs.writeFileSync(path.resolve(__dirname, `${output_path}/${fileName}`), buf);
-									formsPath.push(fileName);
-								}
-								catch (error) {
-									let e = {
-										message: error.message,
-										name: error.name,
-										stack: error.stack,
-										properties: error.properties,
-									};
-									cb(e);
-								}
-							}
-
-							let cr6 = {
-								from: new Date(from),
-								to: new Date(to),
-								date: new Date(),
-								companyId: companyId
-							};
-
-							async.each(formsPath, (formPath, callback) => {
-									cr6.name = formPath;
-									CR6.create(cr6)
-										.then((cr6Item) => {
-											callback(null, cr6Item);
-										})
-										.catch((err) => {
-											callback(err);
-										});
-								},
-								(err) => {
-									if (err)
-										cb(err);
-									else
-										return cb(null, {
-											success: 1,
-											message: `CR6 form for  ${company.company_name} created successfully.`,
-											paths: formsPath
-										});
-								});
-
-						})
-						.catch((error) => {
-							return cb(error);
-						});
-				}
-				else {
-					return cb(null, {
-						success: 0,
-						message: 'There no directors appointed within the specified dates.'
-					});
-				}
-			})
-			.catch((error) => {
-				return cb(error);
-			});
-	})
-	.catch((err) => {
-		cb(err);
+		findDirectorsPromise.catch((err) => { cb(err); });
 	});
+
+	findCompanyPromise.catch((err) => { cb(err);});
+
+	/**
+	 * Format each director: date of birth and number them
+	 * @param directors
+	 * @returns {*}
+	 */
+	function formatDirectors (directors) {
+		for (let i = 0; i < directors.length; i++) {
+			let d = directors[i];
+			d.num = i + 1;
+			let dob = new Date(d.date_of_birth);
+			d.dob = `${dob.getDate()}/${dob.getMonth() + 1}/${dob.getFullYear()}`;
+
+			Object.keys(d).forEach(function (key) {
+				if (d[key] === null && d.hasOwnProperty(key)) d[key] = NA;
+			});
+		}
+
+		return directors;
+	}
+
+	/**
+	 * Format data for CR6 form
+	 * @param company
+	 * @param secretary
+	 * @returns {{company_name: *, registration_no: *, company_type, dated: string, secretary_name: string, secretary_postal_code: string, secretary_box: string, secretary_town: string, secretary_email: string, secretary_phone: string}}
+	 */
+	function formatCR6Data (company, secretary) {
+		let secName = NA;
+		let secPostalCode = NA;
+		let secPostalBox = NA;
+		let secTown = NA;
+		let secEmail = NA;
+		let secPhoneNo = NA;
+
+		if (secretary !== null) {
+			secName = `${secretary.surname} ${secretary.other_names}`;
+			secPostalCode = secretary.postal_code;
+			secPostalBox = secretary.box;
+			secTown = secretary.town;
+			secEmail = secretary.email_address;
+			secPhoneNo = secretary.phone_number;
+		}
+
+		let today = new Date();
+		return  {
+			company_name: company.company_name,
+			registration_no: company.registration_no,
+			company_type: company.CompanyType.name,
+			dated: `${today.getDate()}/${(today.getMonth() + 1)}/${today.getFullYear()}`,
+			secretary_name: secName,
+			secretary_postal_code: secPostalCode,
+			secretary_box: secPostalBox,
+			secretary_town: secTown,
+			secretary_email: secEmail,
+			secretary_phone: secPhoneNo
+		};
+	}
+
+	/**
+	 * Create a CR6 form
+	 * @param data Object with keys for CR6 template
+	 * @returns {string} Filename of CR6 file created
+	 */
+	function createCR6Form (data) {
+		let content = fs.readFileSync(path.resolve(__dirname, template_path), 'binary');
+		let zip = new JSZip(content);
+		let doc = new Docxtemplater();
+		doc.loadZip(zip);
+		doc.setData(data);
+
+		try {
+			doc.render();
+			let buf = doc.getZip().generate({type: 'nodebuffer'});
+			let token = uuid().toString().substring(0, 7);
+			let fileName = `CR6-${data.company_name}-${token}.docx`;
+			fs.writeFileSync(path.resolve(__dirname, `${output_path}/${fileName}`), buf);
+			return fileName;
+		}
+		catch (error) { cb(error); }
+	}
+
+	/**
+	 * Combine all the elements for CR6 form
+	 * @param company
+	 * @param secretary
+	 * @param directors
+	 */
+	function processCR6(company, secretary,directors) {
+		let itemsPerForm = 5;
+		// if items found are more than itemsPerForm
+		// they have to be output into n forms
+		// n = Math.ceil(directors.length/itemsPerForm)
+		let groupCount = Math.ceil(directors.length / itemsPerForm);
+		let data = formatCR6Data(company, secretary);
+		let formsPath = [];
+
+		for (let i = 0; i < groupCount; i++) {
+			data.directors = directors.slice(i * itemsPerForm, (i + 1) * itemsPerForm);
+			let filePath = createCR6Form(data);
+			formsPath.push(filePath);
+		}
+
+		let cr6 = {
+			from: new Date(from),
+			to: new Date(to),
+			date: new Date(),
+			companyId: companyId
+		};
+
+		function createCRItemTask (formPath, callback) {
+			cr6.name = formPath;
+			let createCR6 = CR6.create(cr6);
+			createCR6.then((cr6Item) => { callback(null, cr6Item); });
+			createCR6.catch((err) => { callback(err); });
+		}
+
+		function finalize (err) {
+			if (err) cb(err);
+			else
+				return cb(null, {
+					success: 1,
+					message: `CR6 form for  ${company.company_name} created successfully.`,
+					paths: formsPath
+				});
+		}
+
+		async.each(formsPath, createCRItemTask, finalize);
+	}
 }
 
 module.exports = generateCR6;
