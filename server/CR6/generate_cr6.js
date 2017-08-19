@@ -16,6 +16,33 @@ function generateCR6 (companyId, from, to, cb) {
 	let template_path = '../templates/CR6.docx';
 	let output_path = '../output/CR6s';
 	let NA = 'NA';
+	let ds = Person.dataSource;
+		let sql = `
+		SELECT
+			surname, 
+		    other_names,
+		    salutation,
+		    former_names,
+		    email_address, 
+		    phone_number,
+		    other_names,
+		    postal_code,
+		    box,
+		    town,
+		    nationality,
+		    id_number,
+		    occupation,
+		    date_of_birth,
+		    area_code,
+		    phone_number,
+		    email_address,
+		    consent
+		FROM Person 
+		WHERE (company_id=?) 
+		AND (
+			DATE(appointment_date) >=? AND 
+			DATE(appointment_date) <=?)
+		AND (person_type='Director')`;
 
 	let findCompanyPromise = Company.findById(companyId, {
 		fields: ['id', 'company_type_id', 'company_name', 'registration_no'],
@@ -34,7 +61,8 @@ function generateCR6 (companyId, from, to, cb) {
 			}
 		});
 
-		findDirectorsPromise.then((directors) => {
+		ds.connector.query(sql, [companyId, from, to], function (err, directors) {
+			if(err) return cb(err);
 			if (directors.length > 0) {
 				company = JSON.parse(JSON.stringify(company));
 				directors = JSON.parse(JSON.stringify(directors));
@@ -61,8 +89,6 @@ function generateCR6 (companyId, from, to, cb) {
 				});
 			}
 		});
-
-		findDirectorsPromise.catch((err) => { cb(err); });
 	});
 
 	findCompanyPromise.catch((err) => { cb(err);});

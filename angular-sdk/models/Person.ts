@@ -27,6 +27,7 @@ export interface PersonInterface {
   "house_number": string;
   "building_name": string;
   "estate": string;
+  "country": string;
   "profile_photo"?: string;
   "consent"?: string;
   "parent_id"?: number;
@@ -60,6 +61,7 @@ export class Person implements PersonInterface {
   "house_number": string;
   "building_name": string;
   "estate": string;
+  "country": string;
   "profile_photo": string;
   "consent": string;
   "parent_id": number;
@@ -185,6 +187,10 @@ export class Person implements PersonInterface {
         },
         "estate": {
           name: 'estate',
+          type: 'string'
+        },
+        "country": {
+          name: 'country',
           type: 'string'
         },
         "profile_photo": {

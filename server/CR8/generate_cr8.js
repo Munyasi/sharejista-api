@@ -8,8 +8,13 @@ let path = require('path');
 let JSZip = require('jszip');
 let Docxtemplater = require('docxtemplater');
 let uuid = require('uuid/v4');
+let moment = require('moment');
 
 function generateCR8 (companyId, from, to, cb) {
+	from = new Date(from);
+	from = moment(new Date(from)).format('YYYY-MM-DD HH:mm:ss');
+	to = moment(new Date(to)).format('YYYY-MM-DD HH:mm:ss');
+	console.log(from, to);
 	// pull PersonChanges for the company
 	// group by directorId
 	let PersonChanges = app.models.PersonChanges;
@@ -25,31 +30,56 @@ function generateCR8 (companyId, from, to, cb) {
 		'building_name': 'Building name',
 		'estate': 'Estate'
 	};
+	let ds = PersonChanges.dataSource;
+	let sql = `SELECT 
+		PersonChanges.id,
+		PersonChanges.key,
+	    PersonChanges.value, 
+	    Person.id AS personId,
+	    Person.salutation,
+	    Person.surname,
+	    Person.salutation,
+	    Person.other_names,
+	    Person.house_number,
+	    Person.building_name,
+	    Person.street,
+	    Person.town,
+	    Person.country
+	FROM PersonChanges
+	INNER JOIN Person on PersonChanges.personId = Person.id
+	WHERE (PersonChanges.companyId=?) 
+	AND (
+		DATE(PersonChanges.date_modified) >=? AND 
+		DATE(PersonChanges.date_modified) <= ?)
+	AND (
+	    (PersonChanges.key='street') OR 
+	    (PersonChanges.key='house_number') OR 
+	    (PersonChanges.key='building_name') OR 
+	    (PersonChanges.key='estate') OR 
+	    (PersonChanges.key='town') OR 
+	    (PersonChanges.key='country')
+	)`;
 
 	let findCompanyPromise = Company.findById(companyId, {
-		fields: ['company_name', 'registration_no'],
+		fields: ['id','company_name', 'registration_no','company_type_id'],
 		include: ['CompanyType']
 	});
 
 	findCompanyPromise.then(function (company) {
-		let findChangesPromise = PersonChanges.find({
-			where: {
-				companyId: companyId,
-				and: [{date_modified: {gte: from}}, {date_modified: {lte: to}}],
-				or: [
-					{key: 'street'},
-					{key: 'house_number'},
-					{key: 'building_name'},
-					{key: 'estate'}]
-			},
-			include: ['Person']
+		if (company === null) return cb(null, {
+			success: 0,
+			message: 'Company information not found. Please try again.'
 		});
 
-		findChangesPromise.then(function (personChanges) {
+		company = JSON.parse(JSON.stringify(company));
+
+		function handleResults(err, personChanges) {
+			if(err) return cb(err);
+			else
 			if (personChanges.length > 0) {
 				personChanges = JSON.parse(JSON.stringify(personChanges));
 				let persons = compilePersonsChanges(personChanges);
-
+				console.log(persons);
 				let findSecPromise = Person.findOne({
 					where: {
 						company_id: companyId, person_type: 'Secretary'
@@ -68,10 +98,9 @@ function generateCR8 (companyId, from, to, cb) {
 					message: 'There no residential changes for directors to be filed within the specified dates.'
 				});
 			}
+		}
 
-		});
-
-		findChangesPromise.catch((err) => {cb(err);});
+		ds.connector.query(sql,[companyId,from, to],handleResults);
 	});
 
 	findCompanyPromise.catch((err) => { cb(err);});
@@ -79,27 +108,33 @@ function generateCR8 (companyId, from, to, cb) {
 	function compilePersonsChanges (personChanges) {
 		personChanges = _.groupBy(personChanges, 'personId');
 		let persons = [];
-		_.each(personChanges, function (personChange) {
-			personChange = _.groupBy(personChange, 'key');
+		_.each(personChanges, function (change) {
 			let person = {};
-			person.fields = [];
-			_.each(personChange, function (change) {
-				person.name = `${change[0].Person.salutation} ${change[0].Person.surname} ${change[0].Person.other_names}`;
-				// sort by date modified, latest first
-				change = _.sortBy(change, 'date_modified').reverse();
-				// pick latest change, first
-				let latestChange = change[0];
-				let fieldObj = {};
-				fieldObj.id = latestChange.Person.id;
-				fieldObj.key = latestChange.key;
-				fieldObj.value = latestChange.value;
-				fieldObj.name = map[latestChange.key];
-				let d = new Date(latestChange.date_modified);
-				fieldObj.date = `${d.getDate()}/${(d.getMonth() + 1)}/${d.getFullYear()}`;
+			let name = '';
+			let house_number = '';
+			let building_name = '';
+			let estate = '';
+			let street = '';
+			let town = '';
+			let country = '';
+			let p = change[0];
+			if(p !== null){
+				name = `${p.salutation || ''} ${p.surname || ''} ${p.other_names || ''}`;
+				house_number = p.house_number || '';
+				building_name = p.building_name || '';
+				estate = p.estate || '';
+				street = p.street || '';
+				town = p.town || '';
+				country = p.country || '';
+			}
 
-				person.fields.push(fieldObj);
-			});
-
+			person.name = name.toString().toUpperCase();
+			person.house = house_number.toString().toUpperCase();
+			person.building = building_name.toString().toUpperCase();
+			person.estate = estate.toString().toUpperCase();
+			person.street = street.toString().toUpperCase();
+			person.town = town.toString().toUpperCase();
+			person.country = country.toString().toUpperCase();
 			persons.push(person);
 		});
 
@@ -115,21 +150,21 @@ function generateCR8 (companyId, from, to, cb) {
 		let secPhoneNo = NA;
 
 		if (secretary !== null) {
-			secName = `${secretary.surname} ${secretary.other_names}`;
+			secName = `${secretary.surname} ${secretary.other_names}`.toUpperCase();
 			secPostalCode = secretary.postal_code;
 			secPostalBox = secretary.box;
-			secTown = secretary.town;
+			secTown = secretary.town.toUpperCase();
 			secEmail = secretary.email_address;
 			secPhoneNo = secretary.phone_number;
 		}
 		let today = new Date();
-		console.log(company.CompanyType.name);
+		console.log(company.CompanyType);
 		return {
-			company_name: company.company_name,
-			registration_no: company.registration_no,
+			company_name: company.company_name.toUpperCase(),
+			registration_no: company.registration_no.toUpperCase(),
 			dated: `${today.getDate()}/${(today.getMonth() + 1)}/${today.getFullYear()}`,
-			company_type: company.CompanyType.name,
-			secretary_name: secName,
+			company_type: company.CompanyType.name.toString().toUpperCase(),
+			secretary_name: secName.toString().toUpperCase(),
 			secretary_postal_code: secPostalCode,
 			secretary_box: secPostalBox,
 			secretary_town: secTown,

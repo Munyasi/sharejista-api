@@ -97,6 +97,10 @@
       "type": "string",
       "required": true
     },
+    "country": {
+      "type": "string",
+      "required": true
+    },
     "profile_photo": {
       "type": "string"
     },

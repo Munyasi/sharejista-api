@@ -15,6 +15,7 @@ function generateCR7 (companyId, from, to, cb) {
 	let template_path = '../templates/CR7.docx';
 	let output_path = '../output/CR7s';
 	let NA = 'NA';
+	let ds = PersonChanges.dataSource;
 	let map = {
 		'surname': 'Surname',
 		'other_names': 'Names',
@@ -37,20 +38,35 @@ function generateCR7 (companyId, from, to, cb) {
 		'estate': 'Estate'
 	};
 
+	let sql = `
+	SELECT 
+		PersonChanges.id,
+		PersonChanges.key,
+	    PersonChanges.value, 
+	    PersonChanges.date_modified,
+	    Person.id AS personId,
+	    Person.salutation,
+	    Person.surname,
+	    Person.salutation,
+	    Person.other_names
+	FROM PersonChanges
+	INNER JOIN Person on PersonChanges.personId = Person.id
+	WHERE (PersonChanges.companyId=?) 
+	AND (
+		DATE(PersonChanges.date_modified) >=? AND
+		DATE(PersonChanges.date_modified) <= ?
+	)`;
+
 	// pull PersonChanges for the company
 	// group by directorId
 	let findCompanyPromise = Company.findById(companyId, {fields: ['company_name', 'registration_no']});
 
 	findCompanyPromise.then(function (company) {
-		let findChangesPromise = PersonChanges.find({
-			where: {
-				companyId: companyId,
-				and: [{date_modified: {gte: from}}, {date_modified: {lte: to}}]
-			}, include: ['Person']
-		});
-		findChangesPromise.then((personChanges) => {
+		ds.connector.query(sql, [companyId,from, to], handleResults);
+
+		function handleResults (err,personChanges) {
+			if(err) return cb(err);
 			if (personChanges.length > 0) {
-				personChanges = JSON.parse(JSON.stringify(personChanges));
 				let persons = compilePersonsChanges(personChanges);
 
 				// get the company secretary
@@ -74,9 +90,7 @@ function generateCR7 (companyId, from, to, cb) {
 					message: 'There no changes for directors to be filed with the specified dates.'
 				});
 			}
-		});
-
-		findChangesPromise.catch(function (err) { cb(err);});
+		}
 	});
 
 	findCompanyPromise.catch(function (err) { cb(err);});
@@ -89,13 +103,13 @@ function generateCR7 (companyId, from, to, cb) {
 			let person = {};
 			person.fields = [];
 			_.each(personChange, function (change) {
-				person.name = `${change[0].Person.salutation} ${change[0].Person.surname} ${change[0].Person.other_names}`;
+				person.name = `${change[0].salutation} ${change[0].surname} ${change[0].other_names}`;
 				// sort by date modified, latest first
 				change = _.sortBy(change, 'date_modified').reverse();
 				// pick latest change, first
 				let latestChange = change[0];
 				let fieldObj = {};
-				fieldObj.id = latestChange.Person.id;
+				fieldObj.id = latestChange.id;
 				fieldObj.key = latestChange.key;
 				fieldObj.value = latestChange.value;
 				fieldObj.name = map[latestChange.key];
@@ -175,7 +189,6 @@ function generateCR7 (companyId, from, to, cb) {
 
 			createCR7Promise.catch((err) => { cb(err); });
 		}
-
 		catch (error) { cb(error); }
 	}
 }
