@@ -53,14 +53,6 @@ function generateCR6 (companyId, from, to, cb) {
 		// select directors whose appointment date lies within
 		// from and to dates
 		// TODO: Add 'Alternate Directors'
-		let findDirectorsPromise = Person.find({
-			where: {
-				company_id: companyId,
-				person_type: 'Director',
-				and: [{appointment_date: {gte: from}}, {appointment_date: {lte: to}}]
-			}
-		});
-
 		ds.connector.query(sql, [companyId, from, to], function (err, directors) {
 			if(err) return cb(err);
 			if (directors.length > 0) {
@@ -126,28 +118,31 @@ function generateCR6 (companyId, from, to, cb) {
 		let secTown = NA;
 		let secEmail = NA;
 		let secPhoneNo = NA;
+		let secCountry = NA;
 
 		if (secretary !== null) {
-			secName = `${secretary.surname} ${secretary.other_names}`;
+			secName = `${secretary.surname} ${secretary.other_names}`.toUpperCase();
 			secPostalCode = secretary.postal_code;
 			secPostalBox = secretary.box;
-			secTown = secretary.town;
+			secTown = secretary.town.toUpperCase();
 			secEmail = secretary.email_address;
 			secPhoneNo = secretary.phone_number;
+			secCountry = secretary.country.toUpperCase();
 		}
 
 		let today = new Date();
 		return  {
-			company_name: company.company_name,
-			registration_no: company.registration_no,
-			company_type: company.CompanyType.name,
+			company_name: company.company_name.toUpperCase(),
+			registration_no: company.registration_no.toUpperCase(),
+			company_type: company.CompanyType.name.toUpperCase(),
 			dated: `${today.getDate()}/${(today.getMonth() + 1)}/${today.getFullYear()}`,
 			secretary_name: secName,
 			secretary_postal_code: secPostalCode,
 			secretary_box: secPostalBox,
 			secretary_town: secTown,
 			secretary_email: secEmail,
-			secretary_phone: secPhoneNo
+			secretary_phone: secPhoneNo,
+			secretary_country: secCountry
 		};
 	}
 

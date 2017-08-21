@@ -18,7 +18,7 @@ coverage
 node_modules
 npm-debug.log
 angular-sdk/
-**server/output/CR6s/*.docx
-**server/output/CR7s/*.docx
-**server/output/CR8s/*.docx
-**server/output/shareholders_list/*.docx
+**server/output/CR6s/
+**server/output/CR7s/
+**server/output/CR8s/
+**server/output/shareholders_list/

@@ -35,7 +35,12 @@ function generateCR7 (companyId, from, to, cb) {
 		'street': 'Street',
 		'house_number': 'House number',
 		'building_name': 'Building name',
-		'estate': 'Estate'
+		'estate': 'Estate',
+		'nationality': 'Nationality',
+		'consent': 'Consent',
+		'area_code':'Area code',
+		'country':'Country',
+		'former_names':'Former names'
 	};
 
 	let sql = `
@@ -57,11 +62,13 @@ function generateCR7 (companyId, from, to, cb) {
 		DATE(PersonChanges.date_modified) <= ?
 	)`;
 
-	// pull PersonChanges for the company
-	// group by directorId
-	let findCompanyPromise = Company.findById(companyId, {fields: ['company_name', 'registration_no']});
+	let findCompanyPromise = Company.findById(companyId, {
+		fields: ['id','company_name', 'registration_no','company_type_id'],
+		include: ['CompanyType']
+	});
 
 	findCompanyPromise.then(function (company) {
+		company = JSON.parse(JSON.stringify(company));
 		ds.connector.query(sql, [companyId,from, to], handleResults);
 
 		function handleResults (err,personChanges) {
@@ -78,7 +85,8 @@ function generateCR7 (companyId, from, to, cb) {
 				});
 
 				findSecPromise.then(function (secretary) {
-					let data = formatCR7Data(company.company_name, company.registration_no, secretary, persons);
+					let company_type = company.CompanyType.name.toString().toUpperCase();
+					let data = formatCR7Data(company.company_name, company.registration_no,company_type, secretary, persons);
 					createCR7Form(data);
 				});
 
@@ -124,27 +132,30 @@ function generateCR7 (companyId, from, to, cb) {
 		return persons;
 	}
 
-	function formatCR7Data (company_name, registration_no, secretary, directors) {
+	function formatCR7Data (company_name, registration_no, company_type, secretary, directors) {
 		let secName = NA;
 		let secPostalCode = NA;
 		let secPostalBox = NA;
 		let secTown = NA;
 		let secEmail = NA;
 		let secPhoneNo = NA;
+		let secCountry = NA;
 
 		if (secretary !== null) {
-			secName = `${secretary.surname} ${secretary.other_names}`;
+			secName = `${secretary.surname} ${secretary.other_names}`.toUpperCase();
 			secPostalCode = secretary.postal_code;
 			secPostalBox = secretary.box;
-			secTown = secretary.town;
+			secTown = secretary.town.toUpperCase();
 			secEmail = secretary.email_address;
 			secPhoneNo = secretary.phone_number;
+			secCountry = secretary.country.toUpperCase();
 		}
 
 		let today = new Date();
 		return {
-			company_name: company_name,
-			registration_no: registration_no,
+			company_name: company_name.toUpperCase(),
+			registration_no: registration_no.toUpperCase(),
+			company_type: company_type,
 			directors: directors,
 			dated: `${today.getDate()}/${(today.getMonth() + 1)}/${today.getFullYear()}`,
 			secretary_name: secName,
@@ -152,7 +163,8 @@ function generateCR7 (companyId, from, to, cb) {
 			secretary_box: secPostalBox,
 			secretary_town: secTown,
 			secretary_email: secEmail,
-			secretary_phone: secPhoneNo
+			secretary_phone: secPhoneNo,
+			secretary_country: secCountry
 		};
 	}
 

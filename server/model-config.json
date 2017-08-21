@@ -87,5 +87,9 @@
   "CR6": {
     "dataSource": "mysql",
     "public": true
+  },
+  "CR9": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

@@ -148,6 +148,7 @@ function generateCR8 (companyId, from, to, cb) {
 		let secTown = NA;
 		let secEmail = NA;
 		let secPhoneNo = NA;
+		let secCountry = NA;
 
 		if (secretary !== null) {
 			secName = `${secretary.surname} ${secretary.other_names}`.toUpperCase();
@@ -156,6 +157,7 @@ function generateCR8 (companyId, from, to, cb) {
 			secTown = secretary.town.toUpperCase();
 			secEmail = secretary.email_address;
 			secPhoneNo = secretary.phone_number;
+			secCountry = secretary.country.toUpperCase();
 		}
 		let today = new Date();
 		console.log(company.CompanyType);
@@ -169,7 +171,8 @@ function generateCR8 (companyId, from, to, cb) {
 			secretary_box: secPostalBox,
 			secretary_town: secTown,
 			secretary_email: secEmail,
-			secretary_phone: secPhoneNo
+			secretary_phone: secPhoneNo,
+			secretary_country: secCountry
 		};
 	}
 
