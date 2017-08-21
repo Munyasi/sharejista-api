@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 git pull
+git checkout develop
 npm install
 #create a copy of datasources.json called datasources1.json
 cp server/datasources.json server/datasources1.json
@@ -10,5 +11,5 @@ lb-migration migrate --ds=mysql --method=update
 #recreate original datasources.json
 mv server/datasources1.json server/datasources.json
 export NODE_ENV=production
-forever restart server/server.js
+forever restart -o info.log -e error.log server/server.js
 exit 1
