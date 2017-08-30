@@ -32,6 +32,25 @@
       "type": "number",
       "required": true
     },
+    "par_value": {
+      "type": "number",
+      "required": true
+    },
+    "share_price": {
+      "type": "number",
+      "required": true
+    },
+    "payment_method": {
+      "type": "string",
+      "required": true
+    },
+    "payment_status": {
+      "type": "string",
+      "required": true
+    },
+    "payment_description": {
+      "type": "string"
+    },
     "share_type_id": {
       "type": "number",
       "required": true

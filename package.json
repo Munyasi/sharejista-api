@@ -6,7 +6,8 @@
     "lint": "eslint .",
     "start": "nodemon server/server.js",
     "posttest": "npm run lint && nsp check",
-    "sdk": "./node_modules/.bin/lb-sdk server/server.js angular-sdk"
+    "sdk": "./node_modules/.bin/lb-sdk server/server.js angular-sdk ng2web -i disabled",
+    "mg": "lb-migration migrate --method=update"
   },
   "dependencies": {
     "@mean-expert/loopback-sdk-builder": "^2.1.0-rc.12.1",
