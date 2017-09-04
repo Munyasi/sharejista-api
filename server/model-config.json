@@ -91,5 +91,9 @@
   "CR9": {
     "dataSource": "mysql",
     "public": true
+  },
+  "SharePayment": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

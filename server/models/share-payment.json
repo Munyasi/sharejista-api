@@ -1,0 +1,33 @@
+{
+  "name": "SharePayment",
+  "plural": "SharePayments",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "mixins": {
+    "TimeStamp": true
+  },
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "amount": {
+      "type": "number",
+      "required": true
+    },
+    "payment_type": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "shareTransfer": {
+      "type": "belongsTo",
+      "model": "ShareTransfer",
+      "foreignKey": "share_transfer_id",
+      "required": true
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
