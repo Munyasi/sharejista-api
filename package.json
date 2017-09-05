@@ -6,7 +6,7 @@
     "lint": "eslint .",
     "start": "nodemon server/server.js",
     "posttest": "npm run lint && nsp check",
-    "sdk": "./node_modules/.bin/lb-sdk server/server.js angular-sdk ng2web -i disabled",
+    "sdk": "./node_modules/.bin/lb-sdk server/server.js angular-sdk",
     "mg": "lb-migration migrate --method=update"
   },
   "dependencies": {
