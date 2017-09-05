@@ -1,7 +1,6 @@
 'use strict';
 let Promise = require('bluebird');
 let app = require('../server');
-let _ = require('underscore');
 let fs = require('fs');
 let path = require('path');
 let JSZip = require('jszip');
@@ -25,47 +24,48 @@ function generateCR20 (companyId, from, to, cb) {
 	let getAmountsPaidNonCashPromise = getAmountsPaidNonCash(companyId, from, to);
 	let getTransfereesPromise = getTransfereeDetails(companyId, from, to);
 
-	let document_data = {};
-
 	Promise.all([findCompanyPromise, getShareCountPromise, getAmountsPaidPromise, getAmountsPaidNonCashPromise, getTransfereesPromise])
-		.then(function (promises_results) {
-			let company = promises_results[0];
-			let shares_counts = promises_results[1];
-			let cash_payments = promises_results[2];
-			let noncash_payments = promises_results[3];
-			let transferees_data = promises_results[4];
-
-			company = JSON.parse(JSON.stringify(company));
-			document_data.company_name = company.company_name;
-			document_data.registration_no = company.registration_no;
-			document_data.company_type = company.CompanyType.name;
-
-			if (shares_counts !== undefined) {
-				document_data.total_shares = shares_counts.total_shares;
-				document_data.total_cost = shares_counts.total_cost;
-			}
-			else {
-				document_data.total_shares = 0;
-				document_data.total_cost = 0;
-			}
-
-			if (cash_payments !== undefined)
-				document_data.amount_paid_cash = cash_payments.amount_paid;
-			else
-				document_data.amount_paid_cash = 0;
-
-			if (noncash_payments !== undefined)
-				document_data.amount_paid_noncash = noncash_payments.amount_paid;
-			else
-				document_data.amount_paid_noncash = 0;
-
-			document_data.transferees = compileTransferees(transferees_data.transferees);
-			document_data.total_allotted_shares = transferees_data.total_allotted_shares;
-			let d = new Date();
-			document_data.dated = `${d.getDay()}/${d.getMonth() + 1}/${d.getFullYear()}`;
-			createCR20Form(document_data);
-		})
+		.then(handlePromises)
 		.catch((err) => { cb(err);});
+
+	function handlePromises(promises_results) {
+		let document_data = {};
+		let company = promises_results[0];
+		let shares_counts = promises_results[1];
+		let cash_payments = promises_results[2];
+		let noncash_payments = promises_results[3];
+		let transferees_data = promises_results[4];
+
+		company = JSON.parse(JSON.stringify(company));
+		document_data.company_name = company.company_name;
+		document_data.registration_no = company.registration_no;
+		document_data.company_type = company.CompanyType.name;
+
+		if (shares_counts !== undefined) {
+			document_data.total_shares = shares_counts.total_shares;
+			document_data.total_cost = shares_counts.total_cost;
+		}
+		else {
+			document_data.total_shares = 0;
+			document_data.total_cost = 0;
+		}
+
+		if (cash_payments !== undefined)
+			document_data.amount_paid_cash = cash_payments.amount_paid;
+		else
+			document_data.amount_paid_cash = 0;
+
+		if (noncash_payments !== undefined)
+			document_data.amount_paid_noncash = noncash_payments.amount_paid;
+		else
+			document_data.amount_paid_noncash = 0;
+
+		document_data.transferees = compileTransferees(transferees_data.transferees);
+		document_data.total_allotted_shares = transferees_data.total_allotted_shares;
+		let d = new Date();
+		document_data.dated = `${d.getDay()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+		createCR20Form(document_data);
+	}
 
 	function compileTransferees (transferees) {
 		return transferees.map(function (transferee) {
