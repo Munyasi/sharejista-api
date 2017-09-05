@@ -91,5 +91,9 @@
   "CR9": {
     "dataSource": "mysql",
     "public": true
+  },
+  "CR20": {
+    "dataSource": "mysql",
+    "public": true
   }
 }
