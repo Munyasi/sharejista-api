@@ -1,0 +1,30 @@
+{
+  "name": "AnnualReturn",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "from": {
+      "type": "date",
+      "required": true
+    },
+    "to": {
+      "type": "date",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

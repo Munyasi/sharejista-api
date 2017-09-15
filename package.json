@@ -10,7 +10,6 @@
     "mg": "lb-migration migrate --method=update"
   },
   "dependencies": {
-    "@mean-expert/loopback-sdk-builder": "^2.1.0-rc.12.1",
     "async": "^2.5.0",
     "bluebird": "^3.5.0",
     "compression": "^1.0.3",
@@ -33,6 +32,7 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "@mean-expert/loopback-sdk-builder": "^2.1.0-rc.13.5",
     "eslint": "^2.13.1",
     "eslint-config-loopback": "^4.0.0",
     "nsp": "^2.1.0"

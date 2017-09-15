@@ -99,5 +99,9 @@
   "CR20": {
     "dataSource": "mysql",
     "public": true
+  },
+  "AnnualReturn": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

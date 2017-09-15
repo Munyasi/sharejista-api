@@ -53,6 +53,20 @@
       "required": false,
       "default": 0
     },
+    "total_cash_amount": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "total_non_cash_amount": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "payment_type": {
+      "type": "string",
+      "required": true
+    },
     "initiated_by": {
       "type": "number",
       "required": false
