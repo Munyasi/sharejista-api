@@ -2,6 +2,7 @@
 let app = require('../server');
 let User = app.models.SystemUser;
 
+//create default user
 createDefaultUser();
 
 function createDefaultUser () {
