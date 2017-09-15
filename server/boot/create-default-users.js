@@ -1,4 +1,5 @@
 'use strict';
+
 let app = require('../server');
 let User = app.models.SystemUser;
 
