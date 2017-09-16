@@ -113,7 +113,6 @@ function getSharesIssuedPartiallyNonCash(ds, companyId, from, to){
 		SELECT
 		  ty.name AS class,
 		  st.share_price as price,
-		  total
 		  SUM(st.number_of_shares) AS total
 		FROM ShareTransfer st
 		  INNER JOIN ShareType ty
