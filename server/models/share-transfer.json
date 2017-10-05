@@ -64,8 +64,7 @@
       "default": 0
     },
     "payment_type": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "initiated_by": {
       "type": "number",
