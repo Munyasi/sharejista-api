@@ -22,7 +22,11 @@
       "type": "number"
     },
     "par_value": {
-      "type": "number"
+      "type": "number",
+      "mysql": {
+        "columnName": "par_value",
+        "dataType": "FLOAT"
+      }
     }
   },
   "validations": [],

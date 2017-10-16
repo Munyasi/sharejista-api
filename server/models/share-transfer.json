@@ -38,7 +38,11 @@
     },
     "share_price": {
       "type": "number",
-      "required": true
+      "required": true,
+      "mysql": {
+        "columnName": "share_price",
+        "dataType": "FLOAT"
+      }
     },
     "payment_status": {
       "type": "string",
@@ -53,15 +57,41 @@
       "required": false,
       "default": 0
     },
+    "cash_payable": {
+      "type": "number",
+      "required": false,
+      "default": 0,
+      "mysql": {
+        "columnName": "cash_payable",
+        "dataType": "FLOAT"
+      }
+    },
+    "non_cash_payable": {
+      "type": "number",
+      "required": false,
+      "default": 0,
+      "mysql": {
+        "columnName": "non_cash_payable",
+        "dataType": "FLOAT"
+      }
+    },
     "total_cash_amount": {
       "type": "number",
       "required": true,
-      "default": 0
+      "default": 0,
+      "mysql": {
+        "columnName": "total_cash_amount",
+        "dataType": "FLOAT"
+      }
     },
     "total_non_cash_amount": {
       "type": "number",
       "required": true,
-      "default": 0
+      "default": 0,
+      "mysql": {
+        "columnName": "total_non_cash_amount",
+        "dataType": "FLOAT"
+      }
     },
     "payment_type": {
       "type": "string"

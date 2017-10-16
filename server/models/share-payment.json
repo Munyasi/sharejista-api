@@ -13,7 +13,11 @@
   "properties": {
     "amount": {
       "type": "number",
-      "required": true
+      "required": true,
+      "mysql": {
+        "columnName": "amount",
+        "dataType": "FLOAT"
+      }
     },
     "payment_type": {
       "type": "string",
