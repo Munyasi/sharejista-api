@@ -33,7 +33,7 @@ function AfterRemoteFindById (ctx,remoteMethodOutput, next) {
 
 			// get transferred away shares
 			function getTransferredAwayShares () {
-				ShareTransfer.find({ where: { transferer_id: shareholder.id, approved: 1},
+				ShareTransfer.find({ where: { transferer_type:'shareholder', approved: 1,and:[{or:[{transferer_id: shareholder.id},{transferee_id: shareholder.id}]}]},
 					include:[{
 						relation: 'sharetype',
 						scope: {
@@ -60,7 +60,7 @@ function AfterRemoteFindById (ctx,remoteMethodOutput, next) {
 
 			// get allotted shares
 			function getAllotedShares () {
-				ShareTransfer.find({ where: { transferee_id: shareholder.id, approved: 1},
+				ShareTransfer.find({ where: { transferee_id: shareholder.id,transferer_type:'company', approved: 1},
 					include:[{
 						relation: 'sharetype',
 						scope: {
