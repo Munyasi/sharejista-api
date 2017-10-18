@@ -42,6 +42,10 @@
       "type": "number",
       "required": true
     },
+    "id_type": {
+      "type": "string",
+      "required": true
+    },
     "id_number": {
       "type": "string",
       "required": true
@@ -52,7 +56,7 @@
     },
     "kra_pin": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "date_of_birth": {
       "type": "date",
