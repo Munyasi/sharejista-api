@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-
+#start changes -- package-lock.json changes when npm install is run
+git stash
 # pull the latest changes from the remote repo
 # requires a password
 git pull
