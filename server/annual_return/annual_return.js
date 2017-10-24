@@ -34,6 +34,7 @@ function annualReturn(companyId, from, to, return_date, cb){
 		fields: ['id', 'company_name', 'registration_no','ro_postal_address','ro_postal_code','ro_town_city', 'company_type_id'],
 		include: ['CompanyType']
 	});
+
 	let getNominalCapital = f.getNominalCapital(ds, companyId);
 	let getSharesIssuedWhollyInCash = f.getSharesIssuedWhollyInCash(ds, companyId, from, to);
 	let getSharesIssuedWhollyNonCash = f.getSharesIssuedWhollyNonCash(ds, companyId, from, to);

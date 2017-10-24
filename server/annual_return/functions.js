@@ -1,5 +1,12 @@
 'use strict';
 let _ = require('underscore');
+//SOME VERSIONS OF MYSQL MAY BEHAVE DIFFERENTLY
+//WHEN GROUP BY CLAUSE IS USED
+//TO AVOID THIS PROBLEM, EDIT /etc/mysql/my.cnf
+//AND ADD sql_mode = STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+//RESTART MYSQL AFTER THAT
+
+
 /**
  * get nominal capital of a company
  * @param ds connection to the database

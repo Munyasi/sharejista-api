@@ -3,6 +3,7 @@ let generateList = require('../shareholders/generate_list');
 let afterRemoteFindById = require('../shareholders/after-remote-find-by-id');
 let generateMembersLedger = require('../shares-ledger/members-ledger');
 let generateMemberLedger = require('../shares-ledger/member-ledger');
+let searchShareholder = require('../shareholders/search-shareholder');
 module.exports = function (Shareholder) {
 	Shareholder.generatelist = generateList;
 
@@ -39,4 +40,16 @@ module.exports = function (Shareholder) {
         returns: {arg: 'data', type: 'Object'},
         http: {path: '/generateMemberLedger', verb: 'get'}
     });
+
+	Shareholder.search = searchShareholder;
+	Shareholder.remoteMethod('search', {
+		accepts: [
+			{ arg: 'q', type: 'string', required: true },
+			{ arg: 'company_id', type: 'number', required: true },
+			{ arg: 'limit', type: 'number' },
+			{ arg: 'skip', type: 'number'}
+		],
+		returns: {arg: 'data', type: 'Object'},
+		http: {path: '/search', verb: 'get'}
+	});
 }
