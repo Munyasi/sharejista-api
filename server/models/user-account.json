@@ -1,14 +1,9 @@
 {
-  "name": "SystemUser",
-  "plural": "SystemUsers",
+  "name": "UserAccount",
   "base": "User",
   "idInjection": true,
   "options": {
     "validateUpsert": true
-  },
-  "forceId": false,
-  "mixins": {
-    "TimeStamp": true
   },
   "properties": {},
   "validations": [],

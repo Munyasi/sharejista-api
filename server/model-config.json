@@ -103,5 +103,9 @@
   "AnnualReturn": {
     "dataSource": "mysql",
     "public": true
+  },
+  "UserAccount": {
+    "dataSource": "mysql",
+    "public": true
   }
 }
