@@ -18,6 +18,11 @@
       "type": "date",
       "required": true
     },
+    "data_object": {
+      "type": "string",
+      "required": true,
+      "dataType":"LONGTEXT"
+    },
     "date": {
       "type": "date",
       "required": true

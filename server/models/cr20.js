@@ -1,5 +1,5 @@
 'use strict';
-let generateCR20 = require('../CR20/generate_cr20');
+let generateCR20 = require('../CR20/generate-cr20');
 module.exports = function(Cr20) {
 	Cr20.generateCR20 = generateCR20;
 	Cr20.remoteMethod('generateCR20', {

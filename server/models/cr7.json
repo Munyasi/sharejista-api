@@ -27,6 +27,11 @@
       "required": true,
       "desc": "Value can be CR7 or CR8"
     },
+    "data_object": {
+      "type": "string",
+      "required": true,
+      "dataType":"LONGTEXT"
+    },
     "date": {
       "type": "date",
       "required": true
