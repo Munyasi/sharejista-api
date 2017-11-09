@@ -7,11 +7,11 @@
     "start": "nodemon server/server.js",
     "posttest": "npm run lint && nsp check",
     "sdk": "./node_modules/.bin/lb-sdk server/server.js angular-sdk",
-    "sdk-dev": "./node_modules/.bin/lb-sdk server/server.js ../secretarialsystem-frontend/src/app/back/shared/sdk",
     "sdk2": "./node_modules/.bin/lb-sdk server/server.js /Users/petermunyasi/PhpstormProjects/secretarialsystem-angular-cli/src/app/back/shared/sdk",
     "mg": "lb-migration migrate --method=update"
   },
   "dependencies": {
+    "@mean-expert/loopback-component-realtime": "^1.0.0-rc.9.6",
     "async": "^2.5.0",
     "bluebird": "^3.5.0",
     "compression": "^1.0.3",
@@ -37,7 +37,7 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
-    "@mean-expert/loopback-sdk-builder": "^2.1.0-rc.13.5",
+    "@mean-expert/loopback-sdk-builder": "^2.1.0-rc.14",
     "eslint": "^2.13.1",
     "eslint-config-loopback": "^4.0.0",
     "nsp": "^2.1.0"
