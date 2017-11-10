@@ -1,9 +1,10 @@
 'use strict';
-let Promise = require('bluebird');
-let app = require('../server');
-let fs = require('fs');
+const app = require('../server');
+const fs = require('fs');
+const uuid = require('uuid/v4');
+
 const getCR20Data = require('./get-cr20-data');
-const createCR20Document = require('./get-cr20-data');
+const createCR20Document = require('./create-cr20-document');
 
 function generateCR20 (companyId, from, to, cb) {
 	let Person = app.models.Person;
@@ -29,13 +30,13 @@ function generateCR20 (companyId, from, to, cb) {
 			getTransfereesPromise
 		])
 		.then((results) => {
-			handlePromises(companyId, from, to, results);
+			handlePromises(companyId, from, to, cb, results);
 		})
 		.catch((err) => { cb(err);});
 }
 
-function handlePromises(companyId, from, to, promises_results) {
-	let document_data = {};
+function handlePromises(companyId, from, to, cb, promises_results) {
+	let data = {};
 	let company = promises_results[0];
 	let shares_counts = promises_results[1];
 	let cash_payments = promises_results[2];
@@ -43,33 +44,34 @@ function handlePromises(companyId, from, to, promises_results) {
 	let transferees_data = promises_results[4];
 
 	company = JSON.parse(JSON.stringify(company));
-	document_data.company_name = company.company_name;
-	document_data.registration_no = company.registration_no;
-	document_data.company_type = company.CompanyType.name;
+	data.company_name = company.company_name;
+	data.registration_no = company.registration_no;
+	data.company_type = company.CompanyType.name;
 
 	if (shares_counts !== undefined) {
-		document_data.total_shares = shares_counts.total_shares;
-		document_data.total_cost = shares_counts.total_cost;
+		data.total_shares = shares_counts.total_shares;
+		data.total_cost = shares_counts.total_cost;
 	}
 	else {
-		document_data.total_shares = 0;
-		document_data.total_cost = 0;
+		data.total_shares = 0;
+		data.total_cost = 0;
 	}
 
 	if (cash_payments !== undefined)
-		document_data.amount_paid_cash = cash_payments.amount_paid;
+		data.amount_paid_cash = cash_payments.amount_paid;
 	else
-		document_data.amount_paid_cash = 0;
+		data.amount_paid_cash = 0;
 
 	if (noncash_payments !== undefined)
-		document_data.amount_paid_noncash = noncash_payments.amount_paid;
+		data.amount_paid_noncash = noncash_payments.amount_paid;
 	else
-		document_data.amount_paid_noncash = 0;
+		data.amount_paid_noncash = 0;
 
-	document_data.transferees = compileTransferees(transferees_data.transferees);
-	document_data.total_allotted_shares = transferees_data.total_allotted_shares;
+	data.transferees = compileTransferees(transferees_data.transferees);
+	data.total_allotted_shares = transferees_data.total_allotted_shares;
 	let d = new Date();
-	document_data.dated = `${d.getDay()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+	data.dated = `${d.getDay()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+
 	let itemP = createCR20Item(companyId, from, to, data);
 
 	itemP.then( item => {

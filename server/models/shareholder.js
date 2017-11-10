@@ -9,7 +9,7 @@ module.exports = function (Shareholder) {
 
 	Shareholder.remoteMethod('generatelist', {
 		accepts: [
-			{arg: 'company_id', type: 'string', required: true},
+			{arg: 'company_id', type: 'number', required: true},
 			{arg: 'export_config', type: 'object', required: false,  http: { source: 'body' }},
 			{arg: 'res', type: 'object', 'http': {source: 'res'}}
 		],

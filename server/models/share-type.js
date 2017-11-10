@@ -6,5 +6,5 @@ module.exports = function(Sharetype) {
     Sharetype.remoteMethod('getShareTypes', {
         returns: {arg: 'data', type: 'Object'},
         http: {path: '/getShareTypes', verb: 'get'}
-    })
+    });
 };

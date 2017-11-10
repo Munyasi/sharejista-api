@@ -1,8 +1,9 @@
 'use strict';
-let addCompany = require('../company/create_company');
-let updateCompany = require('../company/update_company');
-let annualReturn = require('../annual_return/annual_return');
-let searchCompany = require('../company/search-company');
+const addCompany = require('../company/create_company');
+const updateCompany = require('../company/update_company');
+const annualReturn = require('../annual_return/annual_return');
+const searchCompany = require('../company/search-company');
+const generateAnnualReturnById = require('../annual_return/get-annual-return-by-id');
 
 module.exports = function(Company) {
     Company.addCompany = addCompany ;
@@ -33,6 +34,15 @@ module.exports = function(Company) {
 		],
 		returns: {arg: 'data', type: 'Object'},
 		http: {path: '/annualReturn', verb: 'post'}
+	});
+
+	Company.generateAnnualReturnById = generateAnnualReturnById;
+	Company.remoteMethod('generateAnnualReturnById', {
+		accepts: [
+			{arg: 'annualReturnId', type: 'number', required: true}
+		],
+		returns: {arg: 'data', type: 'Object'},
+		http: {path: '/generateAnnualReturnById', verb: 'post'}
 	});
 
 	Company.search = searchCompany;

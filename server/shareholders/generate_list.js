@@ -9,76 +9,83 @@ let _ = require('underscore');
 let uuid = require('uuid/v4');
 
 function generateList (company_id, export_config, res, cb) {
-	let app = require('../server');
-	let Shareholder = app.models.Shareholder;
-	let Company = app.models.Company;
-	let template_path = '';
+    let app = require('../server');
+    let Shareholder = app.models.Shareholder;
+    let Company = app.models.Company;
+    let template_path = '';
     let output_path = '../output/shareholders_list';
-	if(export_config.type=='doc'){
+    let filter = {
+		where: { company_id: company_id },
+		include: ['Shares']
+    };
+
+    //file type
+    if(export_config.type === 'doc'){
         template_path = '../templates/list_of_shareholders.docx';
-
-    }else if(export_config.type=='xlsx'){
+    }else if(export_config.type === 'xlsx'){
         template_path = '../templates/list_of_shareholders.xlsx';
-	}else{
+    }else{
     	return cb('No such file type');
-	}
+    }
 
-	let sortByShares = false;
-
-	let findCompanyPromise = Company.findById(company_id,
+    //name
+    if(export_config.name !== ""){
+		filter.order =
+	    filter.order =`name ${export_config.name.toUpperCase()}`;
+    }
+	const shareholderPromise = Shareholder.find(filter);
+    const findCompanyPromise = Company.findById(company_id,
 		{
 			fields: ['company_name', 'ro_postal_address', 'ro_postal_code', 'ro_town_city']
 		});
 
-	findCompanyPromise.then(function (company) {
-		let sort_string = createSortString();
+    const p = Promise.all([findCompanyPromise, shareholderPromise]);
 
-		let findShareholderPromise = Shareholder.find({
-			where: {company_id: company_id},
-			include: ['Shares'],
-			order: sort_string
-		});
+    p.then( results => {
+		let company = results[0],
+		    shareholders = results[1];
+		shareholders = JSON.parse(JSON.stringify(shareholders));
+		company = JSON.parse(JSON.stringify(company));
+		shareholders = calculateTotalShares(shareholders);
 
-		findShareholderPromise.then(function (shareholders) {
-			shareholders = JSON.parse(JSON.stringify(shareholders));
-			shareholders = calculateTotalShares(shareholders);
-
-			if (sortByShares) {
-				shareholders = _.sortBy(shareholders, 'total_shares').reverse();
-			}
-
-            if(export_config.type=='doc'){
-                let createDocumentPromise = createWordDocument(shareholders, company);
-                createDocumentPromise.then((data) => { cb(null, data);});
-                createDocumentPromise.catch((err) => { cb(err);});
-
-            }else if(export_config.type=='xlsx'){
-                let createDocumentPromise = createExcelDocument(shareholders, company);
-            }
-		});
-
-		findShareholderPromise.catch((err) => { cb(err);});
-	});
-
-	findCompanyPromise.catch((err) => { cb(err);});
-
-	function createSortString () {
-		let sortString = '';
-		if (export_config) {
-			if (export_config.field === 'name') {
-				sortString = `${export_config.field} ${export_config.order}`;
-			}
-			else
-				sortByShares = true;
-		}
-		else {
-			sortString = `name ASC`;
+		//sort by shares
+		if (export_config.shares) {
+			shareholders = sortByTotalShares(shareholders, export_config.shares);
 		}
 
-		return sortString;
-	}
+		// if(export_config.sharesRange.min || export_config.sharesRange.min)
+		// 	shareholders = sortBySharesRanges(shareholders, export_config.sharesRange.min, export_config.sharesRange.max);
 
-	function calculateTotalShares (shareholders) {
+		if(export_config.type === 'doc'){
+			console.log(shareholders);
+			let createDocumentPromise = createWordDocument(shareholders, company);
+			createDocumentPromise.then((data) => { cb(null, data);});
+			createDocumentPromise.catch((err) => { cb(err);});
+
+		}else if(export_config.type === 'xlsx'){
+			let createDocumentPromise = createExcelDocument(shareholders, company);
+		}
+    });
+
+    p.catch( err => cb(err) );
+
+    function sortByTotalShares (shareholders, ascDesc) {
+		if(ascDesc === 'asc'){
+			return _.sortBy(shareholders, 'total');
+		}
+		else if(ascDesc === 'desc'){
+			_.sortBy(shareholders, 'total').reverse();
+		}
+    }
+
+    function sortBySharesRanges (shareholders, min, max) {
+	    return shareholders.map( s => {
+	    	if(s.total > min || s.total < max)
+	    		return s;
+	    });
+    }
+
+    function calculateTotalShares (shareholders) {
 		for (let i = 0; i < shareholders.length; i++) {
 			shareholders[i].n = i + 1;
 			let total = 0;
@@ -89,15 +96,15 @@ function generateList (company_id, export_config, res, cb) {
 		}
 
 		return shareholders;
-	}
+    }
 
-	/**
+    /**
 	 *
 	 * @param shareholders
 	 * @param company
 	 * @Return A promise
 	 */
-	function createWordDocument (shareholders, company) {
+    function createWordDocument (shareholders, company) {
 		let content = fs.readFileSync(path.resolve(__dirname, template_path), 'binary');
 		let zip = new JSZip(content);
 		let doc = new Docxtemplater();
@@ -135,10 +142,10 @@ function generateList (company_id, export_config, res, cb) {
 		}
 
 		return new Promise(createDocPromise);
-	}
+    }
 
 
-	function createExcelDocument(shareholders, company) {
+    function createExcelDocument(shareholders, company) {
         let workbook = new Excel.Workbook();
 
         workbook.xlsx.readFile(path.resolve(__dirname, template_path))

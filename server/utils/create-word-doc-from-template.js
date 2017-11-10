@@ -30,7 +30,7 @@ function createWordDocument (templatePath, outputDir,fileName, data) {
 		doc.render();
 
 		let buf = doc.getZip().generate({type: 'nodebuffer'});
-		fs.writeFileSync(path.resolve(outputDir,fileName), buf);
+		fs.writeFileSync(path.resolve(outputDir, fileName), buf);
 
 		return fileName;
 	}

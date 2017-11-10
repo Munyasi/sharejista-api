@@ -1,5 +1,7 @@
 'use strict';
-let _ = require('underscore');
+const _ = require('underscore');
+const executeQuery = require('../utils/execute-query');
+
 //SOME VERSIONS OF MYSQL MAY BEHAVE DIFFERENTLY
 //WHEN GROUP BY CLAUSE IS USED
 //TO AVOID THIS PROBLEM, EDIT /etc/mysql/my.cnf
@@ -29,14 +31,7 @@ function getNominalCapital (ds, companyId) {
 		WHERE (c.id = ? )
 		ORDER BY ty.name;`;
 
-	return new Promise(function (resolve, reject) {
-		ds.connector.query(sql, [companyId], function (err, results) {
-			if (err)
-				return reject(err);
-			else
-				return resolve(results);
-		});
-	});
+	return executeQuery(sql, ds, [companyId]);
 }
 /**
  *  Get shares issued wholly in cash methods within specified period, from
@@ -67,14 +62,7 @@ function getSharesIssuedWhollyInCash (ds, companyId, from, to) {
 			GROUP BY st.share_type_id
 			ORDER BY ty.name;;`;
 
-	return new Promise(function (resolve, reject) {
-		ds.connector.query(sql, [companyId, from, to], function (err, results) {
-			if (err)
-				return reject(err);
-			else
-				return resolve(results);
-		});
-	});
+	return executeQuery(sql, ds, [companyId, from, to]);
 }
 
 /**
@@ -105,14 +93,7 @@ function getSharesIssuedWhollyNonCash(ds, companyId, from, to){
 		GROUP BY st.share_type_id
 		ORDER BY ty.name;;`;
 
-	return new Promise(function (resolve, reject) {
-		ds.connector.query(sql, [companyId, from, to], function (err, results) {
-			if (err)
-				return reject(err);
-			else
-				return resolve(results);
-		});
-	});
+	return executeQuery(sql, ds, [companyId, from, to]);
 }
 
 function getSharesIssuedPartiallyNonCash(ds, companyId, from, to){
@@ -136,14 +117,7 @@ function getSharesIssuedPartiallyNonCash(ds, companyId, from, to){
 		GROUP BY st.share_type_id
 		ORDER BY ty.name;;`;
 
-	return new Promise(function (resolve, reject) {
-		ds.connector.query(sql, [companyId, from, to], function (err, results) {
-			if (err)
-				return reject(err);
-			else
-				return resolve(results);
-		});
-	});
+	return executeQuery(sql, ds, [companyId, from, to]);
 }
 
 function getSharesIssuedInDiscount(ds, companyId, from, to){
@@ -165,14 +139,7 @@ function getSharesIssuedInDiscount(ds, companyId, from, to){
 		GROUP BY st.share_type_id
 		ORDER BY ty.name;;`;
 
-	return new Promise(function (resolve, reject) {
-		ds.connector.query(sql, [companyId, from, to], function (err, results) {
-			if (err)
-				return reject(err);
-			else
-				return resolve(results);
-		});
-	});
+	return executeQuery(sql, ds, [companyId, from, to]);
 }
 
 /**
@@ -197,14 +164,7 @@ function getSharesTakenUp(ds, companyId){
 			WHERE (c.id = ? )
 			ORDER BY ty.name;`;
 
-	return new Promise(function (resolve, reject) {
-		ds.connector.query(sql, [companyId], function (err, results) {
-			if (err)
-				return reject(err);
-			else
-				return resolve(results);
-		});
-	});
+	return executeQuery(sql, ds, [companyId]);
 }
 
 /**
@@ -233,14 +193,7 @@ function getShareholderDetails (ds, companyId) {
 			WHERE (sh.company_id = ? )
 			GROUP BY s.shareholder_id, s.sharetype_id;`;
 
-	return new Promise(function (resolve, reject) {
-		ds.connector.query(sql, [companyId], function (err, results) {
-			if (err)
-				return reject(err);
-			else
-				return resolve(results);
-		});
-	});
+	return executeQuery(sql, ds, [companyId]);
 }
 
 /**
@@ -275,14 +228,7 @@ function getShareTransfers (ds, companyId, from, to) {
 			      )
 	        ORDER BY ty.name;`;
 
-	return new Promise(function (resolve, reject) {
-		ds.connector.query(sql, [companyId, from, to], function (err, results) {
-			if (err)
-				return reject(err);
-			else
-				return resolve(results);
-		});
-	});
+	return executeQuery(sql, ds, [companyId, from, to]);
 }
 
 /**
@@ -316,9 +262,7 @@ function getShareholdersAndTransfers(ds, companyId, from, to){
 
 				return resolve(shareholders);
 			})
-			.catch((err) => {
-				return reject(err);
-			});
+			.catch((err) => { reject(err); });
 	});
 }
 
@@ -349,18 +293,7 @@ function getOfficers(ds, companyId){
 			      AND p.resignation_date IS NULL
 			ORDER BY p.surname, p.other_names;`;
 
-	return new Promise(function (resolve, reject) {
-		ds.connector.query(sql, [companyId], function (err, results) {
-			if (err)
-				return reject(err);
-			else
-				return resolve(results);
-		});
-	});
-}
-
-function getCompanySecretary(ds, companyId){
-
+	return executeQuery(sql, ds, [companyId]);
 }
 
 let functions = {

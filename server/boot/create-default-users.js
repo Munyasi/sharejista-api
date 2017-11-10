@@ -1,7 +1,7 @@
 'use strict';
 
 let app = require('../server');
-let User = app.models.SystemUser;
+let User = app.models.UserAccount;
 
 //create default user
 createDefaultUser();
@@ -24,7 +24,7 @@ function createDefaultUser () {
 			}
 		})
 		.catch(function (err) {
-			Logger.error(err);
+			//Logger.error(err);
 		});
 }
 

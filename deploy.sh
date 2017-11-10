@@ -5,12 +5,15 @@ git stash
 # requires a password
 git pull
 
-#checkout develop branch
-# TODO: Change to master branch when all code is merged to master
-git checkout develop
+#checkout master branch
+git checkout master
 
 # install  node packages
 npm install
+
+
+#set NODE_ENV to production
+export NODE_ENV=production
 
 #create a copy of datasources.json called datasources1.json
 cp server/datasources.json server/datasources1.json
@@ -23,9 +26,6 @@ lb-migration migrate --ds=mysql --method=update
 
 #recreate original datasources.json
 mv server/datasources1.json server/datasources.json
-
-#set NODE_ENV to production
-export NODE_ENV=production
 
 # restart loopback server
 forever restart -o info.log -e error.log server/server.js

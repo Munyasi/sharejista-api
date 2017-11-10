@@ -1,5 +1,5 @@
 'use strict';
-
+const executeQuery = require('../utils/execute-query');
 /**
  * Get CR9 data
  * @param companyId Company ID
@@ -10,15 +10,8 @@
  */
 function getCR9Data(companyId, from, to, dataSource) {
 	let sql = getCR9Query();
-	let p = (resolve, reject) => {
-		dataSource.connector.query(sql, [companyId, from, to], (err, directors) => {
-			if(err)
-				reject(err);
-			resolve(directors);
-		});
-	};
 
-	return new Promise(p);
+	return executeQuery(sql, dataSource, [companyId, from, to])
 }
 
 /**
