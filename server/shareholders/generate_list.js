@@ -53,11 +53,14 @@ function generateList (company_id, export_config, res, cb) {
 			shareholders = sortByTotalShares(shareholders, export_config.shares);
 		}
 
-		// if(export_config.sharesRange.min || export_config.sharesRange.min)
-		// 	shareholders = sortBySharesRanges(shareholders, export_config.sharesRange.min, export_config.sharesRange.max);
+		if(export_config.sharesRange.min || export_config.sharesRange.min)
+			shareholders = sortBySharesRanges(shareholders, export_config.sharesRange.min, export_config.sharesRange.max);
+
+		//number shareholders
+	    shareholders = numberShareholders(shareholders);
 
 		if(export_config.type === 'doc'){
-			console.log(shareholders);
+
 			let createDocumentPromise = createWordDocument(shareholders, company);
 			createDocumentPromise.then((data) => { cb(null, data);});
 			createDocumentPromise.catch((err) => { cb(err);});
@@ -74,20 +77,19 @@ function generateList (company_id, export_config, res, cb) {
 			return _.sortBy(shareholders, 'total');
 		}
 		else if(ascDesc === 'desc'){
-			_.sortBy(shareholders, 'total').reverse();
+			return _.sortBy(shareholders, 'total').reverse();
 		}
     }
 
     function sortBySharesRanges (shareholders, min, max) {
-	    return shareholders.map( s => {
-	    	if(s.total > min || s.total < max)
-	    		return s;
+    	console.log({min, max});
+	    return shareholders.filter( s => {
+		    return (s.total >= parseInt(min) && s.total <= parseInt(max))
 	    });
     }
 
     function calculateTotalShares (shareholders) {
 		for (let i = 0; i < shareholders.length; i++) {
-			shareholders[i].n = i + 1;
 			let total = 0;
 			for (let share of shareholders[i].Shares) {
 				total += share.number_of_shares;
@@ -96,6 +98,13 @@ function generateList (company_id, export_config, res, cb) {
 		}
 
 		return shareholders;
+    }
+
+    function numberShareholders (shareholders) {
+	    return shareholders.map((s, i) => {
+		    s.n = i + 1;
+		    return s;
+	    });
     }
 
     /**
