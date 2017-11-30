@@ -103,6 +103,12 @@
     "approved_by": {
       "type": "number",
       "required": false
+    },
+    "dated": {
+      "type": "date"
+    },
+    "share_certificate_no": {
+      "type": "number"
     }
   },
   "validations": [],

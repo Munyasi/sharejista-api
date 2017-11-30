@@ -5,6 +5,7 @@ let approveAllotment = require('../sharetransfer/approve-allotment');
 let listTransfers = require('../sharetransfer/list-transfers');
 let listAllotments = require('../sharetransfer/list-allotments');
 let searchAllotment = require('../sharetransfer/search-allotment');
+let generateShareCertificate = require('../sharetransfer/generate-share-certificate');
 
 module.exports = function(Sharetransfer) {
 	Sharetransfer.approveTransfer = approveTransfer ;
@@ -61,4 +62,13 @@ module.exports = function(Sharetransfer) {
 		returns: {arg: 'data', type: 'Object'},
 		http: {path: '/search', verb: 'get'}
 	});
+
+  Sharetransfer.generateShareCertificate = generateShareCertificate;
+  Sharetransfer.remoteMethod('generateShareCertificate', {
+    accepts: [
+      {arg: 'transferId', type: 'number', required: true}
+    ],
+    returns: {arg: 'data', type: 'Object'},
+    http: {path: '/generate-share-certificate', verb: 'get'}
+  });
 };
