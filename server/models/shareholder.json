@@ -20,34 +20,35 @@
       "required": true
     },
     "email_address": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "phone_number": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "id_reg_number": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "appointment_date": {
       "type": "date"
     },
     "postal_code": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "box": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "town": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "profile_photo": {
       "type": "string"
+    },
+    "group_members": {
+      "type": "string",
+      "mysql": {
+        "columnName": "group_members",
+        "dataType": "text"
+      }
     }
   },
   "validations": [],

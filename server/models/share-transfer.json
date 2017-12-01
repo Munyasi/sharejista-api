@@ -28,10 +28,6 @@
       "type": "number",
       "required": true
     },
-    "number_of_shares": {
-      "type": "number",
-      "required": true
-    },
     "par_value": {
       "type": "number",
       "required": true
@@ -41,37 +37,6 @@
       "required": true,
       "mysql": {
         "columnName": "share_price",
-        "dataType": "FLOAT"
-      }
-    },
-    "payment_status": {
-      "type": "string",
-      "required": true
-    },
-    "share_type_id": {
-      "type": "number",
-      "required": true
-    },
-    "approved": {
-      "type": "boolean",
-      "required": false,
-      "default": 0
-    },
-    "cash_payable": {
-      "type": "number",
-      "required": false,
-      "default": 0,
-      "mysql": {
-        "columnName": "cash_payable",
-        "dataType": "FLOAT"
-      }
-    },
-    "non_cash_payable": {
-      "type": "number",
-      "required": false,
-      "default": 0,
-      "mysql": {
-        "columnName": "non_cash_payable",
         "dataType": "FLOAT"
       }
     },
@@ -93,22 +58,15 @@
         "dataType": "FLOAT"
       }
     },
-    "payment_type": {
-      "type": "string"
-    },
     "initiated_by": {
-      "type": "number",
-      "required": false
-    },
-    "approved_by": {
       "type": "number",
       "required": false
     },
     "dated": {
       "type": "date"
     },
-    "share_certificate_no": {
-      "type": "number"
+    "comment": {
+      "type": "text"
     }
   },
   "validations": [],

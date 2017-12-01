@@ -11,8 +11,26 @@
     "TimeStamp": true
   },
   "properties": {
+    "entry_no": {
+      "type": "string",
+      "required": true
+    },
     "number_of_shares": {
-      "type": "number"
+      "type": "number",
+      "required": true
+    },
+    "action": {
+      "type": "string",
+      "required": true,
+      "desc": "Expects TRANSFER/ALLOTMENT/REPLACEMENT"
+    },
+    "status": {
+      "type": "string",
+      "required": true,
+      "desc": "Expects VALID/INVALID"
+    },
+    "dated": {
+      "type": "date"
     }
   },
   "validations": [],
@@ -26,6 +44,11 @@
       "type": "belongsTo",
       "model": "ShareType",
       "foreignKey": "sharetype_id"
+    },
+    "ShareTransfer": {
+      "type": "belongsTo",
+      "model": "ShareTransfer",
+      "foreignKey": "sharetransfer_id"
     }
   },
   "acls": [],
