@@ -4,6 +4,7 @@ let afterRemoteFindById = require('../shareholders/after-remote-find-by-id');
 let generateMembersLedger = require('../shares-ledger/members-ledger');
 let generateMemberLedger = require('../shares-ledger/member-ledger');
 let searchShareholder = require('../shareholders/search-shareholder');
+let bulkUpload = require('../shareholders/bulk-upload');
 module.exports = function (Shareholder) {
 	Shareholder.generatelist = generateList;
 
@@ -52,4 +53,15 @@ module.exports = function (Shareholder) {
 		returns: {arg: 'data', type: 'Object'},
 		http: {path: '/search', verb: 'get'}
 	});
+
+
+    Shareholder.bulkUpload = bulkUpload;
+
+    Shareholder.remoteMethod('bulkUpload', {
+        accepts: [
+            {arg: 'fileObject', type: 'object', required: true,  http: { source: 'body' }}
+        ],
+        returns: {arg: 'data', type: 'Object'},
+        http: {path: '/bulkUpload', verb: 'post'}
+    });
 }

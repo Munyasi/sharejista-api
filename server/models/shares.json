@@ -12,7 +12,7 @@
   },
   "properties": {
     "entry_no": {
-      "type": "string",
+      "type": "number",
       "required": true
     },
     "number_of_shares": {
@@ -22,7 +22,7 @@
     "action": {
       "type": "string",
       "required": true,
-      "desc": "Expects TRANSFER/ALLOTMENT/REPLACEMENT"
+      "desc": "Expects TRANSFER/ALLOTMENT/REPLACEMENT/CF(carried forward from manual system)"
     },
     "status": {
       "type": "string",

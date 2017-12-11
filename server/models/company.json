@@ -21,7 +21,6 @@
     },
     "avg_turn_over": {
       "type": "number",
-      "required": true,
       "mysql": {
         "columnName": "avg_turn_over",
         "dataType": "FLOAT"

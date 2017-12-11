@@ -21,7 +21,7 @@
     "data_object": {
       "type": "string",
       "required": true,
-      "dataType":"LONGTEXT"
+      "dataType": "LONGTEXT"
     },
     "date": {
       "type": "date",

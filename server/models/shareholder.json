@@ -40,6 +40,18 @@
     "town": {
       "type": "string"
     },
+    "county": {
+      "type": "string"
+    },
+    "constituency": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "sublocation": {
+      "type": "string"
+    },
     "profile_photo": {
       "type": "string"
     },

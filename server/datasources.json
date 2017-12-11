@@ -1,7 +1,8 @@
 {
   "db": {
     "name": "db",
-    "connector": "memory"
+    "connector": "memory",
+    "file": "memory-db.json"
   },
   "mysql": {
     "host": "localhost",
@@ -11,6 +12,13 @@
     "name": "mysql",
     "user": "root",
     "connector": "mysql"
+  },
+  "documents-storage": {
+    "name": "documents-storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./storage/documents",
+    "nameConflict": "makeUnique"
   },
   "storage": {
     "name": "storage",

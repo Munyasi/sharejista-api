@@ -107,5 +107,13 @@
   "UserAccount": {
     "dataSource": "mysql",
     "public": true
+  },
+  "Document": {
+    "dataSource": "documents-storage",
+    "public": true
+  },
+  "Temp": {
+    "dataSource": "db",
+    "public": true
   }
 }
