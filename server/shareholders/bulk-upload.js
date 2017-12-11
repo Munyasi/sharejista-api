@@ -93,7 +93,8 @@ function bulkUpload (file, cb) {
               "action": "CF",
               "status": "VALID",
               "sharetype_id": share_data.share_type_id,
-              "shareholder_id": shareholder_id
+              "shareholder_id": shareholder_id,
+              "company_id": file.company_id
           }
       )
     }

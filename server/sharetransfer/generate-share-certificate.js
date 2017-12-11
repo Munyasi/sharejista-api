@@ -9,26 +9,31 @@ const TEMPLATE_PATH = path.resolve(__dirname, '../templates/share_certificate.do
 const OUTPUT_PATH = path.resolve(__dirname , '../output/share_certificates');
 
 
-function generateShareCertificate(transferId, cb) {
-  const ShareTransfer = App.models.ShareTransfer;
+function generateShareCertificate(shareEntryId, cb) {
+  const Shares = App.models.Shares;
   const Company = App.models.Company;
   let data = {};
 
-  const p = ShareTransfer.findById(transferId, {include: ['transferee','sharetype']});
+  const p = Shares.findById(shareEntryId, {include: ['Shareholder','ShareType']});
 
-  p.then(transfer => {
-    transfer = JSON.parse(JSON.stringify(transfer));
-    data.name = transfer.transferee.name.toUpperCase();
-    data.shares = transfer.number_of_shares;
-    data.par_value = transfer.sharetype.par_value;
-    data.price = transfer.share_price;
-    data.type = transfer.sharetype.name;
-    data.address = `P.O BOX ${transfer.transferee.postal_code}-${transfer.transferee.box} ${transfer.transferee.town}.`.toUpperCase();
-    let words = toWords(transfer.number_of_shares);
+  p.then(entry => {
+    entry = JSON.parse(JSON.stringify(entry));
+    data.name = entry.Shareholder.name.toUpperCase();
+    data.shares = entry.number_of_shares;
+    data.par_value = entry.ShareType.par_value;
+
+    if(entry.action === 'CF')
+      data.price = 'NA'; //entry.share_price;
+    else
+      data.price = entry.share_price || 'NA';
+
+    data.type = entry.ShareType.name;
+    data.address = `P.O BOX ${entry.Shareholder.postal_code}-${entry.Shareholder.box} ${entry.Shareholder.town}.`.toUpperCase();
+    let words = toWords(entry.number_of_shares);
     data.shares_word = words.toUpperCase();
-    data.no = transfer.share_certificate_no || '';
+    data.no = entry.entry_no || '';
 
-    let dated = transfer.dated || transfer.createdAt;
+    let dated = entry.dated || entry.createdAt;
     dated = new Date(dated);
 
     data.day = dated.getDate() + nth(dated.getDate());
@@ -36,7 +41,7 @@ function generateShareCertificate(transferId, cb) {
     data.year = dated.getFullYear();
 
     // get company details
-    const companyPromise = Company.findById(transfer.company_id);
+    const companyPromise = Company.findById(entry.company_id);
 
     companyPromise.then( results => {
       let company = JSON.parse(JSON.stringify(results));
