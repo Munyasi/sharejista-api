@@ -11,10 +11,10 @@
     "TimeStamp": true
   },
   "indexes": {
-    "certificate_shareholder_index": {
-      "keys": {"certificate_no": 1, "shareholder_id": -1},
+    "company_certificate_index": {
+      "keys": {"company_id": 1, "certificate_no": -1},
       "options": {
-        "unique": false
+        "unique": true
       }
     }
   },

@@ -71,7 +71,8 @@ function bulkUpload (file, cb) {
                                     "action": "CF",
                                     "status": "VALID",
                                     "shareholder_id": value.id,
-                                    "sharetype_id": sheet_data['shareholderShareTypesRes'][key2]
+                                    "sharetype_id": sheet_data['shareholderShareTypesRes'][key2],
+                                    "company_id": file.company_id
                                 })
                             }
                         })

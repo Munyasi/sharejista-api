@@ -151,7 +151,7 @@ function shareCertificateNumber(colShareholderCertificateNumber,shares_list,call
         if(rowNumber<3) return;
 
         //check for duplicate share certificate number from db
-        if(_.find(shares_list, ['entry_no', cell.value])){
+        if(_.find(shares_list, ['certificate_no', cell.value])){
             share_certificate_number.errors.push(`Share certificate number for row ${rowNumber} already exists`);
         }
 
@@ -203,7 +203,7 @@ function shareholderShareTypes(colShareholderShareTypes,share_type_results,callb
         }
 
         // Check for ids from db
-        let share_type_id=-1;
+        let share_type_id = -1;
         let share_types_str = '';
         _.forEach(share_type_results, value => {
             if(_.toLower(cell.value)===_.toLower(value.name)){
