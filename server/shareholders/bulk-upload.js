@@ -80,6 +80,7 @@ function bulkUpload (file, cb) {
                     let sh_certificates = createShares(share_certificate_nos);
                     sh_certificates.then(res=>{cb(null,"Success");console.timeEnd('bulk');})
                     sh_certificates.catch(err=>cb(err));
+                    //TODO: delete temp and uploaded file;
                 })
             })
             .catch(err=>cb(err))
