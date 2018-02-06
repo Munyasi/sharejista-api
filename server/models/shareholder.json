@@ -10,10 +10,33 @@
   "mixins": {
     "TimeStamp": true
   },
+  "indexes": {
+    "company_email_index": {
+      "keys": {"company_id": 1, "email_address": -1},
+      "options": {
+        "unique": true
+      }
+    },
+    "company_entry_index": {
+      "keys": {"company_id": 1, "entry_number": -1},
+      "options": {
+        "unique": true
+      }
+    },
+    "company_idtype_idregno_index": {
+      "keys": {"company_id": 1, "id_type": -1,"id_reg_number": -1},
+      "options": {
+        "unique": true
+      }
+    }
+  },
   "properties": {
     "type": {
       "type": "string",
-      "required": "string"
+      "required": true
+    },
+    "entry_number": {
+      "type": "string"
     },
     "name": {
       "type": "string",
@@ -25,8 +48,13 @@
     "phone_number": {
       "type": "string"
     },
+    "id_type": {
+      "type": "string",
+      "required": true
+    },
     "id_reg_number": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "appointment_date": {
       "type": "date"

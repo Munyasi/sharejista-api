@@ -10,8 +10,16 @@
   "mixins": {
     "TimeStamp": true
   },
+  "indexes": {
+    "certificate_shareholder_index": {
+      "keys": {"certificate_no": 1, "shareholder_id": -1},
+      "options": {
+        "unique": false
+      }
+    }
+  },
   "properties": {
-    "entry_no": {
+    "certificate_no": {
       "type": "number",
       "required": true
     },

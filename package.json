@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "nodemon server/server.js",
+    "debugger": "nodemon --inspect server/server.js",
     "posttest": "npm run lint && nsp check",
     "sdk": "./node_modules/.bin/lb-sdk server/server.js angular-sdk",
     "sdk-dev": "./node_modules/.bin/lb-sdk server/server.js ../sharejista/src/app/back/shared/sdk",
