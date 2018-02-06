@@ -13,5 +13,12 @@
     "connector": "loopback-component-storage",
     "provider": "filesystem",
     "root": "./server/output"
+  },
+  "documents-storage": {
+    "name": "documents-storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./storage/documents",
+    "nameConflict": "makeUnique"
   }
 }

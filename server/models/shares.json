@@ -57,6 +57,11 @@
       "type": "belongsTo",
       "model": "ShareTransfer",
       "foreignKey": "sharetransfer_id"
+    },
+    "Company": {
+      "type": "belongsTo",
+      "model": "Company",
+      "foreignKey": "company_id"
     }
   },
   "acls": [],
