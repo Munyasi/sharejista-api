@@ -19,6 +19,8 @@ function generateList (company_id, export_config, res, cb) {
 		include: ['Shares']
     };
 
+
+
     //file type
     if(export_config.type === 'doc'){
         template_path = '../templates/list_of_shareholders.docx';
@@ -45,6 +47,13 @@ function generateList (company_id, export_config, res, cb) {
 		let company = results[0],
 		    shareholders = results[1];
 		shareholders = JSON.parse(JSON.stringify(shareholders));
+
+		shareholders = shareholders.map(item=>{
+			if(!item.email_address){
+				item.email_address = 'Not Available';
+			}
+			return item;
+		})
 		company = JSON.parse(JSON.stringify(company));
 		shareholders = calculateTotalShares(shareholders);
 
@@ -67,6 +76,8 @@ function generateList (company_id, export_config, res, cb) {
 
 		}else if(export_config.type === 'xlsx'){
 			let createDocumentPromise = createExcelDocument(shareholders, company);
+            createDocumentPromise.then((data) => { cb(null, data);});
+            createDocumentPromise.catch((err) => { cb(err);});
 		}
     });
 
@@ -82,9 +93,15 @@ function generateList (company_id, export_config, res, cb) {
     }
 
     function sortBySharesRanges (shareholders, min, max) {
-    	console.log({min, max});
 	    return shareholders.filter( s => {
-		    return (s.total >= parseInt(min) && s.total <= parseInt(max))
+	    	if(min != null && max != null ){
+                return (s.total >= parseInt(min) && s.total <= parseInt(max))
+			}else if(min == null && max != null ){
+                return (s.total <= parseInt(max))
+			}else if((min != null && max == null) ){
+                return (s.total >= parseInt(min))
+			}
+
 	    });
     }
 
@@ -135,7 +152,6 @@ function generateList (company_id, export_config, res, cb) {
 				let buf = doc.getZip().generate({type: 'nodebuffer'});
 				let token = uuid().toString().substring(0, 7);
 				let fileName = `List-of-shareholders-${company.company_name}-${token}.docx`;
-				//console.log(fileName);
 				fs.writeFileSync(path.resolve(__dirname, `${output_path}/${fileName}`), buf);
 				return resolve({success: 1, path: fileName});
 			}
@@ -155,37 +171,41 @@ function generateList (company_id, export_config, res, cb) {
 
 
     function createExcelDocument(shareholders, company) {
-        let workbook = new Excel.Workbook();
+        return new Promise((resolve,reject)=>{
+            let workbook = new Excel.Workbook();
+            workbook.xlsx.readFile(path.resolve(__dirname, template_path))
+                .then(function() {
+                    let token = uuid().toString().substring(0, 7);
+                    let filename = `List-of-shareholders-${company.company_name}-${token}.xlsx`;
+                    let worksheet = workbook.getWorksheet(1);
 
-        workbook.xlsx.readFile(path.resolve(__dirname, template_path))
-            .then(function() {
-                let token = uuid().toString().substring(0, 7);
-                let filename = `List-of-shareholders-${company.company_name}-${token}.xlsx`;
-                let worksheet = workbook.getWorksheet(1);
+                    worksheet.getRow(1).getCell(1).value = company.company_name;
+                    worksheet.getRow(2).getCell(1).value = `P.O BOX ${company.ro_postal_code}- ${company.ro_postal_address}`;
+                    worksheet.getRow(3).getCell(1).value = company.ro_town_city;
+                    let rowCount = 5;
 
-                worksheet.getRow(1).getCell(1).value = company.company_name;
-                worksheet.getRow(2).getCell(1).value = `P.O BOX ${company.ro_postal_code}- ${company.ro_postal_address}`;
-                worksheet.getRow(3).getCell(1).value = company.ro_town_city;
-                let rowCount = 5;
+                    _.forEach(shareholders,(value,index) => {
+                        let row = worksheet.getRow(rowCount);
+                        value = JSON.parse(JSON.stringify(value));
+                        row.getCell(1).value = value.id;
+                        row.getCell(2).value = value.name;
+                        row.getCell(3).value = value.email_address?value.email_address:'Not Available';
+                        row.getCell(4).value = `P.O BOX ${value.postal_code}- ${value.box}, ${value.town}`;
+                        row.getCell(5).value = value.total;
+                        row.commit();
+                        rowCount++;
+                    })
+                    workbook.xlsx.writeFile(path.resolve(__dirname, `${output_path}/${filename}`))
+						.then(res=>resolve({success: 1, path: filename}))
+						.catch(err=>reject(err));
 
-				_.forEach(shareholders,(value,index) => {
-					let row = worksheet.getRow(rowCount);
-					value = JSON.parse(JSON.stringify(value));
-					row.getCell(1).value = value.id;
-					row.getCell(2).value = value.name;
-					row.getCell(3).value = value.email_address;
-					row.getCell(4).value = `P.O BOX ${value.postal_code}- ${value.box}, ${value.town}`;
-					row.getCell(5).value = value.total;
-					row.commit();
-					rowCount++;
-				})
-				workbook.xlsx.writeFile(path.resolve(__dirname, `${output_path}/${filename}`));
-				cb(null,{success: 1, path: filename});
 
-            })
-            .catch(function (err) {
-                cb(err);
-            })
+                })
+                .catch(function (err) {
+                    reject(err);
+                })
+		})
+
     }
 }
 
