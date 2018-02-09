@@ -31,7 +31,7 @@ function generateShareCertificate(shareEntryId, cb) {
     data.address = `P.O BOX ${entry.Shareholder.postal_code}-${entry.Shareholder.box} ${entry.Shareholder.town}.`.toUpperCase();
     let words = toWords(entry.number_of_shares);
     data.shares_word = words.toUpperCase();
-    data.no = entry.entry_no || '';
+    data.no = entry.certificate_no || '';
 
     let dated = entry.dated || entry.createdAt;
     dated = new Date(dated);
