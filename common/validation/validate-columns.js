@@ -204,16 +204,20 @@ function shareholderShareTypes(colShareholderShareTypes,share_type_results,callb
 
         // Check for ids from db
         let share_type_id = -1;
-        let share_types_str = '';
+        let share_types_str = [];
+        //TODO: share-types should be based on existing company share types
         _.forEach(share_type_results, value => {
             if(_.toLower(cell.value)===_.toLower(value.name)){
                 share_type_id = value.id;
             }
-            share_types_str+= value.name+' or ';
+            share_types_str.push(cell.value);
         })
+        share_types.errors.push(share_type_results);
+
+        share_types_str = _.uniq(share_types_str);
 
         if(cell.value && share_type_id==-1){
-            share_types.errors.push(`Only ${share_types_str.slice(0, -3)} accepted for share type column on row ${rowNumber}`);
+            share_types.errors.push(`Share type for row ${rowNumber} does not correspond with what you have in this company profile. If missing, kindly add it before proceeding`);
         }
         share_types.data.push(share_type_id);
     });

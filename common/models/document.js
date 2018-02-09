@@ -10,6 +10,7 @@ let shareRegisterUtilities = require('../utilities/share-register');
 module.exports = function(Document) {
     Document.afterRemote('upload', function(ctx, unused, next) {
         let file = unused.result.files.file[0];
+        let company_id = (unused.result.fields.company_id[0])*1;
         let app = require('../../server/server');
         let Shareholder = app.models.Shareholder;
         let Shares = app.models.Shares;
@@ -23,10 +24,10 @@ module.exports = function(Document) {
             let sheet_content = workbook.xlsx.readFile(path.resolve(__dirname, template_path));
 
             //retrieve company share types
-            const share_type_res = ShareType.find({where:{company_id: file.company_id }});
+            const share_type_res = ShareType.find({where:{company_id: company_id }});
 
             //retrieve company certificate numbers
-            const shares_res = Shares.find({where:{company_id: file.company_id }});
+            const shares_res = Shares.find({where:{company_id: company_id }});
 
 
             async.parallel([
@@ -42,8 +43,8 @@ module.exports = function(Document) {
                 ],
                 function(data_error, data_results) {
                     // const sheet_content = data_results[0];
-                    const share_type_results = data_results[1];
-                    const shares_results = data_results[2];
+                    const share_type_results = JSON.parse(JSON.stringify(data_results[1]));
+                    const shares_results = JSON.parse(JSON.stringify(data_results[2]));
                     if(data_error){
                         ctx.result.errors = data_error;
                         next();
