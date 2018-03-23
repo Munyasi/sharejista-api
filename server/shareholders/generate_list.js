@@ -101,7 +101,6 @@ function generateList (company_id, export_config, res, cb) {
 			}else if((min != null && max == null) ){
                 return (s.total >= parseInt(min))
 			}
-
 	    });
     }
 
@@ -113,7 +112,6 @@ function generateList (company_id, export_config, res, cb) {
 			}
 			shareholders[i].total = total;
 		}
-
 		return shareholders;
     }
 

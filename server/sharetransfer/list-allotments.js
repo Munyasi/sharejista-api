@@ -18,7 +18,7 @@ function listAllotments (company_id, skip = null, limit = null, cb) {
 		skip: skip,
 		limit: limit,
 		include: ['transferee', 'sharetype'],
-		order: 'approved ASC'
+		order: 'id DESC'
 	})
 	.then(function (shareTranfers) {
 		shareTranfers = JSON.parse(JSON.stringify(shareTranfers));
